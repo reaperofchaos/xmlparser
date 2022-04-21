@@ -14,31 +14,56 @@ std::vector<std::string_view> tokenize(std::string &input)
 
 /** 
  * function to read a string, 
- * tokenizes and then analyzes the tokens*/
-Value *read_str(std::string &input) 
+ * tokenizes and analyzes the tokens 
+ * and returns an Abstract Syntax Tree
+ **/
+Node* read_str(std::string &input) 
 {
-    auto tokens = tokenize(input);
+    std::vector<std::string_view> tokens = tokenize(input);
     Reader reader { tokens };
-    Value* tag =  read_form(reader);
-    return tag; 
+    Node* ast = reader.getAst(); 
+    std::vector<int> levels; //position is level and value is index in child vector
+    Node* targetNode; 
+    std::cout << "Tokens found: " << tokens.size() << "\n"; 
+    for(std::string_view token : tokens)
+    {
+        Value* tag = read_form(token);
+        if(tag->type() != Type::EndTag)
+        {
+            std::cout << "Adding Node " <<
+            tag->str() << " at level " << levels.size() << "\n";
+            ast = targetNode; 
+            if(levels.size() > 0){
+                for(int level: levels){
+                    targetNode = targetNode->child[level];
+                }
+            }
+            targetNode->addNode(*tag);
+            levels.push_back(0); //add another level since added a child
+        }else{
+            if(levels.size() > 0){
+                levels.pop_back();  // go up a level
+                levels[levels.size()]++; //move to the next sibling node
+            }
+        }
+    }
+    return ast; 
 }
 
 /** 
  * Function that takes the reader of tokens and
  *  then analyzes and assigns types to them
  */
-Value* read_form(Reader &reader) 
-{
-    auto token = reader.peek();
-    if (!token)
-        return nullptr;
+Value* read_form(std::optional<std::string_view> token) 
+{   
+    if(!token) return nullptr; 
+    
     //read the first char of a token
     switch (token.value()[0]) 
     {
         case '<': //its a tag of some sort
         {
             auto tag =  readTag(token);
-            std::cout <<"found tag " << tag->str() << "\n"; 
             return tag; 
         }    
 

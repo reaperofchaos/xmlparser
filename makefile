@@ -26,10 +26,13 @@ $(OBJDIR)/Types.o \
 $(OBJDIR)/Reader.o \
 $(OBJDIR)/Tokenizer.o \
 $(OBJDIR)/Printer.o \
-
+$(OBJDIR)/Node.o \
 
 all: $(OBJS)
 	$(LD) -o $(TARGET) $(OBJS) $(LDFLAGS)
+
+$(OBJDIR)/Node.o:
+	$(CC) -c $(CCFLAGS) $(SRCDIR)/Node.cpp -o $(OBJDIR)/Node.o
 
 $(OBJDIR)/Printer.o:
 	$(CC) -c $(CCFLAGS) $(SRCDIR)/printer.cpp -o $(OBJDIR)/Printer.o

@@ -16,22 +16,23 @@ class EndTagValue;
 class SelfClosingTagValue; 
 
    
-
+enum class Type
+{
+    Tag,
+    String,
+    Comment,
+    DocumentTag,
+    XmlTag,
+    StartTag,
+    EndTag,
+    SelfClosingTag,
+    Symbol
+};
 class Value {
     private: 
         std::string m_str; 
     public:
-        enum class Type{
-            Tag,
-            String,
-            Comment,
-            DocumentTag,
-            XmlTag,
-            StartTag,
-            EndTag,
-            SelfClosingTag,
-            Symbol
-        };
+
         
         virtual std::string getTypeAsString(Type type){
             switch (type)

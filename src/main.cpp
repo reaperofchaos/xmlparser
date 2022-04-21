@@ -5,26 +5,26 @@
 #include "Tokenizer.hpp"
 #include "Reader.hpp"
 #include "printer.hpp"
-
-Value *READ(std::string input)
+#include "Node.hpp"
+Node *READ(std::string input)
 {
+    std::cout << input << "\n"; 
     return read_str(input); 
 }
 
 
-Value* EVAL(Value* ast)
+Node* EVAL(Node* ast)
 {
-    std::cout << "ast is " << ast->str() << "\n"; 
     return ast; 
 }
 
-std::string PRINT(Value* input){
-    return pr_str(input);  
+std::string PRINT(Node* input){
+    return Node::LevelOrderTraversal(input); 
 }
 
 std::string rep(std::string input){
-    Value* ast = READ(input);
-    auto result = EVAL(ast);
+    Node* ast = READ(input);
+    Node* result = EVAL(ast);
     return PRINT(result);
 
 }
@@ -35,13 +35,21 @@ int main(){
 
     std::string input;
     for (;;){
+
         auto quit = linenoise::Readline("hello> ", input); 
 
         if(quit)
             break;
+        if(input == "exit()" || input == "quit()")
+        {
+            std::cout << "Exiting the XML parser \n"; 
+            return 0; 
+        }
         std::cout << rep(input) << std::endl; 
+
         //add text to history
         linenoise::AddHistory(input.c_str()); 
+
     }
     linenoise::SaveHistory(history_path);
     return 0; 
