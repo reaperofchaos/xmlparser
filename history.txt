@@ -4,3 +4,8 @@ make
 <html></html>
 <html><body></body></html>
 quit()
+<test><test2></test2></test>
+make clean
+make
+<test><test2></test2></test>
+

@@ -6,7 +6,7 @@
 #include "Reader.hpp"
 #include "printer.hpp"
 #include "Node.hpp"
-Node *READ(std::string input)
+Node* READ(std::string input)
 {
     std::cout << input << "\n"; 
     return read_str(input); 
@@ -18,8 +18,18 @@ Node* EVAL(Node* ast)
     return ast; 
 }
 
-std::string PRINT(Node* input){
-    return Node::LevelOrderTraversal(input); 
+std::string PRINT(Node* result){
+    // return Node::LevelOrderTraversal(input); 
+      if(result != NULL){
+        std::cout << "Root is " << result->value->str() << "\n"; 
+        std:: cout << "Displaying Child Nodes \n";
+        if(result->children.size() > 0){
+            for(Node* childNode : result->children){
+                std::cout << "Child Node: " << childNode->value->str() << "\n"; 
+            };
+        }
+      }
+    return ""; 
 }
 
 std::string rep(std::string input){

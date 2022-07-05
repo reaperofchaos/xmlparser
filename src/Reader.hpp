@@ -17,7 +17,7 @@ class Reader {
     private:
         std::vector<std::string_view> &m_tokens;
         size_t m_index { 0 };
-        Node* ast = nullptr; 
+        Node* ast = NULL; 
 
     public:
         Reader(std::vector<std::string_view> &tokens)
