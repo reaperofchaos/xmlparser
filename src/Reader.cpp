@@ -22,34 +22,13 @@ Node* read_str(std::string &input)
     std::vector<std::string_view> tokens = tokenize(input);
     Reader reader { tokens };
     std::vector<int> levels; //position is level and value is index in child vector
-    Node* targetNode; 
+    Node* targetNode = nullptr; 
     std::cout << "Tokens found: " << tokens.size() << "\n"; 
     std::vector<Value*> tags; 
     for(std::string_view token : tokens)
     {
         Value* tag = read_form(token);
         tags.push_back(tag); 
-        // std::cout << "Adding token type " << tag->str() << "\n";
-        // if(tag->type() != Type::EndTag)
-        // {
-        //     std::cout << "Adding Node " <<
-        //     tag->str() << " at level " << levels.size() << "\n";
-        //     if(levels.size() > 0){
-        //         for(int level: levels){
-        //             targetNode = targetNode->child[level];
-        //         }
-        //     }
-        //     std::cout << "About to add a node" << "\n";
-        //     targetNode->setValue(*tag);
-        //     std::cout << "About to set the tree" << "\n";
-        //     reader.setAst(targetNode); 
-        //     levels.push_back(0); //add another level since added a child
-        // }else{
-        //     if(levels.size() > 0){
-        //         levels.pop_back();  // go up a level
-        //         levels[levels.size()]++; //move to the next sibling node
-        //     }
-        // }
     }
     Node* tree = targetNode->createTree(tags);
     reader.setAst(tree); 

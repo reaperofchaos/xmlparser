@@ -1,5 +1,7 @@
 #include <string>
 #include <iostream>
+#include <fstream>
+#include <vector>
 #include <unordered_map>
 #include "linenoise.hpp"
 #include "Tokenizer.hpp"
@@ -19,16 +21,9 @@ Node* EVAL(Node* ast)
 }
 
 std::string PRINT(Node* result){
-    // return Node::LevelOrderTraversal(input); 
-      if(result != NULL){
-        std::cout << "Root is " << result->value->str() << "\n"; 
-        std:: cout << "Displaying Child Nodes \n";
-        if(result->children.size() > 0){
-            for(Node* childNode : result->children){
-                std::cout << "Child Node: " << childNode->value->str() << "\n"; 
-            };
-        }
-      }
+    if(result != NULL){
+        Node::display(result);
+    }
     return ""; 
 }
 
@@ -39,28 +34,46 @@ std::string rep(std::string input){
 
 }
 
-int main(){
-    const auto history_path = "history.txt"; 
-    linenoise::LoadHistory(history_path); 
+int main(int argc, char** argv){
 
-    std::string input;
-    for (;;){
-
-        auto quit = linenoise::Readline("hello> ", input); 
-
-        if(quit)
-            break;
-        if(input == "exit()" || input == "quit()")
-        {
-            std::cout << "Exiting the XML parser \n"; 
-            return 0; 
+    if(argc > 1){
+        std::ifstream file;
+        std::string line; 
+        std::vector<std::string> lines; 
+        std::string text; 
+        // std::cout << "File name: " << argv[1] << "\n";  
+        file.open(argv[1]);
+        while (std::getline(file, line)){
+            lines.push_back(line); 
         }
-        std::cout << rep(input) << std::endl; 
+        for(std::string l : lines){
+            text += l; 
+        }
+        file.close();
+        rep(text);
+    }else{
+        const auto history_path = "history.txt"; 
+        linenoise::LoadHistory(history_path); 
 
-        //add text to history
-        linenoise::AddHistory(input.c_str()); 
+        std::string input;
+        for (;;){
 
+            auto quit = linenoise::Readline("hello> ", input); 
+
+            if(quit)
+                break;
+            if(input == "exit()" || input == "quit()")
+            {
+                std::cout << "Exiting the XML parser \n"; 
+                return 0; 
+            }
+            std::cout << rep(input) << std::endl; 
+
+            //add text to history
+            linenoise::AddHistory(input.c_str()); 
+
+        }
+        linenoise::SaveHistory(history_path);
     }
-    linenoise::SaveHistory(history_path);
     return 0; 
 }
