@@ -27,9 +27,13 @@ $(OBJDIR)/Reader.o \
 $(OBJDIR)/Tokenizer.o \
 $(OBJDIR)/Printer.o \
 $(OBJDIR)/Node.o \
+$(OBJDIR)/Writer.o \
 
 all: $(OBJS)
 	$(LD) -o $(TARGET) $(OBJS) $(LDFLAGS)
+
+$(OBJDIR)/Writer.o:
+	$(CC) -c $(CCFLAGS) $(SRCDIR)/Writer.cpp -o $(OBJDIR)/Writer.o
 
 $(OBJDIR)/Node.o:
 	$(CC) -c $(CCFLAGS) $(SRCDIR)/Node.cpp -o $(OBJDIR)/Node.o

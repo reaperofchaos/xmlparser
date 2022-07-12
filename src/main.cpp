@@ -8,6 +8,8 @@
 #include "Reader.hpp"
 #include "printer.hpp"
 #include "Node.hpp"
+#include "Writer.hpp"
+
 Node* READ(std::string input)
 {
     std::cout << input << "\n"; 
@@ -20,18 +22,23 @@ Node* EVAL(Node* ast)
     return ast; 
 }
 
-std::string PRINT(Node* result){
+void PRINT(Node* result){
     if(result != NULL){
         Node::display(result);
     }
-    return ""; 
+    std::string fileName = "out.txt";
+    std::cout << "Saving parsed tree to " << fileName << "\n"; 
+    Writer* writer = new Writer(result);
+    writer->createFile(fileName); 
+    writer->setFile("out.json");
+    writer->writeTreeAsJSON();
 }
 
 std::string rep(std::string input){
     Node* ast = READ(input);
     Node* result = EVAL(ast);
-    return PRINT(result);
-
+    PRINT(result);
+    return ""; 
 }
 
 int main(int argc, char** argv){
