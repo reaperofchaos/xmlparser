@@ -73,15 +73,22 @@ class Node{
         }
     }
 
+   
     static void display(Node* node)
     {
-            std::cout << "Root is " << node->value->str() << "\n"; 
-             if(node->children.size() > 0){
-                 std::cout << "Child Nodes " << node->children.size() << "\n";
-                for(Node* childNode : node->children){
-                    std::cout << "Child Node: " << childNode->value->str() <<  " level: " << childNode->level << " \n";
+            if(node->level == 0)
+            {
+                std::cout << "Root is " << node->value->str() << "\n"; 
+            }else{
+                std::cout << "Child Node: " << node->value->str() <<  " level: " << node->level << " \n";
+            }
+            if(node->children.size() > 0)
+            {
+                 for(Node* childNode : node->children)
+                 {
+                    display(childNode);
                 };
-            }       
+            }     
     }
    
 };

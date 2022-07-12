@@ -41,7 +41,6 @@ int main(int argc, char** argv){
         std::string line; 
         std::vector<std::string> lines; 
         std::string text; 
-        // std::cout << "File name: " << argv[1] << "\n";  
         file.open(argv[1]);
         while (std::getline(file, line)){
             lines.push_back(line); 
