@@ -8,6 +8,7 @@
 class Node{
     public:
         Value* value = NULL; 
+        Node* parent = NULL;
         std::vector<Node*> children;
         int level = 0; 
 
@@ -16,11 +17,19 @@ class Node{
     {
         this->value = newValue;
     }
-
-    Node(Value* newValue, int level)
+    
+    Node(Value* newValue, Node* parentNode)
     {
         this->value = newValue;
-        this->level = level; 
+        this->parent = parentNode;
+    }
+
+    Node(Value* newValue, int level, Node* parentNode)
+    {
+        this->value = newValue;
+        this->level = level;
+        this->parent = parentNode;
+
     }
 
     void setValue(Value* value){this->value = value; }
@@ -67,11 +76,15 @@ class Node{
                 if(node->children.size() == 0)
                 {
                     std::cout << "The child node " << valueToAdd->str() << " has been added below "<< node->value->str() << "\n"; 
-                    node->children.push_back(new Node(valueToAdd, bottomLevel + 1));
+                    node->children.push_back(new Node(valueToAdd, bottomLevel + 1, node));
                 }else{
                     insertValue(node->children[node->children.size() - 1], valueToAdd);
                 }
             }else{
+                int lastLevel = Node::getLastLevel(node);
+                std::cout << "The last level is " << lastLevel << "\n"; 
+
+            
                 //find opening tag in tree
                     //find the last node
                     //work our way up
@@ -112,6 +125,7 @@ class Node{
                 std::cout << "Root is " << node->value->str() << "\n"; 
             }else{
                 std::cout << "Child Node: " << node->value->str() <<  " level: " << node->level << " \n";
+                std::cout << "Child of parent " << node->parent->value->str() << "level: " << node->parent->level << "\n";
             }
             if(node->children.size() > 0)
             {
