@@ -1,20 +1,20 @@
 	{ 
-		"name": "<test>",
+		"name": "test",
 		"level": "0",
 		"type": "Start Tag",
 		"children": [
 		{ 
-			"name": "<test1>",
+			"name": "test1",
 			"level": "1",
 			"type": "Start Tag",
 			"children": [
 			{ 
-				"name": "<test2>",
+				"name": "test2",
 				"level": "2",
 				"type": "Start Tag",
 				"children": [
 				{ 
-					"name": "<test3>",
+					"name": "test3",
 					"level": "3",
 					"type": "Start Tag"
 				}

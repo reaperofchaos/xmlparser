@@ -15,7 +15,6 @@ class StartTagValue;
 class EndTagValue; 
 class SelfClosingTagValue; 
 
-   
 enum class Type
 {
     Tag,
@@ -62,15 +61,16 @@ class Value {
         virtual Type type(){ assert(0);}
         virtual std::string inspect() { assert(0); }
         virtual  std::string  str(){ return m_str;}
-       TagValue* as_tag(); 
-       StringValue* as_string(); 
-       CommentValue* as_comment(); 
-       SymbolValue* as_symbol(); 
-       DocumentTagValue* as_document_tag(); 
-       XmlTagValue* as_xml_tag(); 
-       EndTagValue* as_end_tag(); 
-       StartTagValue* as_start_tag(); 
-       SelfClosingTagValue* as_self_closing_tag(); 
+        virtual std::string getType(){return this->getTypeAsString(this->type());}
+        TagValue* as_tag(); 
+        StringValue* as_string(); 
+        CommentValue* as_comment(); 
+        SymbolValue* as_symbol(); 
+        DocumentTagValue* as_document_tag(); 
+        XmlTagValue* as_xml_tag(); 
+        EndTagValue* as_end_tag(); 
+        StartTagValue* as_start_tag(); 
+        SelfClosingTagValue* as_self_closing_tag(); 
 
 };
 
@@ -80,7 +80,10 @@ class TagValue: public Value {
         std::vector<std::pair<std::string, std::string>> properties;
 
     public:
-        TagValue(std::string_view str): m_str {str} {}
+        TagValue(std::string_view str){
+            typedef std::size_t count_t, pos_t;
+            this->m_str = str.substr(pos_t(1), count_t(str.length()-2));
+        }
 
         std::string  str(){ return m_str;}
 
@@ -108,7 +111,10 @@ class XmlTagValue: public Value {
         std::vector<std::pair<std::string, std::string>> properties;
 
     public:
-        XmlTagValue(std::string_view str): m_str {str} {}
+        XmlTagValue(std::string_view str){
+            //<tag> to tag
+            this->m_str = str.substr(1, str.length()-1);
+        }
 
         std::string  str(){ return m_str;}
 
@@ -122,7 +128,10 @@ class StartTagValue: public Value {
         std::vector<std::pair<std::string, std::string>> properties;
 
     public:
-        StartTagValue(std::string_view str): m_str {str} {}
+        StartTagValue(std::string_view str){
+            //<tag> to tag
+            this->m_str = str.substr(1, str.length()-2); 
+        }
 
         std::string  str(){ return m_str;}
 
@@ -136,8 +145,10 @@ class EndTagValue: public Value {
         std::vector<std::pair<std::string, std::string>> properties;
 
     public:
-        EndTagValue(std::string_view str): m_str {str} {}
-
+        EndTagValue(std::string_view str){
+            //</tag> to tag
+            this->m_str = str.substr(2, str.length() -3);
+        } 
         std::string  str(){ return m_str;}
 
         virtual std::string inspect(){ return "Type " + getTypeAsString(type()) + " - " + str();}
@@ -150,8 +161,15 @@ class SelfClosingTagValue: public Value {
         std::vector<std::pair<std::string, std::string>> properties;
 
     public:
-        SelfClosingTagValue(std::string_view str): m_str {str} {}
-
+        SelfClosingTagValue(std::string_view str){
+            //<tag /> to tag
+            if(str.at(str.length()-3)== ' '){
+                this->m_str = str.substr(1, str.length()-4); 
+            //<tag/> to tag
+            }else{
+                this->m_str = str.substr(1, str.length()-3); 
+            }
+        }
         std::string  str(){ return m_str;}
 
         virtual std::string inspect(){ return "Type " + getTypeAsString(type()) + " - " + str();}

@@ -28,6 +28,7 @@ Node* read_str(std::string &input)
     for(std::string_view token : tokens)
     {
         Value* tag = read_form(token);
+        std::cout << "The tag has a value of " <<  tag->str() << " and is of type " << tag->getType() << "\n"; 
         tags.push_back(tag); 
     }
     Node* tree = targetNode->createTree(tags);
