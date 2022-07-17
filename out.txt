@@ -1,9 +1,7 @@
 Parsed Tree 
 Node: test Level: 0 Type:Start Tag
 Node: test1 Level: 1 Type:Start Tag
-Node: test2 Level: 1 Type:Start Tag
+Node: test2 Level: 2 Type:Start Tag
 Node: test2 Level: 1 Type:End Tag
-Node: test3 Level: 1 Type:Start Tag
+Node: test3 Level: 0 Type:Start Tag
 Node: test3 Level: 1 Type:End Tag
-Node: test1 Level: 1 Type:End Tag
-Node: test Level: 1 Type:End Tag

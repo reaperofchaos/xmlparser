@@ -203,8 +203,6 @@ class Node{
             int recursionCount = 0; 
             int* recursionCountPtr = &recursionCount; 
             Node* lastNode = Node::getLastNode(node, recursionCountPtr);
-            // std::cout << "Number of recursions in last node is " << recursionCount << "\n";
-            // std::cout << "The last node is " << lastNode->value->str() << "\n";
             int bottomLevel = getLastLevel(node);
             if(valueToAdd->type() != Type::EndTag)
             {
@@ -224,7 +222,7 @@ class Node{
                     }else{
                         std::cout << "The node " << valueToAdd->str() <<  " has been added under " << lastNode->parent->value->str() << "\n";
                         //Add to the children of the parent of the last node. (Node is a sibling of last node)
-                        lastNode->parent->children.push_back(new Node(valueToAdd, bottomLevel + 1, node));
+                        lastNode->parent->children.push_back(new Node(valueToAdd, bottomLevel, lastNode->parent));
                     }
                 }
             }else{
@@ -282,10 +280,14 @@ class Node{
     {
             if(node->level == 0)
             {
-                std::cout << "Root is " << node->value->str() << "\n"; 
+                std::cout   << "Root is " << node->value->str() << "\n"; 
             }else{
-                std::cout << "Child Node: " << node->value->str() <<  " level: " << node->level << " \n";
-                std::cout << "Child of parent " << node->parent->value->str() << "level: " << node->parent->level << "\n";
+                std::cout   << "Child Node: " << node->value->str() 
+                            << " - " << node->value->getType()
+                            <<  " level: " << node->level << " \n";
+                std::cout   << "Child of parent " << node->parent->value->str() 
+                            << " - " << node->value->getType()
+                            << " level: " << node->parent->level << "\n";
             }
             if(node->children.size() > 0)
             {
