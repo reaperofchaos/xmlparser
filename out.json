@@ -6,21 +6,37 @@
 		{ 
 			"name": "test1",
 			"level": "1",
-			"type": "Start Tag",
-			"children": [
-			{ 
-				"name": "test2",
-				"level": "2",
-				"type": "Start Tag",
-				"children": [
-				{ 
-					"name": "test3",
-					"level": "3",
-					"type": "Start Tag"
-				}
-				]
-			}
-			]
+			"type": "Start Tag"
+		}
+		{ 
+			"name": "test2",
+			"level": "1",
+			"type": "Start Tag"
+		}
+		{ 
+			"name": "test2",
+			"level": "1",
+			"type": "End Tag"
+		}
+		{ 
+			"name": "test3",
+			"level": "1",
+			"type": "Start Tag"
+		}
+		{ 
+			"name": "test3",
+			"level": "1",
+			"type": "End Tag"
+		}
+		{ 
+			"name": "test1",
+			"level": "1",
+			"type": "End Tag"
+		}
+		{ 
+			"name": "test",
+			"level": "1",
+			"type": "End Tag"
 		}
 		]
 	}

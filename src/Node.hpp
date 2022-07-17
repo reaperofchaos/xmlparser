@@ -49,17 +49,30 @@ class Node{
         }
         return node->level;
     }
-
+    /**
+     * @brief Function to navigate the tree and find the next 
+     * node with a value equal to the string of the value provided
+     * 
+     * @param tree 
+     * @param currenetValue 
+     * @return Node* 
+     */
     static Node* findNode(Node* tree, Value* currenetValue)
     {
-        int numberOfChildren = tree->children.size(); 
+        int numberOfChildren = tree->children.size();
+        int currentLevel = tree->level; 
+        std::cout << "The node " << tree->value->str() << " has " << numberOfChildren << " children." << "\n";  
+        //If we have reached the root node and the value's match, return the node
+        // and we will add the end root tag to the children of that node
         if(numberOfChildren > 0)
         {
             //Check to see if parent has children with a match
             //go right to left
             int i = numberOfChildren -1; 
-            while(numberOfChildren >= 0)
+            while(i >= 0)
             {
+                std::cout << "i is " << i << "\n"; 
+                std::cout << "The " << i << " child is " << tree->children.at(i)->value->str() << " - " << tree->children.at(i)->value->getType()  << "\n"; 
                 if(tree->children[i]->value->str() == currenetValue->str())
                 {
                     if(Node::isPair(tree->children.at(i), currenetValue))
@@ -76,15 +89,27 @@ class Node{
                 i--; 
             }
         }
+        std::cout << "The parent's parent is " << ((tree->parent->parent != NULL) ? tree->parent->parent->value->str() : "Null") << "\n"; 
         if(tree->parent->parent != NULL){
+                std::cout << "Node match was not found in the children of " << tree->value->str() << "\n";
+                std::cout << "Checking the children of the parent node " << tree->parent->parent->value->str() << "\n"; 
                 //no nodes at this level, go up one
-                Node::findNode(tree->parent->parent, currenetValue);
-            }
-            std::cout   << "Error: A " << currenetValue->getType() 
+                return Node::findNode(tree->parent->parent, currenetValue);
+            }else{
+                std::cout   << "Error: A " << currenetValue->getType() 
                         << " for " << currenetValue->str()
                         << " was found without a starting tag "   
                         << "\n"; 
                     return NULL;
+            }
+        //After all child nodes have been looped through, then check if we have a root node
+        // and if that root node's value is equal to the current value, return that
+        if(currentLevel == 0)
+        {
+            if(tree->value->str() == currenetValue->str()){
+                return tree; 
+            }
+        }
         return NULL; 
     }
 
@@ -94,14 +119,15 @@ class Node{
      * @param node, a tree
      * @return int the level of the node
      */
-    static Node* getLastNode(Node* node)
+    static Node* getLastNode(Node* node, int* recursionCount)
     {
         int childNodes = node->children.size();
-        std::cout << "NUmber of child nodes " << childNodes << "\n"; 
         if(childNodes > 0)
         {
-            Node::getLastNode(node->children[childNodes - 1]);
+            *recursionCount += 1;
+            return Node::getLastNode(node->children[childNodes - 1], recursionCount);   
         }
+
         return node;
     }
 
@@ -113,8 +139,6 @@ class Node{
         {
             root->insertValue(root, valueToAdd);
         }
-        Node* lastNode = Node::findLastNode(root); 
-        std::cout << "The last node is " << lastNode->value->str() << "\n"; 
         return root; 
     }
 
@@ -145,7 +169,7 @@ class Node{
         return false;
     }
 
-      /**
+    /**
      * @brief Checks if two nodes are a match
      * 
      * @param node1 a node
@@ -176,6 +200,11 @@ class Node{
             std::cout << "The first node " << valueToAdd->str() << " has been added" << "\n"; 
             node->setValue(valueToAdd);
         }else{
+            int recursionCount = 0; 
+            int* recursionCountPtr = &recursionCount; 
+            Node* lastNode = Node::getLastNode(node, recursionCountPtr);
+            // std::cout << "Number of recursions in last node is " << recursionCount << "\n";
+            // std::cout << "The last node is " << lastNode->value->str() << "\n";
             int bottomLevel = getLastLevel(node);
             if(valueToAdd->type() != Type::EndTag)
             {
@@ -185,16 +214,28 @@ class Node{
                     node->children.push_back(new Node(valueToAdd, bottomLevel + 1, node));
                     std::cout << "The child node " << node->children[0]->value->str() << " is below " << node->children[0]->parent->value->str() << "\n";
                 }else{
-                    insertValue(node->children[node->children.size() - 1], valueToAdd);
+                    // we have more than one child node
+                    // if the last node was a start tag, 
+                    // this next start tag should be nested under it
+                    if(lastNode->value->type() == Type::StartTag)
+                    {
+                        insertValue(node->children[node->children.size() - 1], valueToAdd);
+                    // This is a sibling node, so just add it to the child array
+                    }else{
+                        std::cout << "The node " << valueToAdd->str() <<  " has been added under " << lastNode->parent->value->str() << "\n";
+                        //Add to the children of the parent of the last node. (Node is a sibling of last node)
+                        lastNode->parent->children.push_back(new Node(valueToAdd, bottomLevel + 1, node));
+                    }
                 }
             }else{
-                Node* lastNode = Node::getLastNode(node);
-
-                std::cout << "The last node is " << lastNode->value->str() << "\n"; 
+                std::cout   << "Last node, when tag is " << valueToAdd->str() 
+                            << " - " << valueToAdd->getType() << " is " 
+                            << lastNode->value->str() << " - " 
+                            << lastNode->value->getType() << "\n"; 
                 if(lastNode->parent != NULL){
                     std::cout << "The last node parent is " << lastNode->parent->value->str() << "\n";
                     Node* foundParentNode = Node::findNode(lastNode->parent, valueToAdd); 
-                    if(foundParentNode != nullptr)
+                    if(foundParentNode != NULL)
                     {
                         std::cout   << "Adding " << valueToAdd->str() 
                                     << " - " <<valueToAdd->getType() 
@@ -209,13 +250,6 @@ class Node{
                 }else{
                     std::cout << "The last node's parent is evidently not set \n"; 
                 }
-
-            
-                //find opening tag in tree
-                    //find the last node
-                    //work our way up
-                    //find the node of the parent that contains the child node of the opening tag
-                    //add the child node here
 
             }
         }
