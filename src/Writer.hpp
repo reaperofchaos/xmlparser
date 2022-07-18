@@ -46,7 +46,7 @@ class Writer{
             }
         }
 
-        void writeNodesAsObject(Node* node)
+        void writeNodesAsObject(Node* node, bool isChild)
         {
             std::string spacing = ""; 
             for(int i = 0; i < node->level; i++){
@@ -54,26 +54,37 @@ class Writer{
             }
             std::string elementSpacing = spacing += "\t";
             
-            this->out << spacing << "{ \n";
-            this->out << "\t" << elementSpacing << "\"name\": \""   << node->value->str() << "\",\n"
-                      << "\t" << elementSpacing << "\"level\": \""  << node->level << "\",\n"
-                      << "\t" << elementSpacing << "\"type\": \""   << node->value->getTypeAsString(node->value->type()) << "\"";
+            this->out   << spacing << "{ \n";
+            this->out   << "\t" << elementSpacing << "\"name\": \""  
+                        << node->value->str() << "\",\n"
+                        << "\t" << elementSpacing << "\"level\": \""  
+                        << node->level << "\",\n"
+                        << "\t" << elementSpacing << "\"type\": \""   
+                        << node->value->getTypeAsString(node->value->type()) << "\"";
             if(node->children.size() > 0){
                 this->out << ",\n"; 
                 this->out << "\t" << elementSpacing << "\"children\": [\n"; 
+                size_t i = 0; 
                 for(Node* child : node->children)
                 {
-                    this->writeNodesAsObject(child); 
+
+                    this->writeNodesAsObject(child, i < node->children.size() -1); 
+                    i++; 
                 }
                 this->out << "\t" << spacing << "]\n";
             }else{
                 this->out << "\n"; 
             }
-           this->out << elementSpacing << "}\n"; 
+            if(isChild){
+                this->out << elementSpacing << "},\n"; 
+            }else{
+                this->out << elementSpacing << "}\n"; 
+            }
         }
+        
 
         void writeTreeAsJSON(){
-            writeNodesAsObject(this->tree); 
+            writeNodesAsObject(this->tree, false); 
             this->out.close(); 
         }
 };
