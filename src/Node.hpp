@@ -222,7 +222,7 @@ class Node{
                     }else{
                         std::cout << "The node " << valueToAdd->str() <<  " has been added under " << lastNode->parent->value->str() << "\n";
                         //Add to the children of the parent of the last node. (Node is a sibling of last node)
-                        lastNode->parent->children.push_back(new Node(valueToAdd, bottomLevel, lastNode->parent));
+                        lastNode->parent->children.push_back(new Node(valueToAdd, lastNode->parent->level +1, lastNode->parent));
                     }
                 }
             }else{
@@ -232,18 +232,24 @@ class Node{
                             << lastNode->value->getType() << "\n"; 
                 if(lastNode->parent != NULL){
                     std::cout << "The last node parent is " << lastNode->parent->value->str() << "\n";
-                    Node* foundParentNode = Node::findNode(lastNode->parent, valueToAdd); 
-                    if(foundParentNode != NULL)
+                    if(lastNode->value->str() == valueToAdd->str() && lastNode->value->type() != Type::EndTag)
                     {
-                        std::cout   << "Adding " << valueToAdd->str() 
-                                    << " - " <<valueToAdd->getType() 
-                                    << " has been added to " 
-                                    << foundParentNode->value->str()
-                                    << "\n"; 
-                        foundParentNode->children.push_back(new Node(valueToAdd, bottomLevel + 1, foundParentNode));
+                        lastNode->parent->children.push_back(new Node(valueToAdd, lastNode->level, lastNode->parent));
                     }else{
-                        std::cout << "No parent was found" << "\n"; 
+                        Node* foundParentNode = Node::findNode(lastNode->parent, valueToAdd); 
+                        if(foundParentNode != NULL)
+                        {
+                            std::cout   << "Adding " << valueToAdd->str() 
+                                        << " - " <<valueToAdd->getType() 
+                                        << " has been added to " 
+                                        << foundParentNode->value->str()
+                                        << "\n"; 
+                            foundParentNode->children.push_back(new Node(valueToAdd, foundParentNode->level -1, foundParentNode));
+                        }else{
+                            std::cout << "No parent was found" << "\n"; 
+                        }
                     }
+                    
                     
                 }else{
                     std::cout << "The last node's parent is evidently not set \n"; 
