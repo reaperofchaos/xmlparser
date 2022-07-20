@@ -1,42 +1,528 @@
 	{ 
-		"name": "test",
+		"name": "!DOCTYPE",
 		"level": "0",
-		"type": "Start Tag",
+		"type": "Document Tag",
 		"children": [
 		{ 
-			"name": "test1",
+			"name": "html",
 			"level": "1",
 			"type": "Start Tag",
 			"children": [
 			{ 
-				"name": "test2",
+				"name": "head",
 				"level": "2",
-				"type": "Start Tag"
+				"type": "Start Tag",
+				"children": [
+				{ 
+					"name": "style",
+					"level": "3",
+					"type": "Start Tag",
+					"children": [
+					{ 
+						"name": "table {  font-family: arial, sans-serif;  border-collapse: collapse;  width: 100%;}td, th {  border: 1px solid #dddddd;  text-align: left;  padding: 8px;}tr:nth-child(even) {  background-color: #dddddd;}",
+						"level": "4",
+						"type": "string"
+					}
+					]
+				},
+				{ 
+					"name": "style",
+					"level": "3",
+					"type": "End Tag"
+				}
+				]
 			},
 			{ 
-				"name": "test2",
+				"name": "head",
 				"level": "2",
 				"type": "End Tag"
 			},
 			{ 
-				"name": "test3",
+				"name": "body",
 				"level": "2",
-				"type": "Start Tag"
+				"type": "Start Tag",
+				"children": [
+				{ 
+					"name": "h2",
+					"level": "3",
+					"type": "Start Tag",
+					"children": [
+					{ 
+						"name": "HTML Table",
+						"level": "4",
+						"type": "string"
+					}
+					]
+				},
+				{ 
+					"name": "h2",
+					"level": "3",
+					"type": "End Tag"
+				},
+				{ 
+					"name": "table",
+					"level": "3",
+					"type": "Start Tag",
+					"children": [
+					{ 
+						"name": "tr",
+						"level": "4",
+						"type": "Start Tag",
+						"children": [
+						{ 
+							"name": "th",
+							"level": "5",
+							"type": "Start Tag",
+							"children": [
+							{ 
+								"name": "Company",
+								"level": "6",
+								"type": "string"
+							}
+							]
+						},
+						{ 
+							"name": "th",
+							"level": "5",
+							"type": "End Tag"
+						},
+						{ 
+							"name": "th",
+							"level": "5",
+							"type": "Start Tag",
+							"children": [
+							{ 
+								"name": "Contact",
+								"level": "6",
+								"type": "string"
+							}
+							]
+						},
+						{ 
+							"name": "th",
+							"level": "5",
+							"type": "End Tag"
+						},
+						{ 
+							"name": "th",
+							"level": "5",
+							"type": "Start Tag",
+							"children": [
+							{ 
+								"name": "Country",
+								"level": "6",
+								"type": "string"
+							}
+							]
+						},
+						{ 
+							"name": "th",
+							"level": "5",
+							"type": "End Tag"
+						}
+						]
+					},
+					{ 
+						"name": "tr",
+						"level": "4",
+						"type": "End Tag"
+					},
+					{ 
+						"name": "tr",
+						"level": "4",
+						"type": "Start Tag",
+						"children": [
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Start Tag",
+							"children": [
+							{ 
+								"name": "Alfreds Futterkiste",
+								"level": "6",
+								"type": "string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "End Tag"
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Start Tag",
+							"children": [
+							{ 
+								"name": "Maria Anders",
+								"level": "6",
+								"type": "string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "End Tag"
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Start Tag",
+							"children": [
+							{ 
+								"name": "Germany",
+								"level": "6",
+								"type": "string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "End Tag"
+						}
+						]
+					},
+					{ 
+						"name": "tr",
+						"level": "4",
+						"type": "End Tag"
+					},
+					{ 
+						"name": "tr",
+						"level": "4",
+						"type": "Start Tag",
+						"children": [
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Start Tag",
+							"children": [
+							{ 
+								"name": "Centro comercial Moctezuma",
+								"level": "6",
+								"type": "string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "End Tag"
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Start Tag",
+							"children": [
+							{ 
+								"name": "Francisco Chang",
+								"level": "6",
+								"type": "string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "End Tag"
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Start Tag",
+							"children": [
+							{ 
+								"name": "Mexico",
+								"level": "6",
+								"type": "string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "End Tag"
+						}
+						]
+					},
+					{ 
+						"name": "tr",
+						"level": "4",
+						"type": "End Tag"
+					},
+					{ 
+						"name": "tr",
+						"level": "4",
+						"type": "Start Tag",
+						"children": [
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Start Tag",
+							"children": [
+							{ 
+								"name": "Ernst Handel",
+								"level": "6",
+								"type": "string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "End Tag"
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Start Tag",
+							"children": [
+							{ 
+								"name": "Roland Mendel",
+								"level": "6",
+								"type": "string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "End Tag"
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Start Tag",
+							"children": [
+							{ 
+								"name": "Austria",
+								"level": "6",
+								"type": "string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "End Tag"
+						}
+						]
+					},
+					{ 
+						"name": "tr",
+						"level": "4",
+						"type": "End Tag"
+					},
+					{ 
+						"name": "tr",
+						"level": "4",
+						"type": "Start Tag",
+						"children": [
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Start Tag",
+							"children": [
+							{ 
+								"name": "Island Trading",
+								"level": "6",
+								"type": "string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "End Tag"
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Start Tag",
+							"children": [
+							{ 
+								"name": "Helen Bennett",
+								"level": "6",
+								"type": "string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "End Tag"
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Start Tag",
+							"children": [
+							{ 
+								"name": "UK",
+								"level": "6",
+								"type": "string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "End Tag"
+						}
+						]
+					},
+					{ 
+						"name": "tr",
+						"level": "4",
+						"type": "End Tag"
+					},
+					{ 
+						"name": "tr",
+						"level": "4",
+						"type": "Start Tag",
+						"children": [
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Start Tag",
+							"children": [
+							{ 
+								"name": "Laughing Bacchus Winecellars",
+								"level": "6",
+								"type": "string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "End Tag"
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Start Tag",
+							"children": [
+							{ 
+								"name": "Yoshi Tannamuri",
+								"level": "6",
+								"type": "string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "End Tag"
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Start Tag",
+							"children": [
+							{ 
+								"name": "Canada",
+								"level": "6",
+								"type": "string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "End Tag"
+						}
+						]
+					},
+					{ 
+						"name": "tr",
+						"level": "4",
+						"type": "End Tag"
+					},
+					{ 
+						"name": "tr",
+						"level": "4",
+						"type": "Start Tag",
+						"children": [
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Start Tag",
+							"children": [
+							{ 
+								"name": "Magazzini Alimentari Riuniti",
+								"level": "6",
+								"type": "string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "End Tag"
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Start Tag",
+							"children": [
+							{ 
+								"name": "Giovanni Rovelli",
+								"level": "6",
+								"type": "string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "End Tag"
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Start Tag",
+							"children": [
+							{ 
+								"name": "Italy",
+								"level": "6",
+								"type": "string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "End Tag"
+						}
+						]
+					},
+					{ 
+						"name": "tr",
+						"level": "4",
+						"type": "End Tag"
+					}
+					]
+				},
+				{ 
+					"name": "table",
+					"level": "3",
+					"type": "End Tag"
+				}
+				]
 			},
 			{ 
-				"name": "test3",
+				"name": "body",
 				"level": "2",
 				"type": "End Tag"
 			}
 			]
 		},
 		{ 
-			"name": "test1",
-			"level": "1",
-			"type": "End Tag"
-		},
-		{ 
-			"name": "test",
+			"name": "html",
 			"level": "1",
 			"type": "End Tag"
 		}

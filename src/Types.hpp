@@ -3,7 +3,8 @@
 #include <string>
 #include <string_view>
 #include <vector>
-#include <unordered_map>
+#include <iostream>
+#include "Prop.hpp"
 
 class TagValue;
 class StringValue;
@@ -58,6 +59,36 @@ class Value {
                     return ""; 
             }
         }
+
+        void parseTagContents(std::string_view tagContents, std::string* value){
+            size_t m_index { 0 }; // position in string
+            std::cout << "Parsing string " << tagContents << "\n"; 
+            std::cout << "The size of the tag contents is " << tagContents.size() -1 << "\n";
+            while(m_index < tagContents.size() -1 )
+            {
+                //find the tag name
+                if(*value  == "")
+                {
+                    while(tagContents.at(m_index) != ' ' && m_index < tagContents.size() -1 )
+                    {
+                        m_index++;
+                    }
+                    if(m_index == tagContents.size()-1){
+                        *value = tagContents;
+                    }else{
+                        *value = tagContents.substr(0, m_index);
+                    }
+                    std::cout << "The name of the tag is " << *value << "\n";
+                    if(m_index == tagContents.size() -1) break; 
+                }else{
+                   //parse some props
+                }
+                std::cout << "Index is " << m_index << "\n";
+                m_index++; //skip the space 
+
+            }
+        }
+
         virtual Type type(){ assert(0);}
         virtual std::string inspect() { assert(0); }
         virtual  std::string  str(){ return m_str;}
@@ -71,7 +102,6 @@ class Value {
         EndTagValue* as_end_tag(); 
         StartTagValue* as_start_tag(); 
         SelfClosingTagValue* as_self_closing_tag(); 
-
 };
 
 class TagValue: public Value {
@@ -97,7 +127,11 @@ class DocumentTagValue: public Value {
         std::vector<std::pair<std::string, std::string>> properties;
 
     public:
-        DocumentTagValue(std::string_view str): m_str {str} {}
+        DocumentTagValue(std::string_view str){
+            std::string tagContents= std::string(str.substr(1, str.length()-2));
+            std::string* pointer = &m_str; 
+            Value::parseTagContents(tagContents, pointer);
+        }
 
         std::string  str(){ return m_str;}
 
@@ -125,13 +159,18 @@ class XmlTagValue: public Value {
 class StartTagValue: public Value {
     private:
         std::string m_str; 
-        std::vector<std::pair<std::string, std::string>> properties;
+        // std::vector<Prop> properties = {};
 
     public:
         StartTagValue(std::string_view str){
+
             //<tag> to tag
-            this->m_str = str.substr(1, str.length()-2); 
+            std::string tagContents = std::string(str.substr(1, str.length()-2)); 
+            std::string* pointer = &m_str;
+            Value::parseTagContents(tagContents, pointer);
         }
+
+        
 
         std::string  str(){ return m_str;}
 

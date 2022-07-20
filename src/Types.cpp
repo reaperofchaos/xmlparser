@@ -38,12 +38,6 @@ EndTagValue* Value::as_end_tag()
     return static_cast<EndTagValue*>(this);
 }
 
-// std::string EndTagValue::inspect(){
-//     std::string out = "Closing Tag  ";
-//     out.append(m_str);
-//     return out; 
-// }
-
 SelfClosingTagValue* Value::as_self_closing_tag() 
 {
     assert(type() == Type::SelfClosingTag);
@@ -56,11 +50,7 @@ StartTagValue* Value::as_start_tag()
     return static_cast<StartTagValue*>(this);
 }
 
-// std::string StartTagValue::inspect(){
-//     std::string out = "Opening Tag  ";
-//     out.append(m_str);
-//     return out; 
-// }
+
 SymbolValue* Value::as_symbol()
 {
     assert(type() == Type::Symbol);
