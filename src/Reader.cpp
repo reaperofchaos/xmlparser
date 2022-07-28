@@ -23,12 +23,10 @@ Node* read_str(std::string &input)
     Reader reader { tokens };
     std::vector<int> levels; //position is level and value is index in child vector
     Node* targetNode = nullptr; 
-    std::cout << "Tokens found: " << tokens.size() << "\n"; 
     std::vector<Value*> tags; 
     for(std::string_view token : tokens)
     {
         Value* tag = read_form(token);
-        std::cout << "The tag has a value of " <<  tag->str() << " and is of type " << tag->getType() << "\n"; 
         tags.push_back(tag); 
     }
     Node* tree = targetNode->createTree(tags);
