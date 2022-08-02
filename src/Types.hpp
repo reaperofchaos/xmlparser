@@ -60,68 +60,6 @@ class Value {
             }
         }
 
-        void parseTagContents(std::string_view tagContents, std::string* value){
-            size_t m_index { 0 }; // position in string
-            size_t lastTokenEnd {0}; 
-            std::vector<std::string> foundProps;
-            while(m_index < tagContents.size() -1 )
-            {
-                //find the tag name
-                if(*value  == "")
-                {
-                    while(tagContents.at(m_index) != ' ' && m_index < tagContents.size() -1 )
-                    {
-                        m_index++;
-                    }
-                    if(m_index == tagContents.size()-1){
-                        *value = tagContents;
-                    }else{
-                        *value = tagContents.substr(lastTokenEnd, m_index);
-                        m_index++; 
-                        lastTokenEnd = m_index;
-                    }
-                    if(m_index == tagContents.size() -1) break; 
-                }else{
-                    //parse some props
-
-                    //get properties without a space in it name="test", name, name={test} {}
-                    //it does not catch name =  "test" , name="test 2" name={`test: test2`} {test: [test, test2, test3, ter4]}
-                    
-                        switch(tagContents.at(m_index)){
-                            case '\'':
-                            case '\"':
-                            case '=':
-                            case '{':
-                            case ',':
-                            case ' ':
-                            case ':':
-                            case '[':
-                            case ']':
-                            default: //A-Za-z1-0
-                                m_index++;
-                        }
-                        m_index++;
-                    }
-                    if(m_index != tagContents.size()-1){
-                        foundProps.push_back(std::string(tagContents.substr(lastTokenEnd, m_index)));
-                        m_index++; 
-                        lastTokenEnd = m_index;
-
-                    }else{
-                        foundProps.push_back(std::string(tagContents.substr(lastTokenEnd, tagContents.size()-1)));
-
-                        break;
-                    }
-                }
-                m_index++; //skip the space 
-
-            }
-            std::cout << "props found: " << foundProps.size() << "\n";
-            for(std::string propName : foundProps){
-                std::cout << "Prop found " << propName << "\n"; 
-            }
-        }
-
         virtual Type type(){ assert(0);}
         virtual std::string inspect() { assert(0); }
         virtual  std::string  str(){ return m_str;}
@@ -161,9 +99,10 @@ class DocumentTagValue: public Value {
 
     public:
         DocumentTagValue(std::string_view str){
-            std::string tagContents= std::string(str.substr(1, str.length()-2));
-            std::string* pointer = &m_str; 
-            Value::parseTagContents(tagContents, pointer);
+            // std::string tagContents= std::string(str.substr(1, str.length()-2));
+            // std::string* pointer = &m_str; 
+            m_str=str; 
+
         }
 
         std::string  str(){ return m_str;}
@@ -198,9 +137,9 @@ class StartTagValue: public Value {
         StartTagValue(std::string_view str){
 
             //<tag> to tag
-            std::string tagContents = std::string(str.substr(1, str.length()-2)); 
-            std::string* pointer = &m_str;
-            Value::parseTagContents(tagContents, pointer);
+            // std::string tagContents = std::string(str.substr(1, str.length()-2)); 
+            // std::string* pointer = &m_str;
+            m_str=str; 
         }
 
         

@@ -4,40 +4,39 @@
 #include <vector>
 #include <unordered_map>
 #include "linenoise.hpp"
-#include "Tokenizer.hpp"
-#include "Reader.hpp"
-#include "printer.hpp"
-#include "Node.hpp"
-#include "Writer.hpp"
+#include "CharacterReader.hpp"
+// #include "printer.hpp"
+// #include "Node.hpp"
+// #include "Writer.hpp"
 
-Node* READ(std::string input)
+void READ(std::string input)
 {
     std::cout << input << "\n"; 
-    return read_str(input); 
+    CharacterReader::read_str(input); 
 }
 
 
-Node* EVAL(Node* ast)
-{
-    return ast; 
-}
+// Node* EVAL(Node* ast)
+// {
+//     return ast; 
+// }
 
-void PRINT(Node* result){
-    if(result != NULL){
-        Node::display(result);
-    }
-    std::string fileName = "out.txt";
-    std::cout << "Saving parsed tree to " << fileName << "\n"; 
-    Writer* writer = new Writer(result);
-    writer->createFile(fileName); 
-    writer->setFile("out.json");
-    writer->writeTreeAsJSON();
-}
+// void PRINT(Node* result){
+//     if(result != NULL){
+//         Node::display(result);
+//     }
+//     std::string fileName = "out.txt";
+//     std::cout << "Saving parsed tree to " << fileName << "\n"; 
+//     Writer* writer = new Writer(result);
+//     writer->createFile(fileName); 
+//     writer->setFile("out.json");
+//     writer->writeTreeAsJSON();
+// }
 
 std::string rep(std::string input){
-    Node* ast = READ(input);
-    Node* result = EVAL(ast);
-    PRINT(result);
+    READ(input);
+    // Node* result = EVAL(ast);
+    // PRINT(result);
     return ""; 
 }
 

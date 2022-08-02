@@ -19,37 +19,41 @@ OBJDIR=obj
 CCFLAGS=$(DEBUG) ${CPPVERSION} $(OPT) $(WARN) -pipe
 # linker
 LD=g++
-LDFLAGS=$(PTHREAD)
+LDFLAGS=$(PTHREAD) -lstdc++
 
 OBJS=$(OBJDIR)/main.o \
-$(OBJDIR)/Types.o \
-$(OBJDIR)/Reader.o \
+$(OBJDIR)/CharType.o \
+$(OBJDIR)/CharacterReader.o \
 $(OBJDIR)/Tokenizer.o \
-$(OBJDIR)/Printer.o \
-$(OBJDIR)/Node.o \
-$(OBJDIR)/Writer.o \
-$(OBJDIR)/Prop.o \
+# $(OBJDIR)/Writer.o \
+# $(OBJDIR)/Printer.o \
+# $(OBJDIR)/Prop.o \
+# $(OBJDIR)/Node.o \
+
 
 all: $(OBJS)
 	$(LD) -o $(TARGET) $(OBJS) $(LDFLAGS)
 
-$(OBJDIR)/Prop.o:
-	$(CC) -c $(CCFLAGS) $(SRCDIR)/Prop.cpp -o $(OBJDIR)/Prop.o
+$(OBJDIR)/CharType.o:
+	$(CC) -c $(CCFLAGS) $(SRCDIR)/Types/CharType.cpp -o $(OBJDIR)/CharType.o
 
-$(OBJDIR)/Writer.o:
-	$(CC) -c $(CCFLAGS) $(SRCDIR)/Writer.cpp -o $(OBJDIR)/Writer.o
+# $(OBJDIR)/Prop.o:
+# 	$(CC) -c $(CCFLAGS) $(SRCDIR)/Prop.cpp -o $(OBJDIR)/Prop.o
 
-$(OBJDIR)/Node.o:
-	$(CC) -c $(CCFLAGS) $(SRCDIR)/Node.cpp -o $(OBJDIR)/Node.o
+# $(OBJDIR)/Writer.o:
+# 	$(CC) -c $(CCFLAGS) $(SRCDIR)/Writer.cpp -o $(OBJDIR)/Writer.o
 
-$(OBJDIR)/Printer.o:
-	$(CC) -c $(CCFLAGS) $(SRCDIR)/printer.cpp -o $(OBJDIR)/Printer.o
+# $(OBJDIR)/Node.o:
+# 	$(CC) -c $(CCFLAGS) $(SRCDIR)/Node.cpp -o $(OBJDIR)/Node.o
 
-$(OBJDIR)/Types.o:
-	$(CC) -c $(CCFLAGS) $(SRCDIR)/Types.cpp -o $(OBJDIR)/Types.o
+# $(OBJDIR)/Printer.o:
+# 	$(CC) -c $(CCFLAGS) $(SRCDIR)/printer.cpp -o $(OBJDIR)/Printer.o
 
-$(OBJDIR)/Reader.o:
-	$(CC) -c $(CCFLAGS) $(SRCDIR)/Reader.cpp -o $(OBJDIR)/Reader.o
+# $(OBJDIR)/Types.o:
+# 	$(CC) -c $(CCFLAGS) $(SRCDIR)/Types.cpp -o $(OBJDIR)/Types.o
+
+$(OBJDIR)/CharacterReader.o:
+	$(CC) -c $(CCFLAGS) $(SRCDIR)/CharacterReader.cpp -o $(OBJDIR)/CharacterReader.o
 
 $(OBJDIR)/Tokenizer.o:
 	$(CC) -c $(CCFLAGS) $(SRCDIR)/Tokenizer.cpp -o $(OBJDIR)/Tokenizer.o
