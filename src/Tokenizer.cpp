@@ -45,20 +45,10 @@ std::shared_ptr<Character>Tokenizer::next()
             case ')':
             case '/':
             case '+':
-            case '-':
             case '`':
             case '~':
-            case '?':
-            case '>':
-            case '<':
-            case ',':
             case '.':
-            case ':':
             case ';': 
-            case '{':
-            case '}':
-            case '[':
-            case ']':
             case '|':
                 m_index++; 
                 std::cout << "Symbol space found. " << std::string(view.substr(start, 1)) <<   "\n";
@@ -89,6 +79,42 @@ std::shared_ptr<Character>Tokenizer::next()
                         m_index++; 
                         return std::make_shared<Symbol>(std::string(view.substr(start, 1)));
                 }
+            case '{':
+                m_index++; 
+                std::cout << "Object Bracket Open found. " << std::string(view.substr(start, 1)) <<   "\n";
+                return std::make_shared<ObjectOpenBracket>(std::string(view.substr(start, 1)));
+            case '}':
+                m_index++; 
+                std::cout << "Object Bracket Close found. " << std::string(view.substr(start, 1)) <<   "\n";
+                return std::make_shared<ObjectCloseBracket>(std::string(view.substr(start, 1)));
+            case '[':
+                m_index++; 
+                std::cout << "Array Bracket Open found. " << std::string(view.substr(start, 1)) <<   "\n";
+                return std::make_shared<ArrayOpenBracket>(std::string(view.substr(start, 1)));
+            case ']':
+                m_index++; 
+                std::cout << "Array Bracket Close found. " << std::string(view.substr(start, 1)) <<   "\n";
+                return std::make_shared<ArrayCloseBracket>(std::string(view.substr(start, 1)));
+            case ':':
+                m_index++; 
+                std::cout << "Colon found. " << std::string(view.substr(start, 1)) <<   "\n";
+                return std::make_shared<Colon>(std::string(view.substr(start, 1)));
+            case '?':
+                m_index++; 
+                std::cout << "Question mark found. " << std::string(view.substr(start, 1)) <<   "\n";
+                return std::make_shared<QuestionMark>(std::string(view.substr(start, 1)));
+            case '>':
+                m_index++; 
+                std::cout << "Close bracket found. " << std::string(view.substr(start, 1)) <<   "\n";
+                return std::make_shared<CloseBracket>(std::string(view.substr(start, 1)));
+            case '<':
+                m_index++; 
+                std::cout << "Open bracket found. " << std::string(view.substr(start, 1)) <<   "\n";
+                return std::make_shared<OpenBracket>(std::string(view.substr(start, 1)));
+            case '-':
+                m_index++; 
+                std::cout << "Dash found. " << std::string(view.substr(start, 1)) <<   "\n";
+                return std::make_shared<Dash>(std::string(view.substr(start, 1)));
             case 'a':
             case 'b':
             case 'c':

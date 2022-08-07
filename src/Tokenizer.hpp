@@ -7,7 +7,7 @@
 #include <optional>
 #include <memory>
 #include "Types/CharType.hpp"
-
+#include "Types/Symbol.hpp"
 /**
  * @brief Class to break down string into smaller chunks
  * which are either tags, strings or untracked 

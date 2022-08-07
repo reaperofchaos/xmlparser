@@ -36,29 +36,29 @@ Symbol* Character::as_symbol()
     return static_cast<Symbol*>(this);
 }
 
-Quote* Character::as_quote()
-{
-    assert(type() == CharacterType::Quote);
-    return static_cast<Quote*>(this);
-}
+// Quote* Character::as_quote()
+// {
+//     assert(type() == CharacterType::Quote);
+//     return static_cast<Quote*>(this);
+// }
 
-SingleQuote* Character::as_singleQuote()
-{
-    assert(type() == CharacterType::SingleQuote);
-    return static_cast<SingleQuote*>(this);
-}
+// SingleQuote* Character::as_singleQuote()
+// {
+//     assert(type() == CharacterType::SingleQuote);
+//     return static_cast<SingleQuote*>(this);
+// }
 
-EscapedQuote* Character::as_escapedQuote()
-{
-    assert(type() == CharacterType::EscapedQuote);
-    return static_cast<EscapedQuote*>(this);
-}
+// EscapedQuote* Character::as_escapedQuote()
+// {
+//     assert(type() == CharacterType::EscapedQuote);
+//     return static_cast<EscapedQuote*>(this);
+// }
 
-EscapedSingleQuote* Character::as_escapedSingleQuote()
-{
-    assert(type() == CharacterType::EscapedSingleQuote);
-    return static_cast<EscapedSingleQuote*>(this);
-}
+// EscapedSingleQuote* Character::as_escapedSingleQuote()
+// {
+//     assert(type() == CharacterType::EscapedSingleQuote);
+//     return static_cast<EscapedSingleQuote*>(this);
+// }
 
 UnicodeCharacter* Character::as_unicode()
 {

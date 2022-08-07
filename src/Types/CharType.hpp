@@ -8,11 +8,7 @@ class Number;
 class Letter; 
 class Lowercase;
 class Uppercase; 
-class Symbol; 
-class Quote; 
-class SingleQuote;
-class EscapedQuote;
-class EscapedSingleQuote;
+class Symbol;
 class UnicodeCharacter; 
 class UnknownCharacter;
 
@@ -25,14 +21,30 @@ enum class CharacterType
     Lowercase,
     Uppercase,
     Symbol,
-    Quote,
-    SingleQuote,
-    EscapedQuote,
-    EscapedSingleQuote,
     UnicodeCharacter,
     Unknown,
 };
 
+enum class SymbolType
+{
+    NotASymbol,
+    Symbol,
+    Quote,
+    SingleQuote,
+    EscapedQuote,
+    EscapedSingleQuote,
+    Colon,
+    Comma,
+    OpenBracket,
+    CloseBracket,
+    ObjectOpenBracket,
+    ObjectCloseBracket,
+    ArrayOpenBracket,
+    ArrayCloseBracket,
+    Exclamation,
+    Dash,
+    QuestionMark,
+};
 class Character{
     private:
         std::string value;
@@ -56,14 +68,6 @@ class Character{
                     return "Uppercase Letter"; 
                 case CharacterType::Symbol:
                     return "Symbol";
-                case CharacterType::Quote:
-                    return "Quote"; 
-                case CharacterType::SingleQuote:
-                    return "Single Quote"; 
-                case CharacterType::EscapedQuote:
-                    return "Escaped Quote"; 
-                case CharacterType::EscapedSingleQuote:
-                    return "Escaped Single Quote"; 
                 case CharacterType::UnicodeCharacter:
                     return "Unicode Character"; 
                 default: 
@@ -72,6 +76,7 @@ class Character{
         }
 
         virtual CharacterType type(){ return CharacterType::Character;}
+        virtual SymbolType symbolType(){ return SymbolType::NotASymbol;}
         virtual std::string inspect() { assert(0); }
         virtual std::string getValue(){ return value;}
         virtual std::string getType(){return this->getTypeAsString(this->type());}
@@ -81,11 +86,7 @@ class Character{
         Letter* as_letter(); 
         Lowercase* as_lowercase(); 
         Uppercase* as_uppercase(); 
-        Symbol* as_symbol(); 
-        Quote* as_quote(); 
-        SingleQuote* as_singleQuote(); 
-        EscapedQuote* as_escapedQuote(); 
-        EscapedSingleQuote* as_escapedSingleQuote(); 
+        Symbol* as_symbol();
         UnicodeCharacter* as_unicode(); 
         UnknownCharacter* as_unknown(); 
 
@@ -138,6 +139,22 @@ class Number: public Character{
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
+class Symbol: public Character{
+    private: 
+        std::string value; 
+    public:
+        Symbol(std::string value){
+            this->value = value;
+            std::cout << this->inspect() << "\n";
+
+        }
+
+        virtual CharacterType type(){ return CharacterType::Symbol;}
+        virtual std::string getValue(){ return value;}
+        virtual std::string getType(){return this->getTypeAsString(this->type());}
+        virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
+};
+
 class Letter: public Character{
     private:
         std::string value; 
@@ -155,11 +172,11 @@ class Letter: public Character{
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class Lowercase: public Character{
+class Lowercase: public Letter{
     private: 
         std::string value; 
     public:
-        Lowercase(std::string value){
+        Lowercase(std::string value): Letter(value){
             this->value = value;
             std::cout << this->inspect() << "\n";
         }
@@ -169,11 +186,11 @@ class Lowercase: public Character{
         virtual std::string inspect(){ return "Type " + this->getType() + " - " + this->getValue();}
 };
 
-class Uppercase: public Character{
+class Uppercase: public Letter{
     private:
         std::string value;
     public:
-        Uppercase(std::string value){
+        Uppercase(std::string value): Letter(value){
             this->value = value; 
             std::cout << this->inspect() << "\n";
         }
@@ -182,81 +199,6 @@ class Uppercase: public Character{
         virtual std::string getType(){return this->getTypeAsString(this->type());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
-
-class Symbol: public Character{
-    private:
-        std::string value; 
-    public:
-        Symbol(std::string value){
-            this->value = value; 
-            std::cout << this->inspect() << "\n";
-        }
-        virtual CharacterType type(){ return CharacterType::Symbol;}
-        virtual std::string getValue(){ return value;}
-        virtual std::string getType(){return this->getTypeAsString(this->type());}
-        virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
-};
-
-class Quote: public Character{
-    private:
-        std::string value; 
-    public:
-        Quote(std::string value){
-            this->value = value;
-            std::cout << this->inspect() << "\n";
- 
-        }
-        virtual CharacterType type(){ return CharacterType::Quote;}
-        virtual std::string getValue(){ return value;}
-        virtual std::string getType(){return this->getTypeAsString(this->type());}
-        virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
-
-};
-
-class EscapedQuote: public Character{
-    private:
-        std::string value;
-    public:
-        EscapedQuote(std::string value){
-            this->value = value; 
-            std::cout << this->inspect() << "\n";
-        }
-        virtual CharacterType type(){ return CharacterType::EscapedQuote;}
-        virtual std::string getValue(){ return value;}
-        virtual std::string getType(){return this->getTypeAsString(this->type());}
-        virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
-};
-
-class SingleQuote: public Character{
-    private:
-        std::string value; 
-    public:
-        SingleQuote(std::string value){
-            this->value = value;
-            std::cout << this->inspect() << "\n";
-        }
-        virtual CharacterType type(){ return CharacterType::SingleQuote;}
-        virtual std::string getValue(){ return value;}
-        virtual std::string getType(){return this->getTypeAsString(this->type());}
-        virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
-
-};
-
-class EscapedSingleQuote: public Character{
-    private:
-        std::string value;
-
-    public:
-        EscapedSingleQuote(std::string value){
-            this->value = value;
-            std::cout << this->inspect() << "\n";
-        }
-        virtual CharacterType type(){ return CharacterType::EscapedSingleQuote;}
-        virtual std::string getValue(){ return value;}
-        virtual std::string getType(){return this->getTypeAsString(this->type());}
-        virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
-};
-
 
 class UnicodeCharacter: public Character{
     private: 

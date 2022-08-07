@@ -23,6 +23,7 @@ LDFLAGS=$(PTHREAD) -lstdc++
 
 OBJS=$(OBJDIR)/main.o \
 $(OBJDIR)/CharType.o \
+$(OBJDIR)/CharType.o \
 $(OBJDIR)/CharacterReader.o \
 $(OBJDIR)/Tokenizer.o \
 # $(OBJDIR)/Writer.o \
@@ -33,6 +34,10 @@ $(OBJDIR)/Tokenizer.o \
 
 all: $(OBJS)
 	$(LD) -o $(TARGET) $(OBJS) $(LDFLAGS)
+
+$(OBJDIR)/Symbol.o:
+	$(CC) -c $(CCFLAGS) $(SRCDIR)/Types/Symbol.cpp -o $(OBJDIR)/Symbol.o
+
 
 $(OBJDIR)/CharType.o:
 	$(CC) -c $(CCFLAGS) $(SRCDIR)/Types/CharType.cpp -o $(OBJDIR)/CharType.o
