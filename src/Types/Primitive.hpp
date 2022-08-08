@@ -45,6 +45,7 @@ class Primitive{
         std::string value;
     public:
         Primitive(){};
+        virtual ~Primitive() = default;
         virtual std::string getTypeAsString(PrimitiveType type){
             switch (type)
             {
@@ -93,7 +94,7 @@ class StringType: public Primitive{
         std::string value;
 
     public:
-        StringType(std::shared_ptr<Quote> q, std::vector<std::shared_ptr<Character>> characters, std::shared_ptr<Quote> q2){
+        StringType(std::shared_ptr<Quote> q, std::vector<std::shared_ptr<Character>> characters, std::shared_ptr<Quote> q2): Primitive(){
             std::string value = "";
             value += q->getValue();
             for(std::shared_ptr<Character> character : characters){
@@ -146,7 +147,7 @@ class NumberType: public Primitive{
         std::string value;
 
     public:
-        NumberType(std::vector<std::shared_ptr<Number>> numbers){
+        NumberType(std::vector<std::shared_ptr<Number>> numbers): Primitive(){
             std::string numberString = "";
             for(std::shared_ptr<Number> number : numbers ){
                 numberString += number->getValue(); 

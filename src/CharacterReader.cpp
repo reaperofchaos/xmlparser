@@ -41,7 +41,7 @@ std::shared_ptr<Primitive>CharacterReader::next(){
                 
                 while(m_tokens[m_index]->type() == CharacterType::WhiteSpace && this->m_index < this->m_tokens.size())
                 {
-                    whiteSpaces.push_back(std::make_shared<WhiteSpace>(*m_tokens[m_index]));
+                    whiteSpaces.push_back(std::make_shared<WhiteSpace>(m_tokens[m_index]->getValue()));
                     m_index++;
                 }
                 if(this->m_index < this->m_tokens.size())
@@ -126,6 +126,7 @@ std::shared_ptr<Primitive>CharacterReader::next(){
                         return std::make_shared<CloseArray>(m_tokens[start]);
                     case SymbolType::ObjectCloseBracket:
                         m_index++;
+                        
                         return std::make_shared<CloseObject>(m_tokens[start]);
                     default: 
                         return {};

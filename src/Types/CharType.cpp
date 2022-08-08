@@ -71,3 +71,5 @@ UnknownCharacter* Character::as_unknown()
     assert(type() == CharacterType::Unknown);
     return static_cast<UnknownCharacter*>(this);
 }
+
+

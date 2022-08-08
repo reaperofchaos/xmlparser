@@ -89,7 +89,6 @@ class Character{
         Symbol* as_symbol();
         UnicodeCharacter* as_unicode(); 
         UnknownCharacter* as_unknown(); 
-
 };
 
 class WhiteSpace: public Character{
