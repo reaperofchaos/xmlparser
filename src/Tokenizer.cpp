@@ -32,7 +32,8 @@ std::shared_ptr<Character>Tokenizer::next()
             case '\r':
                 std::cout << "white space found." << "\n";
                 m_index++; 
-                return std::make_shared<WhiteSpace>(std::string(view.substr(start, 1)));
+                return 
+                std::make_shared<WhiteSpace>(std::string(view.substr(start, 1)));
             case '!':
             case '@':
             case '#':
