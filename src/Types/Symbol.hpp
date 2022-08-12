@@ -28,7 +28,6 @@ class Symbol: public Character{
     public:
         Symbol(std::string value){
             this->value = value;
-            std::cout << this->inspect() << "\n";
 
         }
         
@@ -67,6 +66,8 @@ class Symbol: public Character{
                     return "Dash";
                 case SymbolType::QuestionMark:
                     return "Question Mark"; 
+                case SymbolType::ForwardSlash:
+                    return "Forward Slash"; 
                 default: 
                     return "Unknown"; 
             }
@@ -82,7 +83,6 @@ class Quote: public Symbol{
     public:
         Quote(std::string value): Symbol(value){
             this->value = value;
-            std::cout << this->inspect() << "\n";
         }
         virtual std::string getValue(){ return value;}
         virtual std::string getType(){return this->getSymbolTypeAsString(this->symbolType());}
@@ -96,7 +96,6 @@ class ObjectOpenBracket: public Symbol{
     public:
         ObjectOpenBracket(std::string value): Symbol(value){
             this->value = value; 
-            std::cout << this->inspect() << "\n";
         }
 
         virtual SymbolType symbolType(){ return SymbolType::ObjectOpenBracket;}
@@ -112,7 +111,6 @@ class ObjectCloseBracket: public Symbol{
     public:
         ObjectCloseBracket(std::string value): Symbol(value){
             this->value = value;
-            std::cout << this->inspect() << "\n";
         }
 
         virtual SymbolType symbolType(){ return SymbolType::ObjectCloseBracket;}
@@ -128,7 +126,6 @@ class ArrayOpenBracket: public Symbol{
     public:
         ArrayOpenBracket(std::string value): Symbol(value){
             this->value = value; 
-            std::cout << this->inspect() << "\n";
         }
 
         virtual SymbolType symbolType(){ return SymbolType::ArrayOpenBracket;}
@@ -144,7 +141,6 @@ class ArrayCloseBracket: public Symbol{
     public:
         ArrayCloseBracket(std::string value): Symbol(value){
             this->value = value;
-            std::cout << this->inspect() << "\n";
         }
 
         virtual SymbolType symbolType(){ return SymbolType::ArrayCloseBracket;}
@@ -176,7 +172,6 @@ class CloseBracket: public Symbol{
     public:
         CloseBracket(std::string value): Symbol(value){
             this->value = value; 
-            std::cout << this->inspect() << "\n";
         }
 
         virtual SymbolType symbolType(){ return SymbolType::CloseBracket;}
@@ -192,7 +187,6 @@ class Colon: public Symbol{
     public:
         Colon(std::string value): Symbol(value){
             this->value = value;
-            std::cout << this->inspect() << "\n";
         }
 
         virtual SymbolType symbolType(){ return SymbolType::Colon;}
@@ -208,7 +202,6 @@ class Comma: public Symbol{
     public:
         Comma(std::string value): Symbol(value){
             this->value = value;
-            std::cout << this->inspect() << "\n";
         }
 
         virtual SymbolType symbolType(){ return SymbolType::Colon;}
@@ -224,7 +217,6 @@ class Exclamation: public Symbol{
     public:
         Exclamation(std::string value): Symbol(value){
             this->value = value;
-            std::cout << this->inspect() << "\n";
         }
 
         virtual SymbolType symbolType(){ return SymbolType::Exclamation;}
@@ -240,7 +232,6 @@ class Dash: public Symbol{
     public:
         Dash(std::string value): Symbol(value){
             this->value = value;
-            std::cout << this->inspect() << "\n";
         }
 
         virtual SymbolType symbolType(){ return SymbolType::Dash;}
@@ -256,7 +247,6 @@ class QuestionMark: public Symbol{
     public:
         QuestionMark(std::string value): Symbol(value){
             this->value = value;
-            std::cout << this->inspect() << "\n";
         }
 
         virtual SymbolType symbolType(){ return SymbolType::QuestionMark;}
@@ -271,7 +261,6 @@ class EscapedQuote: public Symbol{
     public:
         EscapedQuote(std::string value): Symbol(value){
             this->value = value; 
-            std::cout << this->inspect() << "\n";
         }
         virtual SymbolType symbolType(){ return SymbolType::EscapedQuote;}
         virtual std::string getValue(){ return value;}
@@ -285,7 +274,6 @@ class SingleQuote: public Symbol{
     public:
         SingleQuote(std::string value): Symbol(value){
             this->value = value;
-            std::cout << this->inspect() << "\n";
         }
         virtual SymbolType symbolType(){ return SymbolType::SingleQuote;}
         virtual std::string getValue(){ return value;}
@@ -301,9 +289,22 @@ class EscapedSingleQuote: public Symbol{
     public:
         EscapedSingleQuote(std::string value): Symbol(value){
             this->value = value;
-            std::cout << this->inspect() << "\n";
         }
         virtual SymbolType symbolType(){ return SymbolType::EscapedSingleQuote;}
+        virtual std::string getValue(){ return value;}
+        virtual std::string getType(){return this->getSymbolTypeAsString(this->symbolType());}
+        virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
+};
+
+class ForwardSlash: public Symbol{
+    private:
+        std::string value;
+
+    public:
+        ForwardSlash(std::string value): Symbol(value){
+            this->value = value;
+        }
+        virtual SymbolType symbolType(){ return SymbolType::ForwardSlash;}
         virtual std::string getValue(){ return value;}
         virtual std::string getType(){return this->getSymbolTypeAsString(this->symbolType());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}

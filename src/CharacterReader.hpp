@@ -7,11 +7,10 @@
 #include "Types/CharType.hpp"
 #include "Types/Primitive.hpp"
 #include "Tokenizer.hpp"
-// #include "Node.hpp"
 
 /**
- * @brief Class that takes tokens (string_view) and 
- * analyzes them further to assign a type
+ * @brief Class that takes tokens  and 
+ * analyzes them further to create primitives
  * 
  */
 class CharacterReader {
@@ -34,5 +33,4 @@ class CharacterReader {
 
         void displayCharacterTokens();
         void displayPrimitives();
-
 };

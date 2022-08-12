@@ -1,7 +1,5 @@
 #include "CharacterReader.hpp"
 
-
-
 /** 
  * function to read a string, 
  * tokenizes and analyzes the tokens 
@@ -29,6 +27,7 @@ std::shared_ptr<Primitive>CharacterReader::next(){
     
     while (this->m_index < this->m_tokens.size())
     {
+        std::cout << m_tokens[m_index]->getValue() << "\n";
         switch(m_tokens[m_index]->type())
         {
             case CharacterType::Number: //Build a number
@@ -69,14 +68,27 @@ std::shared_ptr<Primitive>CharacterReader::next(){
                                             std::dynamic_pointer_cast<ObjectCloseBracket>(m_tokens[m_index]));
 
                                 default:
-                                    return {};
+                                    return std::make_shared<WhiteSpaces>(whiteSpaces);
                             }
                         default:
-                            return {};
+                            return std::make_shared<WhiteSpaces>(whiteSpaces);
                     }
                 }
-                return {};
-
+                return std::make_shared<WhiteSpaces>(whiteSpaces);
+            case CharacterType::Letter:
+            case CharacterType::Uppercase:
+            case CharacterType::Lowercase:
+                std::cout << "Building a name" << "\n";
+                m_index++;
+                while(m_tokens[m_index]->type() != CharacterType::WhiteSpace && (m_tokens[m_index]->type() != CharacterType::Symbol && m_tokens[m_index]->symbolType() != SymbolType::CloseBracket))
+                {
+                    // std::cout << m_tokens[m_index]->inspect() << "\n";
+                    characters.push_back(std::dynamic_pointer_cast<Character>(m_tokens[m_index]));
+                    m_index++;
+                }
+                return std::make_shared<Name>(
+                    std::dynamic_pointer_cast<Letter>(m_tokens[start]),
+                    characters);
             case CharacterType::Symbol:
                 switch(m_tokens[m_index]->symbolType())
                 {
@@ -180,6 +192,14 @@ std::shared_ptr<Primitive>CharacterReader::next(){
                         (
                             std::dynamic_pointer_cast<ObjectCloseBracket>(m_tokens[start])
                         );
+                    case SymbolType::Exclamation:
+                        std::cout << "Building a close object primitive \n";
+                        m_index++;
+                        
+                        return std::make_shared<ExclamationPrimitive>
+                        (
+                            std::dynamic_pointer_cast<Exclamation>(m_tokens[start])
+                        );
                     default: 
                         m_index++;
                         return {};
@@ -192,15 +212,21 @@ std::shared_ptr<Primitive>CharacterReader::next(){
     return {};
 }
 
-
+/**
+ * @brief Displays the type and value of the tokens
+ * 
+ */
 void CharacterReader::displayCharacterTokens(){
-    std::cout << "Total tokens" << this->m_tokens.size() << "\n";
     for(auto token : this->m_tokens)
     {
         std::cout << token->getType() << " - " << token->getValue() << "\n";
     }
 }
 
+/**
+ * @brief Builds primitives from the characters
+ * 
+ */
 void CharacterReader::build_primitives() 
 {
     while (auto primitive = this->next()) 
@@ -208,6 +234,11 @@ void CharacterReader::build_primitives()
         this->m_primitives.push_back(primitive);
     }
 }
+
+/**
+ * @brief Displays the type and value of the primitives
+ * 
+ */
 void CharacterReader::displayPrimitives()
 {
     for(auto primitive : this->m_primitives)

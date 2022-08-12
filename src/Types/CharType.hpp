@@ -45,6 +45,7 @@ enum class SymbolType
     Exclamation,
     Dash,
     QuestionMark,
+    ForwardSlash,
 };
 class Character{
     private:
@@ -81,15 +82,6 @@ class Character{
         virtual std::string inspect() { assert(0); }
         virtual std::string getValue(){ return value;}
         virtual std::string getType(){return this->getTypeAsString(this->type());}
-
-        // WhiteSpace* as_whitespace(); 
-        // Number* as_number(); 
-        // Letter* as_letter(); 
-        // Lowercase* as_lowercase(); 
-        // Uppercase* as_uppercase(); 
-        // // Symbol* as_symbol();
-        // UnicodeCharacter* as_unicode(); 
-        // UnknownCharacter* as_unknown(); 
 };
 
 class WhiteSpace: public Character{
@@ -99,7 +91,6 @@ class WhiteSpace: public Character{
     public:
         WhiteSpace(std::string str){
             this->value = str;
-            std::cout << this->inspect() << "\n";
         }
 
         virtual CharacterType type(){ return CharacterType::WhiteSpace;}
@@ -129,8 +120,6 @@ class Number: public Character{
     public:
         Number(std::string value){
             this->value = value;
-            std::cout << this->inspect() << "\n";
-
         }
 
         virtual CharacterType type(){ return CharacterType::Number;}
@@ -149,7 +138,6 @@ class Letter: public Character{
         Letter(std::string value)
         {
             this->value = value; 
-            std::cout << this->inspect() << "\n";
         }
         
         virtual CharacterType type(){ return CharacterType::Letter;}
@@ -164,7 +152,6 @@ class Lowercase: public Letter{
     public:
         Lowercase(std::string value): Letter(value){
             this->value = value;
-            std::cout << this->inspect() << "\n";
         }
         virtual CharacterType type(){ return CharacterType::Lowercase;}
         virtual std::string getValue(){ return value;}
@@ -178,7 +165,6 @@ class Uppercase: public Letter{
     public:
         Uppercase(std::string value): Letter(value){
             this->value = value; 
-            std::cout << this->inspect() << "\n";
         }
         virtual CharacterType type(){ return CharacterType::Uppercase;}
         virtual std::string getValue(){ return value;}
@@ -192,7 +178,6 @@ class UnicodeCharacter: public Character{
     public:
         UnicodeCharacter(std::string value){
             this->value = value;
-            std::cout << this->inspect() << "\n";
         }
         virtual CharacterType type(){ return CharacterType::UnicodeCharacter;}
         virtual std::string getValue(){ return value;}
@@ -207,7 +192,6 @@ class UnknownCharacter: public Character{
     public:
         UnknownCharacter(std::string value){
             this->value = value;
-            std::cout << this->inspect() << "\n";
         }
         virtual CharacterType type(){ return CharacterType::Unknown;}
         virtual std::string getValue(){ return value;}

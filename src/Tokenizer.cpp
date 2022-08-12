@@ -34,7 +34,6 @@ std::shared_ptr<Character>Tokenizer::next()
                 m_index++; 
                 return 
                 std::make_shared<WhiteSpace>(std::string(view.substr(start, 1)));
-            case '!':
             case '@':
             case '#':
             case '$':
@@ -44,7 +43,6 @@ std::shared_ptr<Character>Tokenizer::next()
             case '*':
             case '(':
             case ')':
-            case '/':
             case '+':
             case '`':
             case '~':
@@ -54,6 +52,10 @@ std::shared_ptr<Character>Tokenizer::next()
                 m_index++; 
                 std::cout << "Symbol space found. " << std::string(view.substr(start, 1)) <<   "\n";
                 return std::make_shared<Symbol>(std::string(view.substr(start, 1)));
+            case '!':
+                m_index++; 
+                std::cout << "Exclamation found. " << std::string(view.substr(start, 1)) <<   "\n";
+                return std::make_shared<Exclamation>(std::string(view.substr(start, 1)));
             case '\'':
                 m_index++; 
                 std::cout << "Single Quote found. " << std::string(view.substr(start, 1)) <<   "\n";
@@ -116,6 +118,10 @@ std::shared_ptr<Character>Tokenizer::next()
                 m_index++; 
                 std::cout << "Dash found. " << std::string(view.substr(start, 1)) <<   "\n";
                 return std::dynamic_pointer_cast<Character>(std::make_shared<Dash>(std::string(view.substr(start, 1))));
+            case '/':
+                m_index++; 
+                std::cout << "Forward Slash found. " << std::string(view.substr(start, 1)) <<   "\n";
+                return std::dynamic_pointer_cast<Character>(std::make_shared<ForwardSlash>(std::string(view.substr(start, 1))));
             case 'a':
             case 'b':
             case 'c':

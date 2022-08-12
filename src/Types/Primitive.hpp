@@ -21,6 +21,10 @@ class OpenArray;
 class CloseArray;
 class CommaPrimitive;
 class ColonPrimitive;
+class ExclamationPrimitive;
+class QuestionPrimitive;
+class DashPrimitive;
+class WhiteSpaces;
 
 enum class PrimitiveType
 {
@@ -37,7 +41,11 @@ enum class PrimitiveType
     OpenArray,
     CloseArray,
     ColonPrimitive,
-    CommaPrimitive
+    CommaPrimitive, 
+    ExclamationPrimitive,
+    QuestionPrimitive,
+    DashPrimitive,
+    WhiteSpaces,
 };
 
 class Primitive{
@@ -67,6 +75,10 @@ class Primitive{
                     return "Close array";
                 case PrimitiveType::CloseObject:
                     return "Close object";
+                case PrimitiveType::WhiteSpaces:
+                    return "White spaces";
+                case PrimitiveType::ExclamationPrimitive:
+                    return "Exclamation";
                 default: 
                     return "Unknown";
             }
@@ -439,6 +451,41 @@ class CommaPrimitive: public Primitive{
         }
 
         virtual PrimitiveType type(){ return PrimitiveType::CommaPrimitive;}
+        std::string getValue(){ return value;}
+        virtual std::string getType(){return this->getTypeAsString(this->type());}
+        virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
+};
+
+class WhiteSpaces: public Primitive{
+    private:
+        std::string value;
+
+    public:
+        WhiteSpaces(std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces ){
+            std::string value = "";
+            for(auto whiteSpace : whiteSpaces)
+            {
+                value += whiteSpace->getValue();
+            }
+            this->value = value;
+        }
+
+        virtual PrimitiveType type(){ return PrimitiveType::WhiteSpaces;}
+        std::string getValue(){ return value;}
+        virtual std::string getType(){return this->getTypeAsString(this->type());}
+        virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
+};
+
+class ExclamationPrimitive: public Primitive{
+    private:
+        std::string value;
+
+    public:
+        ExclamationPrimitive(std::shared_ptr<Exclamation> exclamation ){
+            this->value = exclamation->getValue();
+        }
+
+        virtual PrimitiveType type(){ return PrimitiveType::ExclamationPrimitive;}
         std::string getValue(){ return value;}
         virtual std::string getType(){return this->getTypeAsString(this->type());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
