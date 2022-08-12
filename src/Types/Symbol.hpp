@@ -1,8 +1,11 @@
+#ifndef SYMBOL_H
+#define SYMBOL_H
 #pragma once
 #include <string>
 #include <iostream>
 #include "CharType.cpp"
 
+class Symbol;
 class Colon;
 class Comma;
 class OpenBracket;
@@ -19,6 +22,60 @@ class EscapedQuote;
 class Quote;
 class SingleQuote;
 
+class Symbol: public Character{
+    private: 
+        std::string value; 
+    public:
+        Symbol(std::string value){
+            this->value = value;
+            std::cout << this->inspect() << "\n";
+
+        }
+        
+        virtual std::string getSymbolTypeAsString(SymbolType type){
+            switch (type)
+            {
+                case SymbolType::NotASymbol:
+                    return "Not a symbol";
+                case SymbolType::Quote:
+                    return "Quote";
+                case SymbolType::SingleQuote:
+                    return "Single Quote";
+                case SymbolType::EscapedQuote:
+                    return "Escaped Quote"; 
+                case SymbolType::EscapedSingleQuote:
+                    return "Escaped Single Quote";
+                case SymbolType::Colon:
+                    return "Colon";
+                case SymbolType::Comma:
+                    return "Comma";
+                case SymbolType::OpenBracket:
+                    return "Open Bracket";
+                case SymbolType::CloseBracket:
+                    return "Close Bracket"; 
+                case SymbolType::ObjectOpenBracket:
+                    return "Object Open Bracket"; 
+                case SymbolType::ObjectCloseBracket:
+                    return "Object Close Bracket"; 
+                case SymbolType::ArrayOpenBracket:
+                    return "Array Open Bracket"; 
+                case SymbolType::ArrayCloseBracket:
+                    return "Array Close Bracket"; 
+                case SymbolType::Exclamation:
+                    return "Exclamation";
+                case SymbolType::Dash:
+                    return "Dash";
+                case SymbolType::QuestionMark:
+                    return "Question Mark"; 
+                default: 
+                    return "Unknown"; 
+            }
+        }
+        virtual CharacterType type(){ return CharacterType::Symbol;}
+        virtual std::string getValue(){ return value;}
+        virtual std::string getType(){return this->getTypeAsString(this->type());}
+        virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
+};
 class Quote: public Symbol{
     private:
         std::string value; 
@@ -28,13 +85,11 @@ class Quote: public Symbol{
             std::cout << this->inspect() << "\n";
         }
         virtual std::string getValue(){ return value;}
-        virtual std::string getType(){return this->getTypeAsString(this->type());}
+        virtual std::string getType(){return this->getSymbolTypeAsString(this->symbolType());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
-        virtual SymbolType symbolType(){ return SymbolType::Quote;}
-
 };
 
-class ObjectOpenBracket: Symbol{
+class ObjectOpenBracket: public Symbol{
     private:
         std::string value;
 
@@ -46,10 +101,11 @@ class ObjectOpenBracket: Symbol{
 
         virtual SymbolType symbolType(){ return SymbolType::ObjectOpenBracket;}
         std::string getValue(){ return value;}
-        virtual std::string getType(){return this->getTypeAsString(this->type());}
+        virtual std::string getType(){return this->getSymbolTypeAsString(this->symbolType());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
+
 };
-class ObjectCloseBracket: Symbol{
+class ObjectCloseBracket: public Symbol{
     private:
         std::string value;
 
@@ -61,10 +117,11 @@ class ObjectCloseBracket: Symbol{
 
         virtual SymbolType symbolType(){ return SymbolType::ObjectCloseBracket;}
         std::string getValue(){ return value;}
-        virtual std::string getType(){return this->getTypeAsString(this->type());}
+        virtual std::string getType(){return this->getSymbolTypeAsString(this->symbolType());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
+
 };
-class ArrayOpenBracket: Symbol{
+class ArrayOpenBracket: public Symbol{
     private:
         std::string value;
 
@@ -76,11 +133,11 @@ class ArrayOpenBracket: Symbol{
 
         virtual SymbolType symbolType(){ return SymbolType::ArrayOpenBracket;}
         std::string getValue(){ return value;}
-        virtual std::string getType(){return this->getTypeAsString(this->type());}
+        virtual std::string getType(){return this->getSymbolTypeAsString(this->symbolType());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class ArrayCloseBracket: Symbol{
+class ArrayCloseBracket: public Symbol{
     private:
         std::string value;
 
@@ -92,11 +149,11 @@ class ArrayCloseBracket: Symbol{
 
         virtual SymbolType symbolType(){ return SymbolType::ArrayCloseBracket;}
         std::string getValue(){ return value;}
-        virtual std::string getType(){return this->getTypeAsString(this->type());}
+        virtual std::string getType(){return this->getSymbolTypeAsString(this->symbolType());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class OpenBracket: Symbol{
+class OpenBracket: public Symbol{
     private:
         std::string value;
 
@@ -108,11 +165,11 @@ class OpenBracket: Symbol{
 
         virtual SymbolType symbolType(){ return SymbolType::OpenBracket;}
         std::string getValue(){ return value;}
-        virtual std::string getType(){return this->getTypeAsString(this->type());}
+        virtual std::string getType(){return this->getSymbolTypeAsString(this->symbolType());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class CloseBracket: Symbol{
+class CloseBracket: public Symbol{
     private:
         std::string value;
 
@@ -124,11 +181,11 @@ class CloseBracket: Symbol{
 
         virtual SymbolType symbolType(){ return SymbolType::CloseBracket;}
         std::string getValue(){ return value;}
-        virtual std::string getType(){return this->getTypeAsString(this->type());}
+        virtual std::string getType(){return this->getSymbolTypeAsString(this->symbolType());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class Colon: Symbol{
+class Colon: public Symbol{
     private:
         std::string value;
 
@@ -140,11 +197,11 @@ class Colon: Symbol{
 
         virtual SymbolType symbolType(){ return SymbolType::Colon;}
         std::string getValue(){ return value;}
-        virtual std::string getType(){return this->getTypeAsString(this->type());}
+        virtual std::string getType(){return this->getSymbolTypeAsString(this->symbolType());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class Comma: Symbol{
+class Comma: public Symbol{
     private:
         std::string value;
 
@@ -156,11 +213,11 @@ class Comma: Symbol{
 
         virtual SymbolType symbolType(){ return SymbolType::Colon;}
         std::string getValue(){ return value;}
-        virtual std::string getType(){return this->getTypeAsString(this->type());}
+        virtual std::string getType(){return this->getSymbolTypeAsString(this->symbolType());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class Exclamation: Symbol{
+class Exclamation: public Symbol{
     private:
         std::string value;
 
@@ -172,11 +229,11 @@ class Exclamation: Symbol{
 
         virtual SymbolType symbolType(){ return SymbolType::Exclamation;}
         std::string getValue(){ return value;}
-        virtual std::string getType(){return this->getTypeAsString(this->type());}
+        virtual std::string getType(){return this->getSymbolTypeAsString(this->symbolType());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class Dash: Symbol{
+class Dash: public Symbol{
     private:
         std::string value;
 
@@ -188,7 +245,7 @@ class Dash: Symbol{
 
         virtual SymbolType symbolType(){ return SymbolType::Dash;}
         std::string getValue(){ return value;}
-        virtual std::string getType(){return this->getTypeAsString(this->type());}
+        virtual std::string getType(){return this->getSymbolTypeAsString(this->symbolType());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
@@ -204,7 +261,7 @@ class QuestionMark: public Symbol{
 
         virtual SymbolType symbolType(){ return SymbolType::QuestionMark;}
         std::string getValue(){ return value;}
-        virtual std::string getType(){return this->getTypeAsString(this->type());}
+        virtual std::string getType(){return this->getSymbolTypeAsString(this->symbolType());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
@@ -218,7 +275,7 @@ class EscapedQuote: public Symbol{
         }
         virtual SymbolType symbolType(){ return SymbolType::EscapedQuote;}
         virtual std::string getValue(){ return value;}
-        virtual std::string getType(){return this->getTypeAsString(this->type());}
+        virtual std::string getType(){return this->getSymbolTypeAsString(this->symbolType());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
@@ -232,7 +289,7 @@ class SingleQuote: public Symbol{
         }
         virtual SymbolType symbolType(){ return SymbolType::SingleQuote;}
         virtual std::string getValue(){ return value;}
-        virtual std::string getType(){return this->getTypeAsString(this->type());}
+        virtual std::string getType(){return this->getSymbolTypeAsString(this->symbolType());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 
 };
@@ -248,6 +305,7 @@ class EscapedSingleQuote: public Symbol{
         }
         virtual SymbolType symbolType(){ return SymbolType::EscapedSingleQuote;}
         virtual std::string getValue(){ return value;}
-        virtual std::string getType(){return this->getTypeAsString(this->type());}
+        virtual std::string getType(){return this->getSymbolTypeAsString(this->symbolType());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
+#endif

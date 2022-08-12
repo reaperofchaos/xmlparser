@@ -1,3 +1,5 @@
+#ifndef CHARTYPE_H
+#define CHARTYPE_H
 #pragma once
 #include <string>
 #include <iostream>
@@ -8,7 +10,6 @@ class Number;
 class Letter; 
 class Lowercase;
 class Uppercase; 
-class Symbol;
 class UnicodeCharacter; 
 class UnknownCharacter;
 
@@ -81,14 +82,14 @@ class Character{
         virtual std::string getValue(){ return value;}
         virtual std::string getType(){return this->getTypeAsString(this->type());}
 
-        WhiteSpace* as_whitespace(); 
-        Number* as_number(); 
-        Letter* as_letter(); 
-        Lowercase* as_lowercase(); 
-        Uppercase* as_uppercase(); 
-        Symbol* as_symbol();
-        UnicodeCharacter* as_unicode(); 
-        UnknownCharacter* as_unknown(); 
+        // WhiteSpace* as_whitespace(); 
+        // Number* as_number(); 
+        // Letter* as_letter(); 
+        // Lowercase* as_lowercase(); 
+        // Uppercase* as_uppercase(); 
+        // // Symbol* as_symbol();
+        // UnicodeCharacter* as_unicode(); 
+        // UnknownCharacter* as_unknown(); 
 };
 
 class WhiteSpace: public Character{
@@ -138,21 +139,7 @@ class Number: public Character{
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class Symbol: public Character{
-    private: 
-        std::string value; 
-    public:
-        Symbol(std::string value){
-            this->value = value;
-            std::cout << this->inspect() << "\n";
 
-        }
-
-        virtual CharacterType type(){ return CharacterType::Symbol;}
-        virtual std::string getValue(){ return value;}
-        virtual std::string getType(){return this->getTypeAsString(this->type());}
-        virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
-};
 
 class Letter: public Character{
     private:
@@ -227,3 +214,5 @@ class UnknownCharacter: public Character{
         virtual std::string getType(){return this->getTypeAsString(this->type());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
+
+#endif

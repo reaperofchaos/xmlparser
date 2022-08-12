@@ -26,9 +26,13 @@ class CharacterReader {
         }
 
         std::vector<std::shared_ptr<Character>> getTokens(){return m_tokens;}
+        std::vector<std::shared_ptr<Primitive>> getPrimitives(){return m_primitives;}
+
         static void read_str(std::string input);
         std::shared_ptr<Primitive> next();
         void build_primitives();
 
         void displayCharacterTokens();
+        void displayPrimitives();
+
 };
