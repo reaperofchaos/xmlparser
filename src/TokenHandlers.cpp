@@ -131,10 +131,11 @@ std::shared_ptr<StringType> TokenHandlers::buildString(
                 characters.push_back(m_tokens[m_index]);
                 m_index++;
             }
+        m_index++;
         return std::make_shared<StringType>( 
             std::dynamic_pointer_cast<SingleQuote>(m_tokens[start]),
             characters,
-            std::dynamic_pointer_cast<SingleQuote>(m_tokens[m_index])
+            std::dynamic_pointer_cast<SingleQuote>(m_tokens[m_index-1])
         );
     }else{
         while( m_tokens[m_index]->symbolType() != SymbolType::Quote)
@@ -142,10 +143,11 @@ std::shared_ptr<StringType> TokenHandlers::buildString(
             characters.push_back(m_tokens[m_index]);
             m_index++;
         }
+        m_index++;
         return std::make_shared<StringType>( 
             std::dynamic_pointer_cast<Quote>(m_tokens[start]),
             characters,
-            std::dynamic_pointer_cast<Quote>(m_tokens[m_index])
+            std::dynamic_pointer_cast<Quote>(m_tokens[m_index-1])
         );
     }
 }
@@ -214,14 +216,13 @@ std::shared_ptr<ExclamationPrimitive> TokenHandlers::buildExclamation(
 
 std::shared_ptr<EqualPrimitive> TokenHandlers::buildEqual(
         std::vector<std::shared_ptr<Character>> &m_tokens, 
-        size_t &m_index,
-        size_t &start)
+        size_t &m_index)
 {
     std::cout << "Building an equal primitive \n";
     m_index++;
     
     return std::make_shared<EqualPrimitive>
     (
-        std::dynamic_pointer_cast<EqualSymbol>(m_tokens[start])
+        std::dynamic_pointer_cast<EqualSymbol>(m_tokens[m_index -1])
     );
 }

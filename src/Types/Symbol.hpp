@@ -21,7 +21,7 @@ class EscapedSingleQuote;
 class EscapedQuote;
 class Quote;
 class SingleQuote;
-
+class Underscore;
 class Symbol: public Character{
     private: 
         std::string value; 
@@ -72,6 +72,8 @@ class Symbol: public Character{
                     return "Closing close tag";
                 case SymbolType::EqualSymbol:
                     return "Equal symbol";
+                case SymbolType::Underscore:
+                    return "Underscore";
                 default: 
                     return "Unknown"; 
             }
@@ -88,6 +90,7 @@ class Quote: public Symbol{
         Quote(std::string value): Symbol(value){
             this->value = value;
         }
+        virtual SymbolType symbolType(){ return SymbolType::Quote;}
         virtual std::string getValue(){ return value;}
         virtual std::string getType(){return this->getSymbolTypeAsString(this->symbolType());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
@@ -323,6 +326,20 @@ class EqualSymbol: public Symbol{
             this->value = value;
         }
         virtual SymbolType symbolType(){ return SymbolType::EqualSymbol;}
+        virtual std::string getValue(){ return value;}
+        virtual std::string getType(){return this->getSymbolTypeAsString(this->symbolType());}
+        virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
+};
+
+class Underscore: public Symbol{
+    private:
+        std::string value;
+
+    public:
+        Underscore(std::string value): Symbol(value){
+            this->value = value;
+        }
+        virtual SymbolType symbolType(){ return SymbolType::Underscore;}
         virtual std::string getValue(){ return value;}
         virtual std::string getType(){return this->getSymbolTypeAsString(this->symbolType());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}

@@ -44,6 +44,7 @@ enum class SymbolType
     ArrayCloseBracket,
     Exclamation,
     Dash,
+    Underscore,
     QuestionMark,
     ForwardSlash,
     ClosingCloseTag,

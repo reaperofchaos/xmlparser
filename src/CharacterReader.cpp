@@ -27,12 +27,12 @@ std::shared_ptr<Primitive>CharacterReader::next(){
     
     while (this->m_index < this->m_tokens.size())
     {
-        std::cout << m_tokens[m_index]->getValue() << "\n";
+        std::cout << m_tokens[m_index]->inspect() << "\n";
         switch(m_tokens[m_index]->type())
         {
             case CharacterType::Number: //Build a number
                 return TokenHandlers::buildNumberPrimitive(m_tokens, m_index, numbers);
-                
+
             case CharacterType::WhiteSpace:
                 whiteSpaces.push_back(std::make_shared<WhiteSpace>(m_tokens[m_index]->getValue()));
                 m_index++;
@@ -76,7 +76,6 @@ std::shared_ptr<Primitive>CharacterReader::next(){
                         TokenHandlers::buildClosingCloseTag(m_tokens, m_index, start);
                     
                     case SymbolType::OpenBracket: // build the start of a tag
-                    
                         std::cout << "Building an open tag primitive \n";
                         std::cout << m_tokens[m_index+1]->inspect() << "\n"; 
                         if(m_tokens[m_index+1]->type() == CharacterType::WhiteSpace){
@@ -114,8 +113,10 @@ std::shared_ptr<Primitive>CharacterReader::next(){
                         m_index++;
                         return std::make_shared<OpenTag>(
                             std::dynamic_pointer_cast<OpenBracket>(m_tokens[start]));
+                    
                     case SymbolType::ArrayOpenBracket: //build the start of an array 
                         return TokenHandlers::buildOpenArray(m_tokens, m_index, start, whiteSpaces);
+                    
                     case SymbolType::ObjectOpenBracket: //build the start of an object
                         return TokenHandlers::buildOpenObject(m_tokens, m_index, start, whiteSpaces);
 
@@ -138,7 +139,7 @@ std::shared_ptr<Primitive>CharacterReader::next(){
                         return TokenHandlers::buildExclamation(m_tokens, m_index, start);
                     
                     case SymbolType::EqualSymbol:
-                        return TokenHandlers::buildEqual(m_tokens, m_index, start);
+                        return TokenHandlers::buildEqual(m_tokens, m_index);
 
                     default: 
                         m_index++;

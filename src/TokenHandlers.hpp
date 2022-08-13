@@ -74,6 +74,5 @@ class TokenHandlers {
 
         static std::shared_ptr<EqualPrimitive> buildEqual(
                 std::vector<std::shared_ptr<Character>> &m_tokens, 
-                size_t &m_index,
-                size_t &start);
+                size_t &m_index);
 };

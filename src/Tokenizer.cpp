@@ -48,6 +48,10 @@ std::shared_ptr<Character>Tokenizer::next()
             case '~':
             case '.':
             case ';': 
+            case '_': 
+                m_index++; 
+                std::cout << "Underscore symbol found. " << std::string(view.substr(start, 1)) <<   "\n";
+                return std::make_shared<Underscore>(std::string(view.substr(start, 1)));
             case '=':
                 m_index++; 
                 std::cout << "Equal symbol found. " << std::string(view.substr(start, 1)) <<   "\n";
