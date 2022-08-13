@@ -127,6 +127,14 @@ class StringType: public Primitive{
             this->value = value;
             std::cout << this->inspect() << "\n";
         }
+        StringType(std::vector<std::shared_ptr<Character>> characters){
+            std::string value = "";
+            for(std::shared_ptr<Character> character : characters){
+                value += character->getValue(); 
+            }
+            this->value = value;
+            std::cout << this->inspect() << "\n";
+        }
         virtual PrimitiveType type(){ return PrimitiveType::StringType;}
         std::string getValue(){ return value;}
         virtual void setValue(std::shared_ptr<Quote> q, std::vector<std::shared_ptr<Character>> characters, std::shared_ptr<Quote> q2)

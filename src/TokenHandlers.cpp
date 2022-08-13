@@ -116,11 +116,11 @@ std::shared_ptr<ClosingCloseTag> TokenHandlers::buildClosingCloseTag(
 }
 
 std::shared_ptr<StringType> TokenHandlers::buildString(
-        std::vector<std::shared_ptr<Character>> &m_tokens, 
-        size_t &m_index,
-        size_t &start,
-        std::vector<std::shared_ptr<Character>> &characters, 
-        SymbolType symbolType)
+    std::vector<std::shared_ptr<Character>> &m_tokens, 
+    size_t &m_index,
+    size_t &start,
+    std::vector<std::shared_ptr<Character>> &characters, 
+    SymbolType symbolType)
 {
     std::cout << "Building a string \n";
     m_index++; 
@@ -153,10 +153,10 @@ std::shared_ptr<StringType> TokenHandlers::buildString(
 }
 
 std::shared_ptr<OpenArray> TokenHandlers::buildOpenArray(
-        std::vector<std::shared_ptr<Character>> &m_tokens, 
-        size_t &m_index,
-        size_t &start,
-        std::vector<std::shared_ptr<WhiteSpace>> &whiteSpaces)
+    std::vector<std::shared_ptr<Character>> &m_tokens, 
+    size_t &m_index,
+    size_t &start,
+    std::vector<std::shared_ptr<WhiteSpace>> &whiteSpaces)
 {
     std::cout << "Building an open array primitive \n";
     if(m_tokens[m_index+1]->type() == CharacterType::WhiteSpace){
@@ -178,10 +178,10 @@ std::shared_ptr<OpenArray> TokenHandlers::buildOpenArray(
 }
 
 std::shared_ptr<OpenObject> TokenHandlers::buildOpenObject(
-        std::vector<std::shared_ptr<Character>> &m_tokens, 
-        size_t &m_index,
-        size_t &start,
-        std::vector<std::shared_ptr<WhiteSpace>> &whiteSpaces)
+    std::vector<std::shared_ptr<Character>> &m_tokens, 
+    size_t &m_index,
+    size_t &start,
+    std::vector<std::shared_ptr<WhiteSpace>> &whiteSpaces)
 {
     std::cout << "Building an Object Open Bracket  primitive \n";
     if(m_tokens[m_index+1]->type() == CharacterType::WhiteSpace){
@@ -201,9 +201,9 @@ std::shared_ptr<OpenObject> TokenHandlers::buildOpenObject(
 }
 
 std::shared_ptr<ExclamationPrimitive> TokenHandlers::buildExclamation(
-        std::vector<std::shared_ptr<Character>> &m_tokens, 
-        size_t &m_index,
-        size_t &start)
+    std::vector<std::shared_ptr<Character>> &m_tokens, 
+    size_t &m_index,
+    size_t &start)
 {
     std::cout << "Building a close object primitive \n";
     m_index++;
@@ -215,8 +215,8 @@ std::shared_ptr<ExclamationPrimitive> TokenHandlers::buildExclamation(
 }
 
 std::shared_ptr<EqualPrimitive> TokenHandlers::buildEqual(
-        std::vector<std::shared_ptr<Character>> &m_tokens, 
-        size_t &m_index)
+    std::vector<std::shared_ptr<Character>> &m_tokens, 
+    size_t &m_index)
 {
     std::cout << "Building an equal primitive \n";
     m_index++;
@@ -226,3 +226,24 @@ std::shared_ptr<EqualPrimitive> TokenHandlers::buildEqual(
         std::dynamic_pointer_cast<EqualSymbol>(m_tokens[m_index -1])
     );
 }
+
+std::shared_ptr<StringType> TokenHandlers::buildNestedString(
+    std::vector<std::shared_ptr<Character>> &m_tokens, 
+    size_t &m_index,
+    std::vector<std::shared_ptr<Character>> &characters)
+{
+    std::cout << "Building a string " << "\n"; 
+    characters.push_back(m_tokens[m_index]);
+    m_index++;
+
+    while(
+        m_tokens[m_index]->symbolType() != SymbolType::OpenBracket &&
+        m_tokens[m_index]->symbolType() != SymbolType::ObjectOpenBracket )
+    {
+        characters.push_back(m_tokens[m_index]);
+        m_index++;
+    }
+
+    return std::make_shared<StringType>(characters);
+}
+

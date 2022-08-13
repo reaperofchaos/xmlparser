@@ -24,7 +24,15 @@ std::shared_ptr<Primitive>CharacterReader::next(){
     std::vector<std::shared_ptr<Character>> characters;
     std::vector< std::shared_ptr<Number>> numbers;
     std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces;
-    
+
+    //handle strings between tags
+    if(
+        m_index > 0 &&
+        m_index < m_tokens.size() &&
+        m_tokens[m_index -1]->symbolType() == SymbolType::CloseBracket &&
+        m_tokens[m_index]->type() != CharacterType::Symbol) 
+        return TokenHandlers::buildNestedString(m_tokens, m_index, characters);
+
     while (this->m_index < this->m_tokens.size())
     {
         std::cout << m_tokens[m_index]->inspect() << "\n";
