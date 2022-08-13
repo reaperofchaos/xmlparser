@@ -31,13 +31,8 @@ std::shared_ptr<Primitive>CharacterReader::next(){
         switch(m_tokens[m_index]->type())
         {
             case CharacterType::Number: //Build a number
-                std::cout << "Building a number primitive \n";
-                while(m_tokens[m_index]->type() == CharacterType::Number)
-                {
-                    numbers.push_back(std::make_shared<Number>(m_tokens[m_index]->getValue()));
-                    m_index++; 
-                }
-                return std::make_shared<NumberType>(numbers);
+                return TokenHandlers::buildNumberPrimitive(m_tokens, m_index, numbers);
+                
             case CharacterType::WhiteSpace:
                 whiteSpaces.push_back(std::make_shared<WhiteSpace>(m_tokens[m_index]->getValue()));
                 m_index++;
@@ -55,51 +50,50 @@ std::shared_ptr<Primitive>CharacterReader::next(){
                             switch(m_tokens[m_index]->symbolType())
                             {
                                 case SymbolType::CloseBracket:
-                                    std::cout << "Building a close bracket primitive \n";
-                                    return std::make_shared<CloseTag>(whiteSpaces, 
-                                            std::dynamic_pointer_cast<CloseBracket>(m_tokens[m_index]));
+                                    return TokenHandlers::buildCloseTag(m_tokens, m_index, whiteSpaces);
                                 case SymbolType::ArrayCloseBracket:
-                                    std::cout << "Building an array close bracket primitive \n";
-                                    return std::make_shared<CloseArray>(whiteSpaces,
-                                            std::dynamic_pointer_cast<ArrayCloseBracket>(m_tokens[m_index]));
+                                    return TokenHandlers::buildCloseArray(m_tokens, m_index, whiteSpaces);
                                 case SymbolType::ObjectCloseBracket:
-                                    std::cout << "Building an object close bracket primitive \n";
-                                    return std::make_shared<CloseObject>(whiteSpaces,
-                                            std::dynamic_pointer_cast<ObjectCloseBracket>(m_tokens[m_index]));
-
+                                    return TokenHandlers::buildCloseObject(m_tokens, m_index, whiteSpaces);
                                 default:
-                                    return std::make_shared<WhiteSpaces>(whiteSpaces);
+                                    return TokenHandlers::buildWhiteSpaces(whiteSpaces);
                             }
                         default:
-                            return std::make_shared<WhiteSpaces>(whiteSpaces);
+                            return TokenHandlers::buildWhiteSpaces(whiteSpaces);
                     }
                 }
-                return std::make_shared<WhiteSpaces>(whiteSpaces);
+                return TokenHandlers::buildWhiteSpaces(whiteSpaces);
+
             case CharacterType::Letter:
             case CharacterType::Uppercase:
             case CharacterType::Lowercase:
-                std::cout << "Building a name" << "\n";
-                m_index++;
-                while(m_tokens[m_index]->type() != CharacterType::WhiteSpace && (m_tokens[m_index]->type() != CharacterType::Symbol && m_tokens[m_index]->symbolType() != SymbolType::CloseBracket))
-                {
-                    // std::cout << m_tokens[m_index]->inspect() << "\n";
-                    characters.push_back(std::dynamic_pointer_cast<Character>(m_tokens[m_index]));
-                    m_index++;
-                }
-                return std::make_shared<Name>(
-                    std::dynamic_pointer_cast<Letter>(m_tokens[start]),
-                    characters);
+                return TokenHandlers::buildName(m_tokens, m_index, start, characters);
+
             case CharacterType::Symbol:
                 switch(m_tokens[m_index]->symbolType())
                 {
+                    case SymbolType::ForwardSlash:
+                        TokenHandlers::buildClosingCloseTag(m_tokens, m_index, start);
+                    
                     case SymbolType::OpenBracket: // build the start of a tag
+                    
                         std::cout << "Building an open tag primitive \n";
+                        std::cout << m_tokens[m_index+1]->inspect() << "\n"; 
                         if(m_tokens[m_index+1]->type() == CharacterType::WhiteSpace){
                             m_index++;
                             while(m_tokens[m_index]->type() == CharacterType::WhiteSpace)
                             {
                                 whiteSpaces.push_back(std::make_shared<WhiteSpace>(m_tokens[m_index]->getValue()));
                                 m_index++;
+                            }
+                            if(m_tokens[m_index+1]->type() == CharacterType::Symbol && m_tokens[m_index+1]->symbolType() == SymbolType::ForwardSlash)
+                            {
+                                m_index++; 
+                                return std::make_shared<ClosingOpenTag>
+                                (
+                                    std::dynamic_pointer_cast<OpenBracket>(m_tokens[start]),
+                                    std::dynamic_pointer_cast<ForwardSlash>(m_tokens[m_index-1])
+                                );
                             }
                             return std::make_shared<OpenTag>
                             (
@@ -107,99 +101,45 @@ std::shared_ptr<Primitive>CharacterReader::next(){
                                 whiteSpaces
                             );
                         }
+                        if(m_tokens[m_index+1]->type() == CharacterType::Symbol && m_tokens[m_index+1]->symbolType() == SymbolType::ForwardSlash)
+                        {
+                            m_index++; 
+                            m_index++; 
+                            return std::make_shared<ClosingOpenTag>
+                            (
+                                std::dynamic_pointer_cast<OpenBracket>(m_tokens[start]),
+                                std::dynamic_pointer_cast<ForwardSlash>(m_tokens[m_index-1])
+                            ); 
+                        }
                         m_index++;
                         return std::make_shared<OpenTag>(
                             std::dynamic_pointer_cast<OpenBracket>(m_tokens[start]));
                     case SymbolType::ArrayOpenBracket: //build the start of an array 
-                        std::cout << "Building an open array primitive \n";
-                        if(m_tokens[m_index+1]->type() == CharacterType::WhiteSpace){
-                            m_index++;
-                            while(m_tokens[m_index]->type() == CharacterType::WhiteSpace)
-                            {
-                                whiteSpaces.push_back(std::make_shared<WhiteSpace>(m_tokens[m_index]->getValue()));
-                                m_index++;
-                            }
-                            return std::make_shared<OpenArray>
-                            (
-                                std::dynamic_pointer_cast<ArrayOpenBracket>(m_tokens[start]),
-                                whiteSpaces
-                            );
-                        }
-                        return std::make_shared<OpenArray>(
-                                std::dynamic_pointer_cast<ArrayOpenBracket>(m_tokens[start]));
+                        return TokenHandlers::buildOpenArray(m_tokens, m_index, start, whiteSpaces);
                     case SymbolType::ObjectOpenBracket: //build the start of an object
-                            std::cout << "Building an Object Open Bracket  primitive \n";
-                            if(m_tokens[m_index+1]->type() == CharacterType::WhiteSpace){
-                            m_index++;
-                            while(m_tokens[m_index]->type() == CharacterType::WhiteSpace)
-                            {
-                                whiteSpaces.push_back(std::make_shared<WhiteSpace>(m_tokens[m_index]->getValue()));
-                                m_index++;
-                            }
-                            return std::make_shared<OpenObject>( 
-                                std::dynamic_pointer_cast<ObjectOpenBracket>(m_tokens[start]),
-                                whiteSpaces
-                            );
-                        }
-                        return std::make_shared<OpenObject>(
-                                std::dynamic_pointer_cast<ObjectOpenBracket>(m_tokens[start]));
+                        return TokenHandlers::buildOpenObject(m_tokens, m_index, start, whiteSpaces);
+
                     case SymbolType::SingleQuote: //build the string
-                        std::cout << "Building a string \n";
-                        m_index++; 
-                        while( m_tokens[m_index]->symbolType() != SymbolType::SingleQuote)
-                        {
-                            characters.push_back(m_tokens[m_index]);
-                            m_index++;
-                        }
-                        return std::make_shared<StringType>( 
-                            std::dynamic_pointer_cast<SingleQuote>(m_tokens[start]),
-                            characters,
-                            std::dynamic_pointer_cast<SingleQuote>(m_tokens[m_index])
-                        );
+                        return TokenHandlers::buildString(m_tokens, m_index, start, characters, SymbolType::SingleQuote);
+                        
                     case SymbolType::Quote: //build the string
-                        std::cout << "Building a string \n";
-                        m_index++; 
-                        while(m_tokens[m_index]->symbolType() != SymbolType::Quote)
-                        {
-                            characters.push_back(m_tokens[m_index]);
-                            m_index++;
-                        }
-                        return std::make_shared<StringType>( 
-                            std::dynamic_pointer_cast<Quote>(m_tokens[start]),
-                            characters,
-                            std::dynamic_pointer_cast<Quote>(m_tokens[m_index])
-                        );
+                        return TokenHandlers::buildString(m_tokens, m_index, start, characters, SymbolType::Quote);
+
                     case SymbolType::CloseBracket:
-                        std::cout << "Building a close tag primitive \n";
-                        m_index++;
-                        return std::make_shared<CloseTag>
-                        (
-                            std::dynamic_pointer_cast<CloseBracket>(m_tokens[start])
-                        );
+                        return TokenHandlers::buildCloseTag(m_tokens, m_index, whiteSpaces);
+                        
                     case SymbolType::ArrayCloseBracket:
-                        std::cout << "Building a close array primitive \n";
-                        m_index++;
-                        return std::make_shared<CloseArray>
-                        (
-                            std::dynamic_pointer_cast<ArrayCloseBracket>(m_tokens[start])
-                        );
+                        return TokenHandlers::buildCloseArray(m_tokens, m_index, whiteSpaces);
 
                     case SymbolType::ObjectCloseBracket:
-                        std::cout << "Building a close object primitive \n";
-                        m_index++;
-                        
-                        return std::make_shared<CloseObject>
-                        (
-                            std::dynamic_pointer_cast<ObjectCloseBracket>(m_tokens[start])
-                        );
+                        return TokenHandlers::buildCloseObject(m_tokens, m_index, whiteSpaces);
+
                     case SymbolType::Exclamation:
-                        std::cout << "Building a close object primitive \n";
-                        m_index++;
-                        
-                        return std::make_shared<ExclamationPrimitive>
-                        (
-                            std::dynamic_pointer_cast<Exclamation>(m_tokens[start])
-                        );
+                        return TokenHandlers::buildExclamation(m_tokens, m_index, start);
+                    
+                    case SymbolType::EqualSymbol:
+                        return TokenHandlers::buildEqual(m_tokens, m_index, start);
+
                     default: 
                         m_index++;
                         return {};

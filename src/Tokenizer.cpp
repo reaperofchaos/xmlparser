@@ -48,9 +48,13 @@ std::shared_ptr<Character>Tokenizer::next()
             case '~':
             case '.':
             case ';': 
+            case '=':
+                m_index++; 
+                std::cout << "Equal symbol found. " << std::string(view.substr(start, 1)) <<   "\n";
+                return std::make_shared<EqualSymbol>(std::string(view.substr(start, 1)));
             case '|':
                 m_index++; 
-                std::cout << "Symbol space found. " << std::string(view.substr(start, 1)) <<   "\n";
+                std::cout << "Symbol found. " << std::string(view.substr(start, 1)) <<   "\n";
                 return std::make_shared<Symbol>(std::string(view.substr(start, 1)));
             case '!':
                 m_index++; 

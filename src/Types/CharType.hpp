@@ -46,6 +46,8 @@ enum class SymbolType
     Dash,
     QuestionMark,
     ForwardSlash,
+    ClosingCloseTag,
+    EqualSymbol,
 };
 class Character{
     private:

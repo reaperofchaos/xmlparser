@@ -25,6 +25,9 @@ class ExclamationPrimitive;
 class QuestionPrimitive;
 class DashPrimitive;
 class WhiteSpaces;
+class ClosingOpenTag;
+class ClosingCloseTag;
+class EqualPrimitive;
 
 enum class PrimitiveType
 {
@@ -46,6 +49,9 @@ enum class PrimitiveType
     QuestionPrimitive,
     DashPrimitive,
     WhiteSpaces,
+    ClosingCloseTag,
+    ClosingOpenTag,
+    EqualPrimitive
 };
 
 class Primitive{
@@ -79,6 +85,12 @@ class Primitive{
                     return "White spaces";
                 case PrimitiveType::ExclamationPrimitive:
                     return "Exclamation";
+                case PrimitiveType::ClosingCloseTag:
+                    return "Closing Close Tag";
+                case PrimitiveType::ClosingOpenTag:
+                    return "Closing Open Tag";
+                case PrimitiveType::EqualPrimitive:
+                    return "Equal";
                 default: 
                     return "Unknown";
             }
@@ -88,17 +100,6 @@ class Primitive{
         virtual std::string inspect() { assert(0); }
         virtual std::string getValue(){ return value;}
         virtual std::string getType(){return this->getTypeAsString(this->type());}
-        Name* as_name(); 
-        NumberType* as_number(); 
-        StringType* as_string(); 
-        OpenTag* as_open_tag();
-        CloseTag* as_close_tag();
-        OpenArray* as_open_array();
-        CloseArray* as_close_array();
-        OpenObject* as_open_object();
-        CloseObject* as_close_object();
-
-
 };
 
 class StringType: public Primitive{
@@ -390,6 +391,76 @@ class OpenTag: public Primitive{
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
+class ClosingCloseTag: public Primitive{
+    private:
+        std::string value;
+
+    public:
+        ClosingCloseTag(std::shared_ptr<ForwardSlash> forwardSlash, std::shared_ptr<CloseBracket> closeBracket){
+                std::string value = "";
+                value += forwardSlash->getValue();
+                value += closeBracket->getValue();
+                this->value = value; 
+        }
+
+        ClosingCloseTag(std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces, std::shared_ptr<ForwardSlash> forwardSlash, std::shared_ptr<CloseBracket> closeBracket){
+            std::string value = "";
+            for(std::shared_ptr<WhiteSpace> whiteSpace : whiteSpaces)
+            {
+                value += whiteSpace->getValue();
+            }
+            value += forwardSlash->getValue();
+            value += closeBracket->getValue();
+            this->value = value; 
+        }
+
+        virtual PrimitiveType type(){ return PrimitiveType::ClosingCloseTag;}
+        std::string getValue(){ return value;}
+        virtual void setValue(std::shared_ptr<ForwardSlash> forwardSlash, std::shared_ptr<CloseBracket> closeBracket){
+            std::string value = "";
+            value += forwardSlash->getValue();
+            value += closeBracket->getValue();
+            this->value = value; 
+        }
+        virtual void setValue(std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces, std::shared_ptr<ForwardSlash> forwardSlash, std::shared_ptr<CloseBracket> closeBracket)
+        {
+            std::string value = "";
+            for(std::shared_ptr<WhiteSpace> whiteSpace : whiteSpaces)
+            {
+                value += whiteSpace->getValue();
+            }
+            value += forwardSlash->getValue();
+            value += closeBracket->getValue();
+            this->value = value; 
+        }
+        virtual std::string getType(){return this->getTypeAsString(this->type());}
+        virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
+};
+
+class ClosingOpenTag: public Primitive{
+    private:
+        std::string value;
+
+    public:
+        ClosingOpenTag(std::shared_ptr<OpenBracket> openBracket, std::shared_ptr<ForwardSlash> forwardSlash){
+                std::string value = "";
+                value += openBracket->getValue();
+                value += forwardSlash->getValue();
+                this->value = value; 
+        }
+
+        virtual PrimitiveType type(){ return PrimitiveType::ClosingCloseTag;}
+        std::string getValue(){ return value;}
+        virtual void setValue(std::shared_ptr<OpenBracket> openBracket, std::shared_ptr<ForwardSlash> forwardSlash){
+            std::string value = "";
+            value += openBracket->getValue();
+            value += forwardSlash->getValue();
+            this->value = value; 
+        }
+        virtual std::string getType(){return this->getTypeAsString(this->type());}
+        virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
+};
+
 class CloseTag: public Primitive{
     private:
         std::string value;
@@ -486,6 +557,21 @@ class ExclamationPrimitive: public Primitive{
         }
 
         virtual PrimitiveType type(){ return PrimitiveType::ExclamationPrimitive;}
+        std::string getValue(){ return value;}
+        virtual std::string getType(){return this->getTypeAsString(this->type());}
+        virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
+};
+
+class EqualPrimitive: public Primitive{
+    private:
+        std::string value;
+
+    public:
+        EqualPrimitive(std::shared_ptr<EqualSymbol> equal ){
+            this->value = equal->getValue();
+        }
+
+        virtual PrimitiveType type(){ return PrimitiveType::EqualPrimitive;}
         std::string getValue(){ return value;}
         virtual std::string getType(){return this->getTypeAsString(this->type());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}

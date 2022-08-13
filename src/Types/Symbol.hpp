@@ -68,6 +68,10 @@ class Symbol: public Character{
                     return "Question Mark"; 
                 case SymbolType::ForwardSlash:
                     return "Forward Slash"; 
+                case SymbolType::ClosingCloseTag:
+                    return "Closing close tag";
+                case SymbolType::EqualSymbol:
+                    return "Equal symbol";
                 default: 
                     return "Unknown"; 
             }
@@ -305,6 +309,20 @@ class ForwardSlash: public Symbol{
             this->value = value;
         }
         virtual SymbolType symbolType(){ return SymbolType::ForwardSlash;}
+        virtual std::string getValue(){ return value;}
+        virtual std::string getType(){return this->getSymbolTypeAsString(this->symbolType());}
+        virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
+};
+
+class EqualSymbol: public Symbol{
+    private:
+        std::string value;
+
+    public:
+        EqualSymbol(std::string value): Symbol(value){
+            this->value = value;
+        }
+        virtual SymbolType symbolType(){ return SymbolType::EqualSymbol;}
         virtual std::string getValue(){ return value;}
         virtual std::string getType(){return this->getSymbolTypeAsString(this->symbolType());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}

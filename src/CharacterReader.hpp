@@ -7,7 +7,7 @@
 #include "Types/CharType.hpp"
 #include "Types/Primitive.hpp"
 #include "Tokenizer.hpp"
-
+#include "TokenHandlers.hpp"
 /**
  * @brief Class that takes tokens  and 
  * analyzes them further to create primitives
