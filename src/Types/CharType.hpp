@@ -49,6 +49,9 @@ enum class SymbolType
     ForwardSlash,
     ClosingCloseTag,
     EqualSymbol,
+    Semicolon,
+    Percentage,
+    HashTag
 };
 class Character{
     private:

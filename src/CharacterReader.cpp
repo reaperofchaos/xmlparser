@@ -12,7 +12,7 @@ void CharacterReader::read_str(std::string input)
     std::vector<std::shared_ptr<Character>>tokens = tokenizer.getTokens(); 
     std::cout << "Total tokens " << tokens.size() << "\n"; 
     CharacterReader reader = CharacterReader(tokens);  
-    reader.displayCharacterTokens();   
+    // reader.  ();   
     reader.build_primitives();
     std::vector<std::shared_ptr<Primitive>>primitives = reader.getPrimitives(); 
     std::cout << "Total primitives " << primitives.size() << "\n"; 
@@ -29,13 +29,13 @@ std::shared_ptr<Primitive>CharacterReader::next(){
     if(
         m_index > 0 &&
         m_index < m_tokens.size() &&
-        m_tokens[m_index -1]->symbolType() == SymbolType::CloseBracket &&
+        (m_tokens[m_index -1]->symbolType() == SymbolType::CloseBracket ||
+        m_tokens[m_index -1]->symbolType() == SymbolType::Dash) &&
         m_tokens[m_index]->type() != CharacterType::Symbol) 
         return TokenHandlers::buildNestedString(m_tokens, m_index, characters);
 
     while (this->m_index < this->m_tokens.size())
     {
-        std::cout << m_tokens[m_index]->inspect() << "\n";
         switch(m_tokens[m_index]->type())
         {
             case CharacterType::Number: //Build a number
@@ -81,47 +81,30 @@ std::shared_ptr<Primitive>CharacterReader::next(){
                 switch(m_tokens[m_index]->symbolType())
                 {
                     case SymbolType::ForwardSlash:
-                        TokenHandlers::buildClosingCloseTag(m_tokens, m_index, start);
+                        return TokenHandlers::buildClosingCloseTag(m_tokens, m_index, start);
                     
-                    case SymbolType::OpenBracket: // build the start of a tag
-                        std::cout << "Building an open tag primitive \n";
-                        std::cout << m_tokens[m_index+1]->inspect() << "\n"; 
-                        if(m_tokens[m_index+1]->type() == CharacterType::WhiteSpace){
-                            m_index++;
-                            while(m_tokens[m_index]->type() == CharacterType::WhiteSpace)
-                            {
-                                whiteSpaces.push_back(std::make_shared<WhiteSpace>(m_tokens[m_index]->getValue()));
-                                m_index++;
-                            }
-                            if(m_tokens[m_index+1]->type() == CharacterType::Symbol && m_tokens[m_index+1]->symbolType() == SymbolType::ForwardSlash)
-                            {
-                                m_index++; 
-                                return std::make_shared<ClosingOpenTag>
-                                (
-                                    std::dynamic_pointer_cast<OpenBracket>(m_tokens[start]),
-                                    std::dynamic_pointer_cast<ForwardSlash>(m_tokens[m_index-1])
-                                );
-                            }
-                            return std::make_shared<OpenTag>
-                            (
-                                std::dynamic_pointer_cast<OpenBracket>(m_tokens[start]),
-                                whiteSpaces
-                            );
-                        }
-                        if(m_tokens[m_index+1]->type() == CharacterType::Symbol && m_tokens[m_index+1]->symbolType() == SymbolType::ForwardSlash)
+                    case SymbolType::OpenBracket:
+
+                        TokenHandlers::findWhiteSpace(m_tokens, m_index, whiteSpaces);
+
+                        if(m_tokens[m_index+1]->symbolType() == SymbolType::ForwardSlash)
                         {
-                            m_index++; 
-                            m_index++; 
-                            return std::make_shared<ClosingOpenTag>
-                            (
-                                std::dynamic_pointer_cast<OpenBracket>(m_tokens[start]),
-                                std::dynamic_pointer_cast<ForwardSlash>(m_tokens[m_index-1])
-                            ); 
+                            return TokenHandlers::buildClosingOpenTag(m_tokens, m_index, start);
                         }
-                        m_index++;
-                        return std::make_shared<OpenTag>(
-                            std::dynamic_pointer_cast<OpenBracket>(m_tokens[start]));
-                    
+
+                        if(m_tokens[m_index+1]->symbolType() == SymbolType::Exclamation)
+                        {
+                            m_index++;
+                            if(m_tokens[m_index+1]->symbolType() == SymbolType::Dash)
+                            {
+                                return TokenHandlers::buildCommentOpenTag(m_tokens, m_index, start, whiteSpaces);
+                            }
+
+                            return TokenHandlers::buildDocumentTypeOpenTag(m_tokens, m_index, start, whiteSpaces);
+                        }
+                
+                        return TokenHandlers::buildOpenTag(m_tokens, m_index, start, whiteSpaces);
+
                     case SymbolType::ArrayOpenBracket: //build the start of an array 
                         return TokenHandlers::buildOpenArray(m_tokens, m_index, start, whiteSpaces);
                     
@@ -148,19 +131,49 @@ std::shared_ptr<Primitive>CharacterReader::next(){
                     
                     case SymbolType::EqualSymbol:
                         return TokenHandlers::buildEqual(m_tokens, m_index);
+                    
+                    case SymbolType::Comma:
+                        return TokenHandlers::buildComma(m_tokens, m_index);
+                    
+                    case SymbolType::HashTag:
+                        return TokenHandlers::buildHashTag(m_tokens, m_index);
+                    
+                    case SymbolType::Semicolon:
+                        return TokenHandlers::buildSemicolon(m_tokens, m_index);
+
+                    case SymbolType::Colon:
+                        return TokenHandlers::buildColon(m_tokens, m_index);
+
+                    case SymbolType::Percentage:
+                        return TokenHandlers::buildPercentage(m_tokens, m_index);
+
+                    case SymbolType::Dash:
+                        if(m_tokens[m_index+1]->symbolType() == SymbolType::Dash)
+                        {
+                            return TokenHandlers::buildCommentCloseTag(m_tokens, m_index, start, whiteSpaces);
+                        }
+            
+                        m_index++;
+                        return std::make_shared<DashPrimitive>
+                        (
+                            std::dynamic_pointer_cast<Dash>(m_tokens[start])
+                        );
 
                     default: 
                         m_index++;
                         return {};
                 }
+                return {};
             default:
                     m_index++;
                     return {};
         }
+        return {};
+
     } 
     return {};
-}
 
+}
 /**
  * @brief Displays the type and value of the tokens
  * 

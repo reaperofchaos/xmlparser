@@ -30,14 +30,11 @@ std::shared_ptr<Character>Tokenizer::next()
             case '\t':
             case '\n':
             case '\r':
-                std::cout << "white space found." << "\n";
                 m_index++; 
                 return 
                 std::make_shared<WhiteSpace>(std::string(view.substr(start, 1)));
             case '@':
-            case '#':
             case '$':
-            case '%':
             case '^':
             case '&':
             case '*':
@@ -47,88 +44,80 @@ std::shared_ptr<Character>Tokenizer::next()
             case '`':
             case '~':
             case '.':
+            case '|':
+                m_index++; 
+                return std::make_shared<Symbol>(std::string(view.substr(start, 1)));
+            case '%':
+                m_index++; 
+                return std::make_shared<Percentage>(std::string(view.substr(start, 1)));
+            case ',':
+                m_index++; 
+                return std::make_shared<Comma>(std::string(view.substr(start, 1)));
             case ';': 
+                m_index++; 
+                return std::make_shared<Semicolon>(std::string(view.substr(start, 1)));
             case '_': 
                 m_index++; 
-                std::cout << "Underscore symbol found. " << std::string(view.substr(start, 1)) <<   "\n";
                 return std::make_shared<Underscore>(std::string(view.substr(start, 1)));
             case '=':
                 m_index++; 
-                std::cout << "Equal symbol found. " << std::string(view.substr(start, 1)) <<   "\n";
                 return std::make_shared<EqualSymbol>(std::string(view.substr(start, 1)));
-            case '|':
+            case '#':
                 m_index++; 
-                std::cout << "Symbol found. " << std::string(view.substr(start, 1)) <<   "\n";
-                return std::make_shared<Symbol>(std::string(view.substr(start, 1)));
+                return std::make_shared<HashTag>(std::string(view.substr(start, 1)));
             case '!':
                 m_index++; 
-                std::cout << "Exclamation found. " << std::string(view.substr(start, 1)) <<   "\n";
                 return std::make_shared<Exclamation>(std::string(view.substr(start, 1)));
             case '\'':
                 m_index++; 
-                std::cout << "Single Quote found. " << std::string(view.substr(start, 1)) <<   "\n";
                 return std::make_shared<SingleQuote>(std::string(view.substr(start, 1)));
             case '"':
                 m_index++; 
-                std::cout << "Double Quote found. " << std::string(view.substr(start, 1)) <<   "\n";
                 return std::make_shared<Quote>(std::string(view.substr(start, 1)));
             case '\\':
                 switch(m_input.at(m_index+1))
                 {
                     case '\'':
-                        std::cout << "Escaped Single Quote found. " << std::string(view.substr(start, 2)) <<   "\n";
                         m_index++;
                         m_index++; 
                         return std::make_shared<EscapedSingleQuote>(std::string(view.substr(start, 2)));
                     case '\"':
-                        std::cout << "Escaped Quote found. " << std::string(view.substr(start, 2)) <<   "\n";
                         m_index++;
                         m_index++; 
                         return std::make_shared<EscapedQuote>(std::string(view.substr(start, 2)));
                     default:
-                        std::cout << "Symbol found. " << std::string(view.substr(start, 1)) <<   "\n";
                         m_index++; 
                         return std::make_shared<Symbol>(std::string(view.substr(start, 1)));
                 }
             case '{':
                 m_index++; 
-                std::cout << "Object Bracket Open found. " << std::string(view.substr(start, 1)) <<   "\n";
                 return std::dynamic_pointer_cast<Character>(std::make_shared<ObjectOpenBracket>(std::string(view.substr(start, 1))));
             case '}':
                 m_index++; 
-                std::cout << "Object Bracket Close found. " << std::string(view.substr(start, 1)) <<   "\n";
                 return std::dynamic_pointer_cast<Character>(std::make_shared<ObjectCloseBracket>(std::string(view.substr(start, 1))));
             case '[':
                 m_index++; 
-                std::cout << "Array Bracket Open found. " << std::string(view.substr(start, 1)) <<   "\n";
                 return std::dynamic_pointer_cast<Character>(std::make_shared<ArrayOpenBracket>(std::string(view.substr(start, 1))));
             case ']':
                 m_index++; 
-                std::cout << "Array Bracket Close found. " << std::string(view.substr(start, 1)) <<   "\n";
                 return std::dynamic_pointer_cast<Character>(std::make_shared<ArrayCloseBracket>(std::string(view.substr(start, 1))));
             case ':':
                 m_index++; 
-                std::cout << "Colon found. " << std::string(view.substr(start, 1)) <<   "\n";
                 return std::dynamic_pointer_cast<Character>(std::make_shared<Colon>(std::string(view.substr(start, 1))));
             case '?':
                 m_index++; 
-                std::cout << "Question mark found. " << std::string(view.substr(start, 1)) <<   "\n";
                 return std::dynamic_pointer_cast<Character>(std::make_shared<QuestionMark>(std::string(view.substr(start, 1))));
             case '>':
                 m_index++; 
-                std::cout << "Close bracket found. " << std::string(view.substr(start, 1)) <<   "\n";
                 return std::dynamic_pointer_cast<Character>(std::make_shared<CloseBracket>(std::string(view.substr(start, 1))));
             case '<':
                 m_index++; 
-                std::cout << "Open bracket found. " << std::string(view.substr(start, 1)) <<   "\n";
                 return std::dynamic_pointer_cast<Character>(std::make_shared<OpenBracket>(std::string(view.substr(start, 1))));
             case '-':
                 m_index++; 
-                std::cout << "Dash found. " << std::string(view.substr(start, 1)) <<   "\n";
                 return std::dynamic_pointer_cast<Character>(std::make_shared<Dash>(std::string(view.substr(start, 1))));
             case '/':
                 m_index++; 
-                std::cout << "Forward Slash found. " << std::string(view.substr(start, 1)) <<   "\n";
                 return std::dynamic_pointer_cast<Character>(std::make_shared<ForwardSlash>(std::string(view.substr(start, 1))));
             case 'a':
             case 'b':
@@ -157,7 +146,6 @@ std::shared_ptr<Character>Tokenizer::next()
             case 'y':
             case 'z':
                 m_index++; 
-                std::cout << "Lowercase letter found. " << std::string(view.substr(start, 1)) <<   "\n";
                 return std::make_shared<Lowercase>(std::string(view.substr(start, 1)));
             case 'A':
             case 'B':
@@ -186,7 +174,6 @@ std::shared_ptr<Character>Tokenizer::next()
             case 'Y':
             case 'Z':
                 m_index++; 
-                std::cout << "Uppercase letter found. " << std::string(view.substr(start, 1)) <<   "\n";
                 return std::make_shared<Uppercase>(std::string(view.substr(start, 1)));
             case '0':
             case '1':
@@ -200,12 +187,10 @@ std::shared_ptr<Character>Tokenizer::next()
             case '9':
             {
                 m_index++; 
-                std::cout << "Number found. " << std::string(view.substr(start, 1)) <<   "\n";
                 return std::make_shared<Number>(std::string(view.substr(start, 1)));
             }
             default:
                 m_index++; 
-                std::cout << "Unicode found. " << std::string(view.substr(start, 1)) <<   "\n";
                 return std::make_shared<UnicodeCharacter>(std::string(view.substr(start, 1)));
         };
     }

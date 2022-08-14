@@ -22,6 +22,9 @@ class EscapedQuote;
 class Quote;
 class SingleQuote;
 class Underscore;
+class Semicolon;
+class Percentage;
+class HashTag;
 class Symbol: public Character{
     private: 
         std::string value; 
@@ -48,6 +51,8 @@ class Symbol: public Character{
                     return "Colon";
                 case SymbolType::Comma:
                     return "Comma";
+                case SymbolType::Semicolon:
+                    return "Semicolon";
                 case SymbolType::OpenBracket:
                     return "Open Bracket";
                 case SymbolType::CloseBracket:
@@ -74,6 +79,10 @@ class Symbol: public Character{
                     return "Equal symbol";
                 case SymbolType::Underscore:
                     return "Underscore";
+                case SymbolType::Percentage:
+                    return "Percentage";
+                case SymbolType::HashTag:
+                    return "Hash Tag";
                 default: 
                     return "Unknown"; 
             }
@@ -163,7 +172,7 @@ class OpenBracket: public Symbol{
     public:
         OpenBracket(std::string value): Symbol(value){
             this->value = value;
-            std::cout << this->inspect() << "\n";            
+            // std::cout << this->inspect() << "\n";            
         }
 
         virtual SymbolType symbolType(){ return SymbolType::OpenBracket;}
@@ -202,6 +211,21 @@ class Colon: public Symbol{
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
+class HashTag: public Symbol{
+    private:
+        std::string value;
+
+    public:
+        HashTag(std::string value): Symbol(value){
+            this->value = value;
+        }
+
+        virtual SymbolType symbolType(){ return SymbolType::HashTag;}
+        std::string getValue(){ return value;}
+        virtual std::string getType(){return this->getSymbolTypeAsString(this->symbolType());}
+        virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
+};
+
 class Comma: public Symbol{
     private:
         std::string value;
@@ -211,7 +235,22 @@ class Comma: public Symbol{
             this->value = value;
         }
 
-        virtual SymbolType symbolType(){ return SymbolType::Colon;}
+        virtual SymbolType symbolType(){ return SymbolType::Comma;}
+        std::string getValue(){ return value;}
+        virtual std::string getType(){return this->getSymbolTypeAsString(this->symbolType());}
+        virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
+};
+
+class Semicolon: public Symbol{
+    private:
+        std::string value;
+
+    public:
+        Semicolon(std::string value): Symbol(value){
+            this->value = value;
+        }
+
+        virtual SymbolType symbolType(){ return SymbolType::Semicolon;}
         std::string getValue(){ return value;}
         virtual std::string getType(){return this->getSymbolTypeAsString(this->symbolType());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
@@ -312,6 +351,20 @@ class ForwardSlash: public Symbol{
             this->value = value;
         }
         virtual SymbolType symbolType(){ return SymbolType::ForwardSlash;}
+        virtual std::string getValue(){ return value;}
+        virtual std::string getType(){return this->getSymbolTypeAsString(this->symbolType());}
+        virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
+};
+
+class Percentage: public Symbol{
+    private:
+        std::string value;
+
+    public:
+        Percentage(std::string value): Symbol(value){
+            this->value = value;
+        }
+        virtual SymbolType symbolType(){ return SymbolType::Percentage;}
         virtual std::string getValue(){ return value;}
         virtual std::string getType(){return this->getSymbolTypeAsString(this->symbolType());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
