@@ -108,3 +108,6 @@ ESCAPEDQUOTES, ESCAPEDSINGLEQUOTES, NAME, CHARACTERSWITHOUTWHITESPACE, ARRAYOPEN
     OBJECTPROP = OBJECT | OBJECT + WHITESPACE
 }
 ```
+
+## Logic
+Character (Token) -> Component (one or more tokens) -> Primitive, Element

@@ -6,7 +6,7 @@
 #include "CharType.hpp"
 #include "Symbol.hpp"
 
-class Primitive;
+class Component;
 class Name;
 class StringType;
 class ArrayType;
@@ -19,23 +19,23 @@ class OpenTag;
 class CloseTag;
 class OpenArray;
 class CloseArray;
-class CommaPrimitive;
-class ColonPrimitive;
-class ExclamationPrimitive;
-class QuestionPrimitive;
-class DashPrimitive;
+class CommaComponent;
+class ColonComponent;
+class ExclamationComponent;
+class QuestionComponent;
+class DashComponent;
 class WhiteSpaces;
 class ClosingOpenTag;
 class ClosingCloseTag;
-class EqualPrimitive;
+class EqualComponent;
 class DocumentTypeOpenTag;
 class CommentOpenTag;
 class CommentCloseTag;
-class SemicolonPrimitive;
-class PercentagePrimitive;
-class HashTagPrimitive;
+class SemicolonComponent;
+class PercentageComponent;
+class HashTagComponent;
 
-enum class PrimitiveType
+enum class ComponentType
 {
     Name, 
     StringType,
@@ -49,95 +49,95 @@ enum class PrimitiveType
     CloseTag,
     OpenArray,
     CloseArray,
-    ColonPrimitive,
-    CommaPrimitive, 
-    ExclamationPrimitive,
-    QuestionPrimitive,
-    DashPrimitive,
-    SemicolonPrimitive,
+    ColonComponent,
+    CommaComponent, 
+    ExclamationComponent,
+    QuestionComponent,
+    DashComponent,
+    SemicolonComponent,
     WhiteSpaces,
     ClosingCloseTag,
     ClosingOpenTag,
-    EqualPrimitive,
+    EqualComponent,
     DocumentTypeOpenTag,
     CommentOpenTag,
     CommentCloseTag,
-    PercentagePrimitive,
-    HashTagPrimitive
+    PercentageComponent,
+    HashTagComponent
 };
 
-class Primitive{
+class Component{
     private:
         std::string value;
     public:
-        Primitive(){};
-        virtual ~Primitive() = default;
-        virtual std::string getTypeAsString(PrimitiveType type){
+        Component(){};
+        virtual ~Component() = default;
+        virtual std::string getTypeAsString(ComponentType type){
             switch (type)
             {
-                case PrimitiveType::Name:
+                case ComponentType::Name:
                     return "Name";
-                case PrimitiveType::StringType:
+                case ComponentType::StringType:
                     return "String";
-                case PrimitiveType::NumberType:
+                case ComponentType::NumberType:
                     return "Number";
-                case PrimitiveType::OpenTag:
+                case ComponentType::OpenTag:
                     return "Open Tag";
-                case PrimitiveType::OpenArray:
+                case ComponentType::OpenArray:
                     return "Open array";
-                case PrimitiveType::OpenObject:
+                case ComponentType::OpenObject:
                     return "Open object";
-                case PrimitiveType::CloseTag:
+                case ComponentType::CloseTag:
                     return "Close tag";
-                case PrimitiveType::CloseArray:
+                case ComponentType::CloseArray:
                     return "Close array";
-                case PrimitiveType::CloseObject:
+                case ComponentType::CloseObject:
                     return "Close object";
-                case PrimitiveType::WhiteSpaces:
+                case ComponentType::WhiteSpaces:
                     return "White spaces";
-                case PrimitiveType::ExclamationPrimitive:
+                case ComponentType::ExclamationComponent:
                     return "Exclamation";
-                case PrimitiveType::ColonPrimitive:
+                case ComponentType::ColonComponent:
                     return "Colon";
-                case PrimitiveType::CommaPrimitive:
+                case ComponentType::CommaComponent:
                     return "Comma";
-                case PrimitiveType::SemicolonPrimitive:
+                case ComponentType::SemicolonComponent:
                     return "Semicolon";
-                case PrimitiveType::ClosingCloseTag:
+                case ComponentType::ClosingCloseTag:
                     return "Closing Close Tag";
-                case PrimitiveType::ClosingOpenTag:
+                case ComponentType::ClosingOpenTag:
                     return "Closing Open Tag";
-                case PrimitiveType::EqualPrimitive:
+                case ComponentType::EqualComponent:
                     return "Equal";
-                case PrimitiveType::DashPrimitive:
+                case ComponentType::DashComponent:
                     return "Dash"; 
-                case PrimitiveType::DocumentTypeOpenTag:
+                case ComponentType::DocumentTypeOpenTag:
                     return "DocumentType Open Tag";
-                case PrimitiveType::CommentOpenTag:
+                case ComponentType::CommentOpenTag:
                     return "Comment open tag";
-                case PrimitiveType::CommentCloseTag:
+                case ComponentType::CommentCloseTag:
                     return "Comment close tag";
-                case PrimitiveType::PercentagePrimitive:
-                    return "Percentage primitive";
-                case PrimitiveType::HashTagPrimitive:
-                    return "Hash Tag primitive";
+                case ComponentType::PercentageComponent:
+                    return "Percentage Component";
+                case ComponentType::HashTagComponent:
+                    return "Hash Tag Component";
                 default: 
                     return "Unknown";
             }
         }
         
-        virtual PrimitiveType type(){ return PrimitiveType::Unknown;}
+        virtual ComponentType type(){ return ComponentType::Unknown;}
         virtual std::string inspect() { assert(0); }
         virtual std::string getValue(){ return value;}
         virtual std::string getType(){return this->getTypeAsString(this->type());}
 };
 
-class StringType: public Primitive{
+class StringType: public Component{
     private:
         std::string value;
 
     public:
-        StringType(std::shared_ptr<Quote> q, std::vector<std::shared_ptr<Character>> characters, std::shared_ptr<Quote> q2): Primitive(){
+        StringType(std::shared_ptr<Quote> q, std::vector<std::shared_ptr<Character>> characters, std::shared_ptr<Quote> q2): Component(){
             std::string value = "";
             value += q->getValue();
             for(std::shared_ptr<Character> character : characters){
@@ -166,7 +166,7 @@ class StringType: public Primitive{
             // std::cout << this->inspect() << "\n";
         }
 
-        virtual PrimitiveType type(){ return PrimitiveType::StringType;}
+        virtual ComponentType type(){ return ComponentType::StringType;}
         std::string getValue(){ return value;}
         virtual void setValue(std::shared_ptr<Quote> q, std::vector<std::shared_ptr<Character>> characters, std::shared_ptr<Quote> q2)
         {
@@ -194,12 +194,12 @@ class StringType: public Primitive{
 
 
 
-class NumberType: public Primitive{
+class NumberType: public Component{
     private:
         std::string value;
 
     public:
-        NumberType(std::vector<std::shared_ptr<Number>> numbers): Primitive(){
+        NumberType(std::vector<std::shared_ptr<Number>> numbers): Component(){
             std::string numberString = "";
             for(std::shared_ptr<Number> number : numbers ){
                 numberString += number->getValue(); 
@@ -216,13 +216,13 @@ class NumberType: public Primitive{
             this->value = numberString;
         }
         std::string getValue(){ return this->value; }
-        virtual PrimitiveType type(){ return PrimitiveType::NumberType;}
+        virtual ComponentType type(){ return ComponentType::NumberType;}
         int getValueAsNumber(){ return std::stoi(this->value);}
         virtual std::string getType(){return this->getTypeAsString(this->type());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class Name: public Primitive{
+class Name: public Component{
     private:
         std::string value;
 
@@ -236,7 +236,7 @@ class Name: public Primitive{
             // std::cout << this->inspect() << "\n";
         }
 
-        virtual PrimitiveType type(){ return PrimitiveType::Name;}
+        virtual ComponentType type(){ return ComponentType::Name;}
         virtual void setValue(std::shared_ptr<Letter> letter, std::vector<std::shared_ptr<Character>> characters)
         {
             std::string value = letter->getValue();
@@ -250,7 +250,7 @@ class Name: public Primitive{
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class OpenObject: public Primitive{
+class OpenObject: public Component{
     private:
         std::string value;
 
@@ -270,12 +270,12 @@ class OpenObject: public Primitive{
             this->value = value; 
         }
 
-        virtual PrimitiveType type(){ return PrimitiveType::OpenObject;}
+        virtual ComponentType type(){ return ComponentType::OpenObject;}
         std::string getValue(){ return value;}
         virtual std::string getType(){return this->getTypeAsString(this->type());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
-class CloseObject: public Primitive{
+class CloseObject: public Component{
     private:
         std::string value;
 
@@ -294,7 +294,7 @@ class CloseObject: public Primitive{
             this->value = value;
         }
 
-        virtual PrimitiveType type(){ return PrimitiveType::CloseObject;}
+        virtual ComponentType type(){ return ComponentType::CloseObject;}
         virtual void setValue(std::shared_ptr<ObjectCloseBracket> closeBracket){this->value = closeBracket->getValue();}
         virtual void setValue(std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces, std::shared_ptr<ObjectCloseBracket> closeBracket)
         {
@@ -311,7 +311,7 @@ class CloseObject: public Primitive{
         virtual std::string getType(){return this->getTypeAsString(this->type());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
-class OpenArray: public Primitive{
+class OpenArray: public Component{
     private:
         std::string value;
 
@@ -331,7 +331,7 @@ class OpenArray: public Primitive{
             this->value = value; 
         }
 
-        virtual PrimitiveType type(){ return PrimitiveType::OpenArray;}
+        virtual ComponentType type(){ return ComponentType::OpenArray;}
         virtual void setValue(std::shared_ptr<ArrayOpenBracket> openBracket){
             this->value = openBracket->getValue();
         }
@@ -350,7 +350,7 @@ class OpenArray: public Primitive{
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class CloseArray: public Primitive{
+class CloseArray: public Component{
     private:
         std::string value;
 
@@ -369,7 +369,7 @@ class CloseArray: public Primitive{
             this->value = value; 
         }
 
-        virtual PrimitiveType type(){ return PrimitiveType::CloseArray;}
+        virtual ComponentType type(){ return ComponentType::CloseArray;}
         std::string getValue(){ return value;}
         virtual void setValue(std::shared_ptr<ArrayCloseBracket> closeBracket){this->value = closeBracket->getValue();}
         virtual void setValue(std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces, std::shared_ptr<ArrayCloseBracket> closeBracket)
@@ -387,7 +387,7 @@ class CloseArray: public Primitive{
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class OpenTag: public Primitive{
+class OpenTag: public Component{
     private:
         std::string value;
 
@@ -407,7 +407,7 @@ class OpenTag: public Primitive{
             this->value = value; 
         }
 
-        virtual PrimitiveType type(){ return PrimitiveType::OpenTag;}
+        virtual ComponentType type(){ return ComponentType::OpenTag;}
         std::string getValue(){ return value;}
         
         virtual void setValue(std::shared_ptr<OpenBracket> openBracket){
@@ -430,7 +430,7 @@ class OpenTag: public Primitive{
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class ClosingCloseTag: public Primitive{
+class ClosingCloseTag: public Component{
     private:
         std::string value;
 
@@ -453,7 +453,7 @@ class ClosingCloseTag: public Primitive{
             this->value = value; 
         }
 
-        virtual PrimitiveType type(){ return PrimitiveType::ClosingCloseTag;}
+        virtual ComponentType type(){ return ComponentType::ClosingCloseTag;}
         std::string getValue(){ return value;}
         virtual void setValue(std::shared_ptr<ForwardSlash> forwardSlash, std::shared_ptr<CloseBracket> closeBracket){
             std::string value = "";
@@ -476,7 +476,7 @@ class ClosingCloseTag: public Primitive{
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class ClosingOpenTag: public Primitive{
+class ClosingOpenTag: public Component{
     private:
         std::string value;
 
@@ -488,7 +488,7 @@ class ClosingOpenTag: public Primitive{
                 this->value = value; 
         }
 
-        virtual PrimitiveType type(){ return PrimitiveType::ClosingCloseTag;}
+        virtual ComponentType type(){ return ComponentType::ClosingCloseTag;}
         std::string getValue(){ return value;}
         virtual void setValue(std::shared_ptr<OpenBracket> openBracket, std::shared_ptr<ForwardSlash> forwardSlash){
             std::string value = "";
@@ -500,7 +500,7 @@ class ClosingOpenTag: public Primitive{
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class CloseTag: public Primitive{
+class CloseTag: public Component{
     private:
         std::string value;
 
@@ -519,7 +519,7 @@ class CloseTag: public Primitive{
             this->value = value; 
         }
 
-        virtual PrimitiveType type(){ return PrimitiveType::CloseTag;}
+        virtual ComponentType type(){ return ComponentType::CloseTag;}
         std::string getValue(){ return value;}
         virtual void setValue(std::shared_ptr<CloseBracket> closeBracket){this->value = closeBracket->getValue();}
         virtual void setValue(std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces, std::shared_ptr<CloseBracket> closeBracket)
@@ -536,52 +536,52 @@ class CloseTag: public Primitive{
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class ColonPrimitive: public Primitive{
+class ColonComponent: public Component{
     private:
         std::string value;
 
     public:
-        ColonPrimitive(std::shared_ptr<Colon> colon ){
+        ColonComponent(std::shared_ptr<Colon> colon ){
             this->value = colon->getValue();
         }
 
-        virtual PrimitiveType type(){ return PrimitiveType::ColonPrimitive;}
+        virtual ComponentType type(){ return ComponentType::ColonComponent;}
         std::string getValue(){ return value;}
         virtual std::string getType(){return this->getTypeAsString(this->type());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class SemicolonPrimitive: public Primitive{
+class SemicolonComponent: public Component{
     private:
         std::string value;
 
     public:
-        SemicolonPrimitive(std::shared_ptr<Semicolon> semicolon ){
+        SemicolonComponent(std::shared_ptr<Semicolon> semicolon ){
             this->value = semicolon->getValue();
         }
 
-        virtual PrimitiveType type(){ return PrimitiveType::SemicolonPrimitive;}
+        virtual ComponentType type(){ return ComponentType::SemicolonComponent;}
         std::string getValue(){ return value;}
         virtual std::string getType(){return this->getTypeAsString(this->type());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class CommaPrimitive: public Primitive{
+class CommaComponent: public Component{
     private:
         std::string value;
 
     public:
-        CommaPrimitive(std::shared_ptr<Comma> comma ){
+        CommaComponent(std::shared_ptr<Comma> comma ){
             this->value = comma->getValue();
         }
 
-        virtual PrimitiveType type(){ return PrimitiveType::CommaPrimitive;}
+        virtual ComponentType type(){ return ComponentType::CommaComponent;}
         std::string getValue(){ return value;}
         virtual std::string getType(){return this->getTypeAsString(this->type());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class WhiteSpaces: public Primitive{
+class WhiteSpaces: public Component{
     private:
         std::string value;
 
@@ -595,88 +595,88 @@ class WhiteSpaces: public Primitive{
             this->value = value;
         }
 
-        virtual PrimitiveType type(){ return PrimitiveType::WhiteSpaces;}
+        virtual ComponentType type(){ return ComponentType::WhiteSpaces;}
         std::string getValue(){ return value;}
         virtual std::string getType(){return this->getTypeAsString(this->type());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class ExclamationPrimitive: public Primitive{
+class ExclamationComponent: public Component{
     private:
         std::string value;
 
     public:
-        ExclamationPrimitive(std::shared_ptr<Exclamation> exclamation ){
+        ExclamationComponent(std::shared_ptr<Exclamation> exclamation ){
             this->value = exclamation->getValue();
         }
 
-        virtual PrimitiveType type(){ return PrimitiveType::ExclamationPrimitive;}
+        virtual ComponentType type(){ return ComponentType::ExclamationComponent;}
         std::string getValue(){ return value;}
         virtual std::string getType(){return this->getTypeAsString(this->type());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class EqualPrimitive: public Primitive{
+class EqualComponent: public Component{
     private:
         std::string value;
 
     public:
-        EqualPrimitive(std::shared_ptr<EqualSymbol> equal ){
+        EqualComponent(std::shared_ptr<EqualSymbol> equal ){
             this->value = equal->getValue();
         }
 
-        virtual PrimitiveType type(){ return PrimitiveType::EqualPrimitive;}
+        virtual ComponentType type(){ return ComponentType::EqualComponent;}
         std::string getValue(){ return value;}
         virtual std::string getType(){return this->getTypeAsString(this->type());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class PercentagePrimitive: public Primitive{
+class PercentageComponent: public Component{
     private:
         std::string value;
 
     public:
-        PercentagePrimitive(std::shared_ptr<Percentage> percentage ){
+        PercentageComponent(std::shared_ptr<Percentage> percentage ){
             this->value = percentage->getValue();
         }
 
-        virtual PrimitiveType type(){ return PrimitiveType::PercentagePrimitive;}
+        virtual ComponentType type(){ return ComponentType::PercentageComponent;}
         std::string getValue(){ return value;}
         virtual std::string getType(){return this->getTypeAsString(this->type());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class HashTagPrimitive: public Primitive{
+class HashTagComponent: public Component{
     private:
         std::string value;
 
     public:
-        HashTagPrimitive(std::shared_ptr<HashTag> hashTag ){
+        HashTagComponent(std::shared_ptr<HashTag> hashTag ){
             this->value = hashTag->getValue();
         }
 
-        virtual PrimitiveType type(){ return PrimitiveType::HashTagPrimitive;}
+        virtual ComponentType type(){ return ComponentType::HashTagComponent;}
         std::string getValue(){ return value;}
         virtual std::string getType(){return this->getTypeAsString(this->type());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class DashPrimitive: public Primitive{
+class DashComponent: public Component{
     private:
         std::string value;
 
     public:
-        DashPrimitive(std::shared_ptr<Dash> dash ){
+        DashComponent(std::shared_ptr<Dash> dash ){
             this->value = dash->getValue();
         }
 
-        virtual PrimitiveType type(){ return PrimitiveType::DashPrimitive;}
+        virtual ComponentType type(){ return ComponentType::DashComponent;}
         std::string getValue(){ return value;}
         virtual std::string getType(){return this->getTypeAsString(this->type());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class DocumentTypeOpenTag: public Primitive{
+class DocumentTypeOpenTag: public Component{
     private:
         std::string value;
 
@@ -704,7 +704,7 @@ class DocumentTypeOpenTag: public Primitive{
             this->value = value; 
         }
 
-        virtual PrimitiveType type(){ return PrimitiveType::DocumentTypeOpenTag;}
+        virtual ComponentType type(){ return ComponentType::DocumentTypeOpenTag;}
         std::string getValue(){ return value;}
         
         virtual std::string getType(){return this->getTypeAsString(this->type());}
@@ -713,7 +713,7 @@ class DocumentTypeOpenTag: public Primitive{
 
 };
 
-class CommentOpenTag: public Primitive{
+class CommentOpenTag: public Component{
     private:
         std::string value;
 
@@ -749,7 +749,7 @@ class CommentOpenTag: public Primitive{
             this->value = value; 
         }
 
-        virtual PrimitiveType type(){ return PrimitiveType::CommentOpenTag;}
+        virtual ComponentType type(){ return ComponentType::CommentOpenTag;}
         std::string getValue(){ return value;}
         
         virtual std::string getType(){return this->getTypeAsString(this->type());}
@@ -757,7 +757,7 @@ class CommentOpenTag: public Primitive{
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class CommentCloseTag: public Primitive{
+class CommentCloseTag: public Component{
     private:
         std::string value;
 
@@ -791,7 +791,7 @@ class CommentCloseTag: public Primitive{
             this->value = value; 
         }
 
-        virtual PrimitiveType type(){ return PrimitiveType::CommentCloseTag;}
+        virtual ComponentType type(){ return ComponentType::CommentCloseTag;}
 
         std::string getValue(){ return value;}
 

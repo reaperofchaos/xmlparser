@@ -5,7 +5,7 @@
 #include <optional>
 #include <memory>
 #include "Types/CharType.hpp"
-#include "Types/Primitive.hpp"
+#include "Types/Component.hpp"
 #include "Tokenizer.hpp"
 #include "TokenHandlers.hpp"
 /**
@@ -16,7 +16,7 @@
 class CharacterReader {
     private:
         std::vector<std::shared_ptr<Character>> m_tokens;
-        std::vector<std::shared_ptr<Primitive>> m_primitives;
+        std::vector<std::shared_ptr<Component>> m_components;
         size_t m_index = 0; // position in string
 
     public:
@@ -25,12 +25,12 @@ class CharacterReader {
         }
 
         std::vector<std::shared_ptr<Character>> getTokens(){return m_tokens;}
-        std::vector<std::shared_ptr<Primitive>> getPrimitives(){return m_primitives;}
+        std::vector<std::shared_ptr<Component>> getComponents(){return m_components;}
 
         static void read_str(std::string input);
-        std::shared_ptr<Primitive> next();
-        void build_primitives();
+        std::shared_ptr<Component> next();
+        void build_components();
 
         void displayCharacterTokens();
-        void displayPrimitives();
+        void displayComponents();
 };

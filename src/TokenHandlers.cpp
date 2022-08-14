@@ -1,6 +1,6 @@
 #include "TokenHandlers.hpp"
 
-std::shared_ptr<NumberType> TokenHandlers::buildNumberPrimitive(
+std::shared_ptr<NumberType> TokenHandlers::buildNumberComponent(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index,
     std::vector<std::shared_ptr<Number>> &numbers)
@@ -202,7 +202,7 @@ std::shared_ptr<OpenObject> TokenHandlers::buildOpenObject(
             std::dynamic_pointer_cast<ObjectOpenBracket>(m_tokens[start]));
 }
 
-std::shared_ptr<ExclamationPrimitive> TokenHandlers::buildExclamation(
+std::shared_ptr<ExclamationComponent> TokenHandlers::buildExclamation(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index,
     size_t &start)
@@ -210,85 +210,85 @@ std::shared_ptr<ExclamationPrimitive> TokenHandlers::buildExclamation(
     // std::cout << "Building a close object primitive \n";
     m_index++;
     
-    return std::make_shared<ExclamationPrimitive>
+    return std::make_shared<ExclamationComponent>
     (
         std::dynamic_pointer_cast<Exclamation>(m_tokens[start])
     );
 }
 
-std::shared_ptr<EqualPrimitive> TokenHandlers::buildEqual(
+std::shared_ptr<EqualComponent> TokenHandlers::buildEqual(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index)
 {
     // std::cout << "Building an equal primitive \n";
     m_index++;
     
-    return std::make_shared<EqualPrimitive>
+    return std::make_shared<EqualComponent>
     (
         std::dynamic_pointer_cast<EqualSymbol>(m_tokens[m_index -1])
     );
 }
 
-std::shared_ptr<SemicolonPrimitive> TokenHandlers::buildSemicolon(
+std::shared_ptr<SemicolonComponent> TokenHandlers::buildSemicolon(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index)
 {
     // std::cout << "Building a semicolon primitive \n";
     m_index++;
     
-    return std::make_shared<SemicolonPrimitive>
+    return std::make_shared<SemicolonComponent>
     (
         std::dynamic_pointer_cast<Semicolon>(m_tokens[m_index -1])
     );
 }
 
-std::shared_ptr<ColonPrimitive> TokenHandlers::buildColon(
+std::shared_ptr<ColonComponent> TokenHandlers::buildColon(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index)
 {
     // std::cout << "Building an equal primitive \n";
     m_index++;
     
-    return std::make_shared<ColonPrimitive>
+    return std::make_shared<ColonComponent>
     (
         std::dynamic_pointer_cast<Colon>(m_tokens[m_index -1])
     );
 }
 
-std::shared_ptr<PercentagePrimitive> TokenHandlers::buildPercentage(
+std::shared_ptr<PercentageComponent> TokenHandlers::buildPercentage(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index)
 {
     // std::cout << "Building a percentage primitive \n";
     m_index++;
     
-    return std::make_shared<PercentagePrimitive>
+    return std::make_shared<PercentageComponent>
     (
         std::dynamic_pointer_cast<Percentage>(m_tokens[m_index -1])
     );
 }
 
-std::shared_ptr<CommaPrimitive> TokenHandlers::buildComma(
+std::shared_ptr<CommaComponent> TokenHandlers::buildComma(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index)
 {
     // std::cout << "Building a comma primitive \n";
     m_index++;
     
-    return std::make_shared<CommaPrimitive>
+    return std::make_shared<CommaComponent>
     (
         std::dynamic_pointer_cast<Comma>(m_tokens[m_index -1])
     );
 }
 
-std::shared_ptr<HashTagPrimitive> TokenHandlers::buildHashTag(
+std::shared_ptr<HashTagComponent> TokenHandlers::buildHashTag(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index)
 {
     // std::cout << "Building a hash tag primitive \n";
     m_index++;
     
-    return std::make_shared<HashTagPrimitive>
+    return std::make_shared<HashTagComponent>
     (
         std::dynamic_pointer_cast<HashTag>(m_tokens[m_index -1])
     );

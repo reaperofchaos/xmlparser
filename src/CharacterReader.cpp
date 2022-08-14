@@ -13,13 +13,13 @@ void CharacterReader::read_str(std::string input)
     std::cout << "Total tokens " << tokens.size() << "\n"; 
     CharacterReader reader = CharacterReader(tokens);  
     // reader.  ();   
-    reader.build_primitives();
-    std::vector<std::shared_ptr<Primitive>>primitives = reader.getPrimitives(); 
-    std::cout << "Total primitives " << primitives.size() << "\n"; 
-    reader.displayPrimitives();
+    reader.build_components();
+    std::vector<std::shared_ptr<Component>>components = reader.getComponents(); 
+    std::cout << "Total components " << components.size() << "\n"; 
+    reader.displayComponents();
 }
 
-std::shared_ptr<Primitive>CharacterReader::next(){
+std::shared_ptr<Component>CharacterReader::next(){
     size_t start = this->m_index;
     std::vector<std::shared_ptr<Character>> characters;
     std::vector< std::shared_ptr<Number>> numbers;
@@ -39,7 +39,7 @@ std::shared_ptr<Primitive>CharacterReader::next(){
         switch(m_tokens[m_index]->type())
         {
             case CharacterType::Number: //Build a number
-                return TokenHandlers::buildNumberPrimitive(m_tokens, m_index, numbers);
+                return TokenHandlers::buildNumberComponent(m_tokens, m_index, numbers);
 
             case CharacterType::WhiteSpace:
                 whiteSpaces.push_back(std::make_shared<WhiteSpace>(m_tokens[m_index]->getValue()));
@@ -154,7 +154,7 @@ std::shared_ptr<Primitive>CharacterReader::next(){
                         }
             
                         m_index++;
-                        return std::make_shared<DashPrimitive>
+                        return std::make_shared<DashComponent>
                         (
                             std::dynamic_pointer_cast<Dash>(m_tokens[start])
                         );
@@ -189,11 +189,11 @@ void CharacterReader::displayCharacterTokens(){
  * @brief Builds primitives from the characters
  * 
  */
-void CharacterReader::build_primitives() 
+void CharacterReader::build_components() 
 {
-    while (auto primitive = this->next()) 
+    while (auto component = this->next()) 
     {
-        this->m_primitives.push_back(primitive);
+        this->m_components.push_back(component);
     }
 }
 
@@ -201,10 +201,10 @@ void CharacterReader::build_primitives()
  * @brief Displays the type and value of the primitives
  * 
  */
-void CharacterReader::displayPrimitives()
+void CharacterReader::displayComponents()
 {
-    for(auto primitive : this->m_primitives)
+    for(auto component : this->m_components)
     {
-        std::cout << primitive->getType() << " - " << primitive->getValue() << "\n";
+        std::cout << component->getType() << " - " << component->getValue() << "\n";
     }
 }

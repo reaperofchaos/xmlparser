@@ -27,7 +27,7 @@ $(OBJDIR)/CharacterReader.o \
 $(OBJDIR)/Tokenizer.o \
 $(OBJDIR)/TokenHandlers.o \
 $(OBJDIR)/Symbol.o \
-$(OBJDIR)/Primitive.o \
+$(OBJDIR)/Component.o \
 
 # $(OBJDIR)/Writer.o \
 # $(OBJDIR)/Printer.o \
@@ -38,8 +38,8 @@ $(OBJDIR)/Primitive.o \
 all: $(OBJS)
 	$(LD) -o $(TARGET) $(OBJS) $(LDFLAGS)
 
-$(OBJDIR)/Primitive.o:
-	$(CC) -c $(CCFLAGS) $(SRCDIR)/Types/Primitive.cpp -o $(OBJDIR)/Primitive.o
+$(OBJDIR)/Component.o:
+	$(CC) -c $(CCFLAGS) $(SRCDIR)/Types/Component.cpp -o $(OBJDIR)/Component.o
 
 
 $(OBJDIR)/TokenHandlers.o:

@@ -4,11 +4,11 @@
 #include <iostream>
 #include <memory>
 #include "Types/CharType.hpp"
-#include "Types/Primitive.hpp"
+#include "Types/Component.hpp"
 
 class TokenHandlers {
     public:
-        static std::shared_ptr<NumberType> buildNumberPrimitive(
+        static std::shared_ptr<NumberType> buildNumberComponent(
             std::vector<std::shared_ptr<Character>> &m_tokens, 
             size_t &m_index,
             std::vector<std::shared_ptr<Number>> &numbers);
@@ -67,32 +67,32 @@ class TokenHandlers {
             size_t &start,
             std::vector<std::shared_ptr<WhiteSpace>> &whiteSpaces);
 
-        static std::shared_ptr<ExclamationPrimitive> buildExclamation(
+        static std::shared_ptr<ExclamationComponent> buildExclamation(
             std::vector<std::shared_ptr<Character>> &m_tokens, 
             size_t &m_index,
             size_t &start);
 
-        static std::shared_ptr<EqualPrimitive> buildEqual(
+        static std::shared_ptr<EqualComponent> buildEqual(
             std::vector<std::shared_ptr<Character>> &m_tokens, 
             size_t &m_index);
         
-        static std::shared_ptr<SemicolonPrimitive> buildSemicolon(
+        static std::shared_ptr<SemicolonComponent> buildSemicolon(
             std::vector<std::shared_ptr<Character>> &m_tokens, 
             size_t &m_index);
         
-        static std::shared_ptr<ColonPrimitive> buildColon(
+        static std::shared_ptr<ColonComponent> buildColon(
             std::vector<std::shared_ptr<Character>> &m_tokens, 
             size_t &m_index);
         
-        static std::shared_ptr<PercentagePrimitive> buildPercentage(
+        static std::shared_ptr<PercentageComponent> buildPercentage(
             std::vector<std::shared_ptr<Character>> &m_tokens, 
             size_t &m_index);
         
-        static std::shared_ptr<CommaPrimitive> buildComma(
+        static std::shared_ptr<CommaComponent> buildComma(
             std::vector<std::shared_ptr<Character>> &m_tokens, 
             size_t &m_index);
         
-        static std::shared_ptr<HashTagPrimitive> buildHashTag(
+        static std::shared_ptr<HashTagComponent> buildHashTag(
             std::vector<std::shared_ptr<Character>> &m_tokens, 
             size_t &m_index);
 
