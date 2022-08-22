@@ -28,6 +28,12 @@ $(OBJDIR)/Tokenizer.o \
 $(OBJDIR)/TokenHandlers.o \
 $(OBJDIR)/Symbol.o \
 $(OBJDIR)/Component.o \
+$(OBJDIR)/Primitive.o \
+$(OBJDIR)/ComponentHandlers.o \
+$(OBJDIR)/PrimitiveBuilder.o \
+$(OBJDIR)/ElementBuilder.o \
+$(OBJDIR)/Element.o \
+$(OBJDIR)/Prop.o \
 
 # $(OBJDIR)/Writer.o \
 # $(OBJDIR)/Printer.o \
@@ -38,12 +44,32 @@ $(OBJDIR)/Component.o \
 all: $(OBJS)
 	$(LD) -o $(TARGET) $(OBJS) $(LDFLAGS)
 
+
+$(OBJDIR)/Prop.o:
+	$(CC) -c $(CCFLAGS) $(SRCDIR)/Types/Prop.cpp -o $(OBJDIR)/Prop.o
+
+
+$(OBJDIR)/Element.o:
+	$(CC) -c $(CCFLAGS) $(SRCDIR)/Types/Element.cpp -o $(OBJDIR)/Element.o
+
+$(OBJDIR)/ElementBuilder.o:
+	$(CC) -c $(CCFLAGS) $(SRCDIR)/ElementBuilder.cpp -o $(OBJDIR)/ElementBuilder.o
+
+$(OBJDIR)/PrimitiveBuilder.o:
+	$(CC) -c $(CCFLAGS) $(SRCDIR)/PrimitiveBuilder.cpp -o $(OBJDIR)/PrimitiveBuilder.o
+
+$(OBJDIR)/ComponentHandlers.o:
+	$(CC) -c $(CCFLAGS) $(SRCDIR)/Handlers/ComponentHandlers.cpp -o $(OBJDIR)/ComponentHandlers.o
+
+$(OBJDIR)/Primitive.o:
+	$(CC) -c $(CCFLAGS) $(SRCDIR)/Types/Primitive.cpp -o $(OBJDIR)/Primitive.o
+
 $(OBJDIR)/Component.o:
 	$(CC) -c $(CCFLAGS) $(SRCDIR)/Types/Component.cpp -o $(OBJDIR)/Component.o
 
 
 $(OBJDIR)/TokenHandlers.o:
-	$(CC) -c $(CCFLAGS) $(SRCDIR)/TokenHandlers.cpp -o $(OBJDIR)/TokenHandlers.o
+	$(CC) -c $(CCFLAGS) $(SRCDIR)/Handlers/TokenHandlers.cpp -o $(OBJDIR)/TokenHandlers.o
 
 $(OBJDIR)/Symbol.o:
 	$(CC) -c $(CCFLAGS) $(SRCDIR)/Types/Symbol.cpp -o $(OBJDIR)/Symbol.o

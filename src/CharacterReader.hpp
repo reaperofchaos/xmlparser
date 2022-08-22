@@ -7,7 +7,7 @@
 #include "Types/CharType.hpp"
 #include "Types/Component.hpp"
 #include "Tokenizer.hpp"
-#include "TokenHandlers.hpp"
+#include "Handlers/TokenHandlers.hpp"
 /**
  * @brief Class that takes tokens  and 
  * analyzes them further to create primitives
@@ -30,7 +30,6 @@ class CharacterReader {
         static void read_str(std::string input);
         std::shared_ptr<Component> next();
         void build_components();
-
         void displayCharacterTokens();
         void displayComponents();
 };

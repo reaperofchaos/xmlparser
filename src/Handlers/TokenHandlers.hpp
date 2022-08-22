@@ -3,8 +3,8 @@
 #include <vector>
 #include <iostream>
 #include <memory>
-#include "Types/CharType.hpp"
-#include "Types/Component.hpp"
+#include "../Types/CharType.hpp"
+#include "../Types/Component.hpp"
 
 class TokenHandlers {
     public:

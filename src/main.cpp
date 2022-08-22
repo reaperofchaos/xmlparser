@@ -4,7 +4,7 @@
 #include <vector>
 #include <unordered_map>
 #include "linenoise.hpp"
-#include "CharacterReader.hpp"
+#include "ElementBuilder.hpp"
 // #include "printer.hpp"
 // #include "Node.hpp"
 // #include "Writer.hpp"
@@ -12,7 +12,7 @@
 void READ(std::string input)
 {
     std::cout << input << "\n"; 
-    CharacterReader::read_str(input); 
+    ElementBuilder::read_str(input); 
 }
 
 
