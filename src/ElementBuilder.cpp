@@ -12,6 +12,12 @@ std::shared_ptr<Element>ElementBuilder::next(){
                 return ComponentHandlers::buildDocumentTagElement(m_components, m_index, start);
             case ComponentType::OpenTag:
                 return ComponentHandlers::buildTagElement(m_components, m_index, start);
+            case ComponentType::ClosingCloseTag:
+                return ComponentHandlers::buildCloseTagElement(m_components, m_index, start);
+            case ComponentType::CommentOpenTag:
+                return ComponentHandlers::buildCommentTagElement(m_components, m_index, start); 
+            case ComponentType::StringType:
+                return ComponentHandlers::buildNestedString(m_components, m_index, start);    
             default:
                     m_index++;
                     return {};

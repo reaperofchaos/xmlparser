@@ -71,3 +71,53 @@ void ComponentHandlers::IgnoreWhiteSpace(
         m_index++;
     } 
 }
+
+std::shared_ptr<CloseTagElement> ComponentHandlers::buildCloseTagElement(
+    std::vector<std::shared_ptr<Component>> &components,
+    size_t &m_index,  
+    size_t &start)
+{
+    std::cout << components[start]->inspect() << "\n";
+    std::shared_ptr<ClosingCloseTag> openTag = std::dynamic_pointer_cast<ClosingCloseTag>(components[start]); 
+    m_index++;
+    std::cout << components[m_index]->inspect() << "\n";
+    ComponentHandlers::IgnoreWhiteSpace(components, m_index);
+    std::shared_ptr<Name> tagName = std::dynamic_pointer_cast<Name>(components[m_index]);
+    m_index++;
+    ComponentHandlers::IgnoreWhiteSpace(components, m_index);
+    std::cout << components[m_index]->inspect() << "\n";
+    std::shared_ptr<CloseTag> closeTag = std::dynamic_pointer_cast<CloseTag>(components[m_index]);
+    m_index++;
+    ComponentHandlers::IgnoreWhiteSpace(components, m_index);
+    std::cout << components[m_index]->inspect() << "\n";
+    return std::make_shared<CloseTagElement>(openTag, tagName, closeTag);
+}
+
+std::shared_ptr<CommentTagElement> ComponentHandlers::buildCommentTagElement(
+    std::vector<std::shared_ptr<Component>> &components,
+    size_t &m_index,  
+    size_t &start)
+{
+    std::shared_ptr<CommentOpenTag> openTag = std::dynamic_pointer_cast<CommentOpenTag>(components[start]); 
+    m_index++;
+    std::cout << components[m_index]->inspect() << "\n";
+    ComponentHandlers::IgnoreWhiteSpace(components, m_index);
+    std::shared_ptr<StringType> comment = std::dynamic_pointer_cast<StringType>(components[m_index]);
+    m_index++;
+    ComponentHandlers::IgnoreWhiteSpace(components, m_index);
+    std::shared_ptr<CommentCloseTag> closeTag = std::dynamic_pointer_cast<CommentCloseTag>(components[m_index]);
+    m_index++;
+    ComponentHandlers::IgnoreWhiteSpace(components, m_index);
+    return std::make_shared<CommentTagElement>(openTag, comment, closeTag);
+}
+
+std::shared_ptr<NestedString> ComponentHandlers::buildNestedString(
+    std::vector<std::shared_ptr<Component>> &components,
+    size_t &m_index,  
+    size_t &start)
+{
+    std::shared_ptr<StringType> stringValue = std::dynamic_pointer_cast<StringType>(components[start]); 
+    m_index++;
+    ComponentHandlers::IgnoreWhiteSpace(components, m_index);
+    return std::make_shared<NestedString>(stringValue);
+}

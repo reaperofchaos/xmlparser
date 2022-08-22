@@ -454,7 +454,7 @@ class ClosingCloseTag: public Component{
         }
 
         virtual ComponentType type(){ return ComponentType::ClosingCloseTag;}
-        std::string getValue(){ return value;}
+        std::string getValue(){ return this->value;}
         virtual void setValue(std::shared_ptr<ForwardSlash> forwardSlash, std::shared_ptr<CloseBracket> closeBracket){
             std::string value = "";
             value += forwardSlash->getValue();

@@ -18,7 +18,9 @@ enum class TagType
 {
     Tag,
     OpenTagElement,
-    SelfClosingTagElement
+    SelfClosingTagElement,
+    CloseTagElement,
+    CommentTagElement
 };
 
 class Element
@@ -70,7 +72,7 @@ class DocumentTag: public Element
         virtual ElementType type(){ return ElementType::DocumentTag;}
         virtual std::string inspect() { std::string text = this->getType() + " - " + this->getValue() +"\n";
         if(this->props.size() > 0){
-            text += "Props \n";
+            text += "\tProps \n";
             text += displayProps();
         }
         return text;  }
@@ -82,9 +84,13 @@ class DocumentTag: public Element
             std::string propText = ""; 
             for(std::shared_ptr<Prop> prop : this->props)
         {
-            propText += prop->getName();
+            propText += "\t";
+            propText += prop->getType();
             propText += " - ";
+            propText += prop->getName();
+            propText += ": ";
             propText += prop->getValue()->getValue(); 
+            propText += "\n"; 
         }
         return propText; 
         }
@@ -110,6 +116,10 @@ class Tag: public Element
                     return "Open tag";
                 case TagType::SelfClosingTagElement:
                     return "Self closing tag";
+                case TagType::CloseTagElement:
+                    return "Closing Tag"; 
+                case TagType::CommentTagElement:
+                    return "Comment Tag"; 
                 default: 
                     return "Unknown Tag";
             }
@@ -198,7 +208,7 @@ class SelfClosingTagElement: public Tag
         }
         virtual TagType tagType(){ return TagType::SelfClosingTagElement;}
         virtual ElementType type(){ return ElementType::Tag;}
-        virtual std::string inspect() { std::string text = this->getType() + " - " + this->getValue() +"\n";
+        virtual std::string inspect() { std::string text = this->getTagType() + " - " + this->getValue() +"\n";
         if(this->props.size() > 0){
             text += "Props \n";
             text += displayProps();
@@ -220,12 +230,83 @@ class SelfClosingTagElement: public Tag
             return propText; 
         }
         virtual std::string getType(){return this->getTypeAsString(this->type());}
+        virtual std::string getTagType(){return this->getTagTypeAsString(this->tagType());}
+
 
 };
+
+class CloseTagElement: public Tag
+{   
+    private:
+        std::string value;
+        std::string tagString;
+
+    public: 
+        CloseTagElement(std::shared_ptr<ClosingCloseTag> openTag, 
+            std::shared_ptr<Name> name, 
+            std::shared_ptr<CloseTag> closeTag): Tag()
+        {
+            std::cout << "Building a close tag" << "\n";
+            std::cout << "open: " << openTag->getType() << "\n";
+            std::cout << "name: " << name->getValue() << "\n";
+            std::cout << "close: " << closeTag->getValue() << "\n";
+
+            this->tagString = openTag->getValue() + " " + name->getValue() + " " + closeTag->getValue(); 
+            std::cout << this->tagString << "\n";
+            this->value = name->getValue();
+        }
+        virtual TagType tagType(){ return TagType::CloseTagElement;}
+        virtual ElementType type(){ return ElementType::Tag;}
+        virtual std::string inspect() { std::string text = this->getTagType() + " - " + this->getValue() +"\n";
+        return text;  }
+        virtual std::string getValue(){ return value;}
+        std::string getTagString(){ return this->tagString;};
+        virtual std::string getType(){return this->getTypeAsString(this->type());}
+        virtual std::string getTagType(){return this->getTagTypeAsString(this->tagType());}
+
+};
+
+class CommentTagElement: public Tag
+{   
+    private:
+        std::string value;
+        std::string tagString;
+
+    public: 
+        CommentTagElement(std::shared_ptr<CommentOpenTag> openTag, 
+            std::shared_ptr<StringType> comment, 
+            std::shared_ptr<CommentCloseTag> closeTag): Tag()
+        {
+            this->tagString = openTag->getValue() + " " + comment->getValue() + " " + closeTag->getValue(); 
+            this->value = comment->getValue();
+        }
+        virtual TagType tagType(){ return TagType::CommentTagElement;}
+        virtual ElementType type(){ return ElementType::Tag;}
+        virtual std::string inspect() { std::string text = this->getTagType() + " - " + this->getValue() +"\n";
+        return text;  }
+        virtual std::string getValue(){ return value;}
+        std::string getTagString(){ return this->tagString;};
+        virtual std::string getType(){return this->getTypeAsString(this->type());}
+        virtual std::string getTagType(){return this->getTagTypeAsString(this->tagType());}
+
+};
+class NestedString: public Element
+{
+    private:
+        std::string value;
+
+    public: 
+        NestedString(std::shared_ptr<StringType> stringValue)
+        {
+            this->value = stringValue->getValue(); 
+        }
+        virtual ElementType type(){ return ElementType::NestedString;}
+        virtual std::string inspect() { std::string text = this->getType() + " - " + this->getValue() +"\n";
+        return text;  }
+        virtual std::string getValue(){ return value;}
+        virtual std::string getType(){return this->getTypeAsString(this->type());}
+};
+
 class NestedObject: public Element{
-
-};
-
-class NestedString: public Element{
 
 };
