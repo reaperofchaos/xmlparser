@@ -77,11 +77,13 @@ std::shared_ptr<CloseTagElement> ComponentHandlers::buildCloseTagElement(
     size_t &m_index,  
     size_t &start)
 {
-    std::cout << components[start]->inspect() << "\n";
-    std::shared_ptr<ClosingCloseTag> openTag = std::dynamic_pointer_cast<ClosingCloseTag>(components[start]); 
+    // std::cout << components[start]->getValue() << "\n";
+    std::shared_ptr<ClosingOpenTag> openClosingTag = std::dynamic_pointer_cast<ClosingOpenTag>(components[start]);
+    
+    std::cout << openClosingTag->inspect() << "\n";
     m_index++;
-    std::cout << components[m_index]->inspect() << "\n";
     ComponentHandlers::IgnoreWhiteSpace(components, m_index);
+    std::cout << components[m_index]->inspect() << "\n";
     std::shared_ptr<Name> tagName = std::dynamic_pointer_cast<Name>(components[m_index]);
     m_index++;
     ComponentHandlers::IgnoreWhiteSpace(components, m_index);
@@ -90,7 +92,7 @@ std::shared_ptr<CloseTagElement> ComponentHandlers::buildCloseTagElement(
     m_index++;
     ComponentHandlers::IgnoreWhiteSpace(components, m_index);
     std::cout << components[m_index]->inspect() << "\n";
-    return std::make_shared<CloseTagElement>(openTag, tagName, closeTag);
+    return std::make_shared<CloseTagElement>(openClosingTag, tagName, closeTag);
 }
 
 std::shared_ptr<CommentTagElement> ComponentHandlers::buildCommentTagElement(

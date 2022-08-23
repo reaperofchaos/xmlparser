@@ -3,6 +3,7 @@
 #pragma once
 #include <string>
 #include <iostream>
+#include <cassert>
 
 class Character;
 class WhiteSpace;

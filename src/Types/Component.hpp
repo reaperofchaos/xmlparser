@@ -70,7 +70,6 @@ class Component{
     private:
         std::string value;
     public:
-        Component(){};
         virtual ~Component() = default;
         virtual std::string getTypeAsString(ComponentType type){
             switch (type)
@@ -435,14 +434,20 @@ class ClosingCloseTag: public Component{
         std::string value;
 
     public:
-        ClosingCloseTag(std::shared_ptr<ForwardSlash> forwardSlash, std::shared_ptr<CloseBracket> closeBracket){
+        ClosingCloseTag(std::shared_ptr<ForwardSlash> forwardSlash, 
+            std::shared_ptr<CloseBracket> 
+            closeBracket)
+        {
                 std::string value = "";
                 value += forwardSlash->getValue();
                 value += closeBracket->getValue();
                 this->value = value; 
         }
 
-        ClosingCloseTag(std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces, std::shared_ptr<ForwardSlash> forwardSlash, std::shared_ptr<CloseBracket> closeBracket){
+        ClosingCloseTag(std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces, 
+            std::shared_ptr<ForwardSlash> forwardSlash, 
+            std::shared_ptr<CloseBracket> closeBracket)
+        {
             std::string value = "";
             for(std::shared_ptr<WhiteSpace> whiteSpace : whiteSpaces)
             {
@@ -455,23 +460,6 @@ class ClosingCloseTag: public Component{
 
         virtual ComponentType type(){ return ComponentType::ClosingCloseTag;}
         std::string getValue(){ return this->value;}
-        virtual void setValue(std::shared_ptr<ForwardSlash> forwardSlash, std::shared_ptr<CloseBracket> closeBracket){
-            std::string value = "";
-            value += forwardSlash->getValue();
-            value += closeBracket->getValue();
-            this->value = value; 
-        }
-        virtual void setValue(std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces, std::shared_ptr<ForwardSlash> forwardSlash, std::shared_ptr<CloseBracket> closeBracket)
-        {
-            std::string value = "";
-            for(std::shared_ptr<WhiteSpace> whiteSpace : whiteSpaces)
-            {
-                value += whiteSpace->getValue();
-            }
-            value += forwardSlash->getValue();
-            value += closeBracket->getValue();
-            this->value = value; 
-        }
         virtual std::string getType(){return this->getTypeAsString(this->type());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
@@ -488,7 +476,7 @@ class ClosingOpenTag: public Component{
                 this->value = value; 
         }
 
-        virtual ComponentType type(){ return ComponentType::ClosingCloseTag;}
+        virtual ComponentType type(){ return ComponentType::ClosingOpenTag;}
         std::string getValue(){ return value;}
         virtual void setValue(std::shared_ptr<OpenBracket> openBracket, std::shared_ptr<ForwardSlash> forwardSlash){
             std::string value = "";

@@ -12,7 +12,7 @@ std::shared_ptr<Element>ElementBuilder::next(){
                 return ComponentHandlers::buildDocumentTagElement(m_components, m_index, start);
             case ComponentType::OpenTag:
                 return ComponentHandlers::buildTagElement(m_components, m_index, start);
-            case ComponentType::ClosingCloseTag:
+            case ComponentType::ClosingOpenTag:
                 return ComponentHandlers::buildCloseTagElement(m_components, m_index, start);
             case ComponentType::CommentOpenTag:
                 return ComponentHandlers::buildCommentTagElement(m_components, m_index, start); 

@@ -242,14 +242,21 @@ class CloseTagElement: public Tag
         std::string tagString;
 
     public: 
-        CloseTagElement(std::shared_ptr<ClosingCloseTag> openTag, 
+        CloseTagElement(std::shared_ptr<ClosingOpenTag> openTag, 
             std::shared_ptr<Name> name, 
             std::shared_ptr<CloseTag> closeTag): Tag()
         {
             std::cout << "Building a close tag" << "\n";
-            std::cout << "open: " << openTag->getType() << "\n";
-            std::cout << "name: " << name->getValue() << "\n";
-            std::cout << "close: " << closeTag->getValue() << "\n";
+            if(openTag){
+                std::cout << "open: " << openTag->getValue() << "\n";
+            }
+            if(name){
+                std::cout << "name: " << name->getValue() << "\n";
+
+            }
+            if(closeTag){
+                std::cout << "close: " << closeTag->getValue() << "\n";
+            }
 
             this->tagString = openTag->getValue() + " " + name->getValue() + " " + closeTag->getValue(); 
             std::cout << this->tagString << "\n";
