@@ -41,6 +41,15 @@ std::shared_ptr<Tag> ComponentHandlers::buildTagElement(
     std::shared_ptr<Name> tagName = std::dynamic_pointer_cast<Name>(components[m_index]);
     m_index++;
     ComponentHandlers::IgnoreWhiteSpace(components, m_index);
+    if(components[m_index]->type() == ComponentType::Name)
+    {
+        std::cout << components[m_index]->getValue() << " is a prop!" << "\n"; 
+        m_index++;
+        ComponentHandlers::IgnoreWhiteSpace(components, m_index);
+        std::cout << components[m_index]->inspect() << "\n"; 
+
+    }
+    ComponentHandlers::IgnoreWhiteSpace(components, m_index);
     std::cout << components[m_index]->inspect() << "\n";
 
     if(components[m_index]->type() == ComponentType::CloseTag)

@@ -2,6 +2,7 @@
 #include <vector>
 #include <memory>
 #include <string>
+#include <cassert>
 #include "Primitive.hpp"
 
 enum class PropType

@@ -3,6 +3,7 @@
 #include <memory>
 #include <iostream>
 #include <string>
+#include <cassert>
 #include "Prop.hpp"
 
 enum class ElementType

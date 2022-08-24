@@ -3,6 +3,7 @@
 #pragma once
 #include <string>
 #include <iostream>
+#include <cassert>
 #include "CharType.cpp"
 
 class Symbol;

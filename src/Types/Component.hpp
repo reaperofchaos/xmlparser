@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include <memory>
+#include <cassert>
 #include "CharType.hpp"
 #include "Symbol.hpp"
 

@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <iostream>
+#include <cassert>
 #include "Type/Primitive"
 
 class ArrayType;

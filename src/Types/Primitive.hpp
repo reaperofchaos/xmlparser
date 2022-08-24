@@ -3,6 +3,7 @@
 #include <string>
 #include <memory>
 #include <iostream>
+#include <cassert>
 #include "Component.hpp"
 
 enum class PrimitiveType
