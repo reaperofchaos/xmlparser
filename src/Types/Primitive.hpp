@@ -59,6 +59,17 @@ class StringPrimitive: public Primitive{
             this->name = text->getValue();
             this->value = text->getValue();
         }
+
+        StringPrimitive(std::vector<std::shared_ptr<Component>> characters): Primitive()
+        {
+            std::string value = ""; 
+            for(std::shared_ptr<Component> character : characters)
+            {
+                value += character->getValue(); 
+            }
+            this->name = value; 
+            this->value = value;
+        }
         virtual PrimitiveType type(){ return PrimitiveType::StringPrimitive;}
         virtual std::string inspect() { return this->getType() + " - " + this->getValue(); }
         virtual std::string getValue(){ return value;}
@@ -76,6 +87,7 @@ class NumberPrimitive: public Primitive{
             this->name = number->getValue();
             this->value = number->getValue();
         }
+
         virtual PrimitiveType type(){ return PrimitiveType::NumberPrimitive;}
         virtual std::string inspect() { return this->getType() + " - " + this->getValue(); }
         virtual std::string getValue(){ return value;}

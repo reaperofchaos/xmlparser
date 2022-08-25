@@ -3,6 +3,7 @@
 #include <iostream>
 #include <cassert>
 #include "Type/Primitive"
+#include "Types/Component.hpp"
 
 class ArrayType;
 class ObjectType;
@@ -44,9 +45,13 @@ private:
 class ArrayType: Container{
     private:
         std::string value;
+        std::vector<std::shared_ptr<Primitive>>  contents; 
 
     public:
-        ArrayType(){
+        ArrayType(std::shared_ptr<ArrayOpenBracket> openBracket,
+            std::vector<shared_ptr<Component>> components 
+            std::shared_ptr<ArrayCloseBracket> closeBracket)
+        {
             this->value = str;
             std::cout << this->inspect() << "\n";
         }

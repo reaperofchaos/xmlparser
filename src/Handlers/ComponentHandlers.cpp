@@ -1,11 +1,56 @@
 #include "ComponentHandlers.hpp"
 
-std::shared_ptr<StringPrimitive> ComponentHandlers::buildStringPrimitive(
+std::shared_ptr<StringPrimitive> ComponentHandlers::buildPrimitve(
+    std::shared_ptr<Component> &text, 
+    size_t &m_index)
+{
+    switch(text->type()){
+        case ComponentType::Name:
+            return ComponentHandlers::buildBooleanPrimitive(text, m_index);
+        case ComponentType::NumberType:
+            return ComponentHandlers::buildNumberPrimitive(text, m_index);
+        case ComponentType::StringType:
+            return ComponentHandlers::buildStringPrimitive(text, m_index);
+        default:
+        m_index++; 
+    }
+}
+
+std::shared_ptr<StringPrimitive> ComponentHandlers::buildBooleanPrimitive(
     std::shared_ptr<Component> &text, 
     size_t &m_index)
 {
     m_index++;
-    return std::make_shared<StringPrimitive>(std::dynamic_pointer_cast<StringType>(text));
+    return std::make_shared<BooleanPrimitive>(std::dynamic_pointer_cast<Name>(text));
+}
+
+std::shared_ptr<StringPrimitive> ComponentHandlers::buildStringPrimitive(
+    std::vector<std::shared_ptr<Component>> &components,
+    size_t &m_index,
+    size_t &start)
+{
+    m_index++;
+    std::vector<std::shared_ptr<Component> characters = []; 
+    while(components[m_index]->type() == ComponentType::OpenTag ||
+        components[m_index]->type() == ComponentType::ClosingOpenTag)
+    {
+        numbers.push_back(components[m_index]);
+        m_index++;
+    }
+    return std::make_shared<StringPrimitive>(characters);
+}
+
+std::shared_ptr<NumberPrimitive> ComponentHandlers::buildNumberPrimitive(
+    std::vector<std::shared_ptr<Component>> &components,
+    size_t &m_index,
+    size_t &start)
+{
+    std::vector<std::shared_ptr<NumberType> numbers = []; 
+    while(components[m_index]->type() == ComponentType::NumberType){
+        numbers.push_back(std::dynamic_pointer_cast<NumberType>(components[m_index]));
+        m_index++;
+    }
+    return std::make_shared<NumberPrimitive>(numbers);
 }
 
 //Creates a document tag element
