@@ -6,6 +6,8 @@
 #include <cassert>
 #include "Component.hpp"
 
+class ObjectPair; 
+
 enum class PrimitiveType
 {
     Primitive,
@@ -123,4 +125,44 @@ class BooleanPrimitive: public Primitive
             return false;
         }
         virtual std::string getType(){return this->getTypeAsString(this->type());}
+};
+
+class ObjectPrimitive: public Primitive
+{
+    private:
+        std::string name; 
+        std::string value; 
+        std::vector<std::shared_ptr<ObjectPair>> pairs;
+
+    public:
+        ObjectPrimitive(std::vector<std::shared_ptr<ObjectPair>> pairs): Primitive()
+        {
+            this->name = "object"; 
+            this->pairs = pairs;
+        }
+
+        virtual PrimitiveType type(){ return PrimitiveType::ObjectPrimitive;}
+        virtual std::string inspect() { return this->getType() + " - " + std::to_string(this->getKeyCount()) + " keys."; }
+        virtual int getKeyCount(){ return this->pairs.size();}
+        virtual std::string getValue(){ return value;}
+        virtual std::string getType(){return this->getTypeAsString(this->type());}
+};
+
+class ObjectPair{
+    private:
+        std::string key; 
+        std::shared_ptr<Primitive> value; 
+
+    public:
+        ObjectPair(std::shared_ptr<Name> key, std::shared_ptr<Primitive> value)
+        {
+            this->value = value;
+            this->key = key->getValue(); 
+        }
+
+    virtual std::string type(){ return "Object Pair";}
+    virtual std::string getType(){ return "Object Pair";}
+    virtual std::shared_ptr<Primitive> getValue(){return value; }
+    virtual std::string inspect() { return this->getType() + " - " + this->getValue()->inspect(); }
+
 };

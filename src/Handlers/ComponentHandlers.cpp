@@ -174,3 +174,40 @@ std::shared_ptr<NestedString> ComponentHandlers::buildNestedString(
     ComponentHandlers::IgnoreWhiteSpace(components, m_index);
     return std::make_shared<NestedString>(stringValue);
 }
+
+std::shared_ptr<ObjectPrimitive> ComponentHandlers::buildObject(
+    std::vector<std::shared_ptr<Component>> &components,
+    size_t &m_index)
+{
+    std::vector<std::shared_ptr<ObjectPair>> objectPairs; 
+    while(components[m_index]->type() != ComponentType::CloseObject)
+    {
+        m_index++;
+        ComponentHandlers::IgnoreWhiteSpace(components, m_index);
+
+        //Function to build an object pair
+        if(components[m_index]->type() == ComponentType::Name){
+            std::shared_ptr<Name> key = std::dynamic_pointer_cast<Name>(components[m_index]); 
+            m_index++;
+            ComponentHandlers::IgnoreWhiteSpace(components, m_index);
+            if(components[m_index]->type() == ComponentType::ColonComponent)
+            {
+                m_index++;
+            }
+
+            ComponentHandlers::IgnoreWhiteSpace(components, m_index);
+            std::shared_ptr<Primitive> primitive = ComponentHandlers::buildPrimitive(components, m_index);
+            ComponentHandlers::IgnoreWhiteSpace(components, m_index);
+            if(components[m_index]->type() == ComponentType::CommaComponent)
+            {
+                m_index++;
+                ComponentHandlers::IgnoreWhiteSpace(components, m_index);
+            }
+
+            objectPairs.push_back(std::make_shared<ObjectPair>(key, primitive));
+        }
+    }
+
+    m_index++;
+    return std::make_shared<ObjectPrimitive>(objectPairs);
+}

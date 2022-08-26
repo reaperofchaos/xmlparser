@@ -6,10 +6,13 @@ std::shared_ptr<Primitive>PrimitiveBuilder::next(){
     while (this->m_index < this->m_components.size())
     {
         switch(m_components[m_index]->type())
-        {
+        {   
+            case ComponentType::NumberType:
             case ComponentType::StringType:
-                return ComponentHandlers::buildStringPrimitive(m_components, m_index);
-
+            case ComponentType::Name:
+                return ComponentHandlers::buildPrimitive(m_components, m_index);
+            case ComponentType::OpenObject:
+                return ComponentHandlers::buildObject(m_components, m_index);
             default:
                     m_index++;
                     return {};
