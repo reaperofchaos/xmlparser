@@ -159,10 +159,11 @@ class ObjectPair{
             this->value = value;
             this->key = key->getValue(); 
         }
+        virtual ~ObjectPair() = default;
 
-    virtual std::string type(){ return "Object Pair";}
-    virtual std::string getType(){ return "Object Pair";}
-    virtual std::shared_ptr<Primitive> getValue(){return value; }
-    virtual std::string inspect() { return this->getType() + " - " + this->getValue()->inspect(); }
+        virtual std::string type(){ return "Object Pair";}
+        virtual std::string getType(){ return "Object Pair";}
+        virtual std::shared_ptr<Primitive> getValue(){return value; }
+        virtual std::string inspect() { return this->getType() + " - " + this->getValue()->inspect(); }
 
 };
