@@ -1,14 +1,14 @@
 #include "PrimitiveBuilder.hpp"
 
 std::shared_ptr<Primitive>PrimitiveBuilder::next(){
-    size_t start = this->m_index;
+    // size_t start = this->m_index;
 
     while (this->m_index < this->m_components.size())
     {
         switch(m_components[m_index]->type())
         {
             case ComponentType::StringType:
-                return ComponentHandlers::buildStringPrimitive(m_components[start], m_index);
+                return ComponentHandlers::buildStringPrimitive(m_components, m_index);
 
             default:
                     m_index++;

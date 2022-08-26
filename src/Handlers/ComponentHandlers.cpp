@@ -1,22 +1,25 @@
 #include "ComponentHandlers.hpp"
 
-std::shared_ptr<StringPrimitive> ComponentHandlers::buildPrimitve(
-    std::shared_ptr<Component> &text, 
+std::shared_ptr<Primitive> ComponentHandlers::buildPrimitive(
+    std::vector<std::shared_ptr<Component>> &components, 
     size_t &m_index)
 {
-    switch(text->type()){
+    size_t start = m_index; 
+    switch(components[start]->type()){
         case ComponentType::Name:
-            return ComponentHandlers::buildBooleanPrimitive(text, m_index);
+            return ComponentHandlers::buildBooleanPrimitive(components[start], m_index);
         case ComponentType::NumberType:
-            return ComponentHandlers::buildNumberPrimitive(text, m_index);
+            return ComponentHandlers::buildNumberPrimitive(components, m_index);
         case ComponentType::StringType:
-            return ComponentHandlers::buildStringPrimitive(text, m_index);
+            return ComponentHandlers::buildStringPrimitive(components, m_index);
         default:
-        m_index++; 
+            m_index++;
+            return NULL; 
     }
+    return NULL; 
 }
 
-std::shared_ptr<StringPrimitive> ComponentHandlers::buildBooleanPrimitive(
+std::shared_ptr<BooleanPrimitive> ComponentHandlers::buildBooleanPrimitive(
     std::shared_ptr<Component> &text, 
     size_t &m_index)
 {
@@ -26,15 +29,14 @@ std::shared_ptr<StringPrimitive> ComponentHandlers::buildBooleanPrimitive(
 
 std::shared_ptr<StringPrimitive> ComponentHandlers::buildStringPrimitive(
     std::vector<std::shared_ptr<Component>> &components,
-    size_t &m_index,
-    size_t &start)
+    size_t &m_index)
 {
-    m_index++;
-    std::vector<std::shared_ptr<Component> characters = []; 
-    while(components[m_index]->type() == ComponentType::OpenTag ||
-        components[m_index]->type() == ComponentType::ClosingOpenTag)
+    std::vector<std::shared_ptr<Component>> characters;
+    m_index++; 
+    while((components[m_index]->type() == ComponentType::OpenTag ||
+        components[m_index]->type() == ComponentType::ClosingOpenTag))
     {
-        numbers.push_back(components[m_index]);
+        characters.push_back(components[m_index]);
         m_index++;
     }
     return std::make_shared<StringPrimitive>(characters);
@@ -42,15 +44,10 @@ std::shared_ptr<StringPrimitive> ComponentHandlers::buildStringPrimitive(
 
 std::shared_ptr<NumberPrimitive> ComponentHandlers::buildNumberPrimitive(
     std::vector<std::shared_ptr<Component>> &components,
-    size_t &m_index,
-    size_t &start)
+    size_t &m_index)
 {
-    std::vector<std::shared_ptr<NumberType> numbers = []; 
-    while(components[m_index]->type() == ComponentType::NumberType){
-        numbers.push_back(std::dynamic_pointer_cast<NumberType>(components[m_index]));
-        m_index++;
-    }
-    return std::make_shared<NumberPrimitive>(numbers);
+    m_index++;
+    return std::make_shared<NumberPrimitive>(std::dynamic_pointer_cast<NumberType>(components[m_index-1]));
 }
 
 //Creates a document tag element
