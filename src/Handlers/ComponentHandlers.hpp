@@ -28,6 +28,10 @@ class ComponentHandlers {
         static std::shared_ptr<ObjectPrimitive> buildObject(
             std::vector<std::shared_ptr<Component>> &components,
             size_t &m_index);
+        
+        static std::shared_ptr<ArrayPrimitive> buildArray(
+            std::vector<std::shared_ptr<Component>> &components,
+            size_t &m_index);
 
         static std::shared_ptr<DocumentTag> buildDocumentTagElement(
             std::vector<std::shared_ptr<Component>> &components,

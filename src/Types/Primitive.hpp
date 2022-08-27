@@ -148,6 +148,27 @@ class ObjectPrimitive: public Primitive
         virtual std::string getType(){return this->getTypeAsString(this->type());}
 };
 
+class ArrayPrimitive: public Primitive
+{
+    private:
+        std::string name; 
+        std::string value; 
+        std::vector<std::shared_ptr<Primitive>> primitives;
+
+    public:
+        ArrayPrimitive(std::vector<std::shared_ptr<Primitive>> primitives): Primitive()
+        {
+            this->name = "object"; 
+            this->primitives = primitives;
+        }
+
+        virtual PrimitiveType type(){ return PrimitiveType::ArrayPrimitive;}
+        virtual std::string inspect() { return this->getType() + " - " + std::to_string(this->getElements()) + " elements."; }
+        virtual int getElements(){ return this->primitives.size();}
+        virtual std::string getValue(){ return value;}
+        virtual std::string getType(){return this->getTypeAsString(this->type());}
+};
+
 class ObjectPair{
     private:
         std::string key; 

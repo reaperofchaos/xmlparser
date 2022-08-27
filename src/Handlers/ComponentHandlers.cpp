@@ -12,6 +12,10 @@ std::shared_ptr<Primitive> ComponentHandlers::buildPrimitive(
             return ComponentHandlers::buildNumberPrimitive(components, m_index);
         case ComponentType::StringType:
             return ComponentHandlers::buildStringPrimitive(components, m_index);
+        case ComponentType::OpenObject:
+            return ComponentHandlers::buildObject(components, m_index);
+        case ComponentType::OpenArray:
+            return ComponentHandlers::buildArray(components, m_index);
         default:
             m_index++;
             return NULL; 
@@ -180,9 +184,10 @@ std::shared_ptr<ObjectPrimitive> ComponentHandlers::buildObject(
     size_t &m_index)
 {
     std::vector<std::shared_ptr<ObjectPair>> objectPairs; 
+    m_index++; //bracket
+
     while(components[m_index]->type() != ComponentType::CloseObject)
     {
-        m_index++;
         ComponentHandlers::IgnoreWhiteSpace(components, m_index);
 
         //Function to build an object pair
@@ -210,4 +215,30 @@ std::shared_ptr<ObjectPrimitive> ComponentHandlers::buildObject(
 
     m_index++;
     return std::make_shared<ObjectPrimitive>(objectPairs);
+}
+
+std::shared_ptr<ArrayPrimitive> ComponentHandlers::buildArray(
+    std::vector<std::shared_ptr<Component>> &components,
+    size_t &m_index)
+{
+    std::vector<std::shared_ptr<Primitive>> primitives;
+    m_index++; //array bracket
+    
+    while(components[m_index]->type() != ComponentType::CloseArray)
+    {
+        ComponentHandlers::IgnoreWhiteSpace(components, m_index);
+        if(components[m_index]->type() != ComponentType::CommaComponent)
+        {
+            primitives.push_back(ComponentHandlers::buildPrimitive(components, m_index));
+            m_index++;
+        }
+        ComponentHandlers::IgnoreWhiteSpace(components, m_index);
+        if(components[m_index]->type() == ComponentType::CommaComponent)
+        {
+            m_index++;
+        }
+        ComponentHandlers::IgnoreWhiteSpace(components, m_index);
+    }
+    m_index++;
+    return std::make_shared<ArrayPrimitive>(primitives);
 }
