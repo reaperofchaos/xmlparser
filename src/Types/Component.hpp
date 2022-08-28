@@ -166,6 +166,10 @@ class StringType: public Component{
             // std::cout << this->inspect() << "\n";
         }
 
+        StringType(std::string value){            
+            this->value = value;
+        }
+
         virtual ComponentType type(){ return ComponentType::StringType;}
         std::string getValue(){ return value;}
         virtual void setValue(std::shared_ptr<Quote> q, std::vector<std::shared_ptr<Character>> characters, std::shared_ptr<Quote> q2)
