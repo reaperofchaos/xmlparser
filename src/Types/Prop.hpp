@@ -50,6 +50,12 @@ class ObjectProp: public Prop{
         std::shared_ptr<Primitive> value; 
     
     public:
+        ObjectProp(std::shared_ptr<Name> name, std::shared_ptr<Primitive> value): Prop()
+        {
+            this->name = name->getValue(); 
+            this->value = value;
+        };
+
         ObjectProp(std::string name, std::shared_ptr<Primitive> value): Prop()
         {
             this->name = name; 
@@ -69,6 +75,12 @@ class StringProp: public Prop{
         std::shared_ptr<Primitive> value; 
     
     public:
+        StringProp(std::shared_ptr<Name> name, std::shared_ptr<StringPrimitive> value): Prop()
+        {
+            this->name = name->getValue(); 
+            this->value = value;
+        };
+
         StringProp(std::string name, std::shared_ptr<StringPrimitive> value): Prop()
         {
             this->name = name; 
@@ -92,6 +104,18 @@ class BooleanProp: public Prop{
         {
             this->name = value->getValue(); 
             this->value = std::make_shared<BooleanPrimitive>(value);
+        };
+
+        BooleanProp(std::shared_ptr<Name> name, std::shared_ptr<Name> value): Prop()
+        {
+            this->name = name->getValue(); 
+            this->value = std::make_shared<BooleanPrimitive>(value);
+        };
+
+        BooleanProp(std::shared_ptr<Name> name, std::shared_ptr<BooleanPrimitive> value): Prop()
+        {
+            this->name = name->getValue(); 
+            this->value = value;
         };
         
         virtual PropType type(){ return PropType::BooleanProp;}

@@ -3,21 +3,20 @@
 std::shared_ptr<Element>ElementBuilder::next(){
     size_t start = this->m_index;
 
-    while (this->m_index < this->m_components.size())
+    while (this->m_index < this->m_components.size()-1)
     {
-        std::cout << m_components[m_index]->inspect() << "\n"; 
         switch(m_components[m_index]->type())
         {
             case ComponentType::DocumentTypeOpenTag:
-                return ComponentHandlers::buildDocumentTagElement(m_components, m_index, start);
+                return ElementHandlers::buildDocumentTagElement(m_components, m_index, start);
             case ComponentType::OpenTag:
-                return ComponentHandlers::buildTagElement(m_components, m_index, start);
+                return ElementHandlers::buildTagElement(m_components, m_index, start);
             case ComponentType::ClosingOpenTag:
-                return ComponentHandlers::buildCloseTagElement(m_components, m_index, start);
+                return ElementHandlers::buildCloseTagElement(m_components, m_index, start);
             case ComponentType::CommentOpenTag:
-                return ComponentHandlers::buildCommentTagElement(m_components, m_index, start); 
+                return ElementHandlers::buildCommentTagElement(m_components, m_index, start); 
             case ComponentType::StringType:
-                return ComponentHandlers::buildNestedString(m_components, m_index, start);    
+                return ElementHandlers::buildNestedString(m_components, m_index, start);    
             default:
                     m_index++;
                     return {};

@@ -29,7 +29,9 @@ $(OBJDIR)/TokenHandlers.o \
 $(OBJDIR)/Symbol.o \
 $(OBJDIR)/Component.o \
 $(OBJDIR)/Primitive.o \
-$(OBJDIR)/ComponentHandlers.o \
+$(OBJDIR)/PropHandlers.o \
+$(OBJDIR)/PrimitiveHandlers.o \
+$(OBJDIR)/ElementHandlers.o \
 $(OBJDIR)/PrimitiveBuilder.o \
 $(OBJDIR)/ElementBuilder.o \
 $(OBJDIR)/Element.o \
@@ -48,7 +50,6 @@ all: $(OBJS)
 $(OBJDIR)/Prop.o:
 	$(CC) -c $(CCFLAGS) $(SRCDIR)/Types/Prop.cpp -o $(OBJDIR)/Prop.o
 
-
 $(OBJDIR)/Element.o:
 	$(CC) -c $(CCFLAGS) $(SRCDIR)/Types/Element.cpp -o $(OBJDIR)/Element.o
 
@@ -58,8 +59,14 @@ $(OBJDIR)/ElementBuilder.o:
 $(OBJDIR)/PrimitiveBuilder.o:
 	$(CC) -c $(CCFLAGS) $(SRCDIR)/PrimitiveBuilder.cpp -o $(OBJDIR)/PrimitiveBuilder.o
 
-$(OBJDIR)/ComponentHandlers.o:
-	$(CC) -c $(CCFLAGS) $(SRCDIR)/Handlers/ComponentHandlers.cpp -o $(OBJDIR)/ComponentHandlers.o
+$(OBJDIR)/PropHandlers.o:
+	$(CC) -c $(CCFLAGS) $(SRCDIR)/Handlers/PropHandlers.cpp -o $(OBJDIR)/PropHandlers.o
+
+$(OBJDIR)/ElementHandlers.o:
+	$(CC) -c $(CCFLAGS) $(SRCDIR)/Handlers/ElementHandlers.cpp -o $(OBJDIR)/ElementHandlers.o
+
+$(OBJDIR)/PrimitiveHandlers.o:
+	$(CC) -c $(CCFLAGS) $(SRCDIR)/Handlers/PrimitiveHandlers.cpp -o $(OBJDIR)/PrimitiveHandlers.o
 
 $(OBJDIR)/Primitive.o:
 	$(CC) -c $(CCFLAGS) $(SRCDIR)/Types/Primitive.cpp -o $(OBJDIR)/Primitive.o

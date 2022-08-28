@@ -6,6 +6,9 @@
 #include "../Types/CharType.hpp"
 #include "../Types/Component.hpp"
 
+/**
+ * A class used to create Components from Token vectors
+ */
 class TokenHandlers {
     public:
         static std::shared_ptr<NumberType> buildNumberComponent(

@@ -10,9 +10,9 @@ std::shared_ptr<Primitive>PrimitiveBuilder::next(){
             case ComponentType::NumberType:
             case ComponentType::StringType:
             case ComponentType::Name:
-                return ComponentHandlers::buildPrimitive(m_components, m_index);
+                return PrimitiveHandlers::buildPrimitive(m_components, m_index);
             case ComponentType::OpenObject:
-                return ComponentHandlers::buildObject(m_components, m_index);
+                return PrimitiveHandlers::buildObject(m_components, m_index);
             default:
                     m_index++;
                     return {};

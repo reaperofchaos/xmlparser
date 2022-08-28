@@ -64,11 +64,11 @@ class DocumentTag: public Element
         std::vector<std::shared_ptr<Prop>> props; 
 
     public: 
-        DocumentTag(std::shared_ptr<DocumentTypeOpenTag> openTag, std::shared_ptr<Name> name, std::shared_ptr<Name> propName, std::shared_ptr<CloseTag> closeTag): Element()
+        DocumentTag(std::shared_ptr<DocumentTypeOpenTag> openTag, std::shared_ptr<Name> name, std::vector<std::shared_ptr<Prop>> props, std::shared_ptr<CloseTag> closeTag): Element()
         {
-            this->tagString = openTag->getValue() + " " + name->getValue() + " " + propName->getValue() + " " + closeTag->getValue(); 
+            this->tagString = openTag->getValue() + " " + name->getValue() + " " + closeTag->getValue(); 
             this->value = name->getValue();
-            this->props.push_back(std::make_shared<BooleanProp>(propName)); 
+            this->props = props;  
         }
         virtual ElementType type(){ return ElementType::DocumentTag;}
         virtual std::string inspect() { std::string text = this->getType() + " - " + this->getValue() +"\n";
@@ -160,10 +160,12 @@ class OpenTagElement: public Tag
     public: 
         OpenTagElement(std::shared_ptr<OpenTag> openTag, 
             std::shared_ptr<Name> name, 
+            std::vector<std::shared_ptr<Prop>> props,
             std::shared_ptr<CloseTag> closeTag): Tag()
         {
             this->tagString = openTag->getValue() + " " + name->getValue() + " " + closeTag->getValue(); 
             this->value = name->getValue();
+            this->props = props; 
         }
         virtual ElementType type(){ return ElementType::Tag;}
         virtual TagType tagType(){ return TagType::OpenTagElement;}
@@ -202,10 +204,12 @@ class SelfClosingTagElement: public Tag
     public: 
         SelfClosingTagElement(std::shared_ptr<OpenTag> openTag, 
             std::shared_ptr<Name> name, 
+            std::vector<std::shared_ptr<Prop>> props,
             std::shared_ptr<ClosingCloseTag> closeTag): Tag()
         {
             this->tagString = openTag->getValue() + " " + name->getValue() + " " + closeTag->getValue(); 
             this->value = name->getValue();
+            this->props = props; 
         }
         virtual TagType tagType(){ return TagType::SelfClosingTagElement;}
         virtual ElementType type(){ return ElementType::Tag;}
@@ -247,22 +251,10 @@ class CloseTagElement: public Tag
             std::shared_ptr<Name> name, 
             std::shared_ptr<CloseTag> closeTag): Tag()
         {
-            std::cout << "Building a close tag" << "\n";
-            if(openTag){
-                std::cout << "open: " << openTag->getValue() << "\n";
-            }
-            if(name){
-                std::cout << "name: " << name->getValue() << "\n";
-
-            }
-            if(closeTag){
-                std::cout << "close: " << closeTag->getValue() << "\n";
-            }
-
             this->tagString = openTag->getValue() + " " + name->getValue() + " " + closeTag->getValue(); 
-            std::cout << this->tagString << "\n";
             this->value = name->getValue();
         }
+        
         virtual TagType tagType(){ return TagType::CloseTagElement;}
         virtual ElementType type(){ return ElementType::Tag;}
         virtual std::string inspect() { std::string text = this->getTagType() + " - " + this->getValue() +"\n";

@@ -5,7 +5,6 @@ std::shared_ptr<NumberType> TokenHandlers::buildNumberComponent(
     size_t &m_index,
     std::vector<std::shared_ptr<Number>> &numbers)
 {
-    // std::cout << "Building a number primitive \n";
     
     while(m_tokens[m_index]->type() == CharacterType::Number)
     {
@@ -21,7 +20,7 @@ std::shared_ptr<CloseTag> TokenHandlers::buildCloseTag(
     std::vector<std::shared_ptr<WhiteSpace>> &whiteSpaces)
 {
     m_index++;
-    // std::cout << "Building a close bracket primitive \n";
+
     if(whiteSpaces.size() > 0){
         return std::make_shared<CloseTag>(whiteSpaces, 
             std::dynamic_pointer_cast<CloseBracket>(m_tokens[m_index-1]));
@@ -36,7 +35,7 @@ std::shared_ptr<CloseArray> TokenHandlers::buildCloseArray(
     size_t &m_index,
     std::vector<std::shared_ptr<WhiteSpace>> &whiteSpaces)
 {
-    // std::cout << "Building an array close bracket primitive \n";
+
     if(whiteSpaces.size() > 0){
         return std::make_shared<CloseArray>(whiteSpaces,
             std::dynamic_pointer_cast<ArrayCloseBracket>(m_tokens[m_index]));
@@ -51,7 +50,7 @@ std::shared_ptr<CloseObject> TokenHandlers::buildCloseObject(
     size_t &m_index,
     std::vector<std::shared_ptr<WhiteSpace>> &whiteSpaces)
 {
-    // std::cout << "Building an object close primitive \n";
+
     if(whiteSpaces.size() > 0){
         return std::make_shared<CloseObject>(whiteSpaces,
             std::dynamic_pointer_cast<ObjectCloseBracket>(m_tokens[m_index]));
@@ -75,7 +74,7 @@ std::shared_ptr<Name> TokenHandlers::buildName(
 
 )
 {
-    // std::cout << "Building a name" << "\n";
+
     m_index++;
     while(m_tokens[m_index]->type() != CharacterType::WhiteSpace &&
     (m_tokens[m_index]->symbolType() != SymbolType::CloseBracket) &&
@@ -97,7 +96,7 @@ std::shared_ptr<ClosingCloseTag> TokenHandlers::buildClosingCloseTag(
     size_t &m_index,
     size_t &start)
 {
-    // std::cout << "Building a closing close tag primitive \n";
+
     if(m_tokens[m_index+1]->type() == CharacterType::WhiteSpace )
     {
         m_index++;
@@ -109,7 +108,7 @@ std::shared_ptr<ClosingCloseTag> TokenHandlers::buildClosingCloseTag(
         m_index++;
     }
     m_index++; 
-    std::cout << "value " << m_tokens[m_index-1]->getValue() << "\n";
+
     return std::make_shared<ClosingCloseTag>
         (
             std::dynamic_pointer_cast<ForwardSlash>(m_tokens[start]),
@@ -124,7 +123,7 @@ std::shared_ptr<StringType> TokenHandlers::buildString(
     std::vector<std::shared_ptr<Character>> &characters, 
     SymbolType symbolType)
 {
-    // std::cout << "Building a string \n";
+
     m_index++; 
     if(symbolType == SymbolType::SingleQuote)
     {
@@ -160,7 +159,7 @@ std::shared_ptr<OpenArray> TokenHandlers::buildOpenArray(
     size_t &start,
     std::vector<std::shared_ptr<WhiteSpace>> &whiteSpaces)
 {
-    // std::cout << "Building an open array primitive \n";
+
     if(m_tokens[m_index+1]->type() == CharacterType::WhiteSpace){
         m_index++;
         while(m_tokens[m_index]->type() == CharacterType::WhiteSpace)
@@ -185,7 +184,6 @@ std::shared_ptr<OpenObject> TokenHandlers::buildOpenObject(
     size_t &start,
     std::vector<std::shared_ptr<WhiteSpace>> &whiteSpaces)
 {
-    // std::cout << "Building an Object Open Bracket  primitive \n";
     if(m_tokens[m_index+1]->type() == CharacterType::WhiteSpace){
         m_index++;
         while(m_tokens[m_index]->type() == CharacterType::WhiteSpace)
@@ -207,7 +205,7 @@ std::shared_ptr<ExclamationComponent> TokenHandlers::buildExclamation(
     size_t &m_index,
     size_t &start)
 {
-    // std::cout << "Building a close object primitive \n";
+
     m_index++;
     
     return std::make_shared<ExclamationComponent>
@@ -220,7 +218,6 @@ std::shared_ptr<EqualComponent> TokenHandlers::buildEqual(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index)
 {
-    // std::cout << "Building an equal primitive \n";
     m_index++;
     
     return std::make_shared<EqualComponent>
@@ -233,7 +230,6 @@ std::shared_ptr<SemicolonComponent> TokenHandlers::buildSemicolon(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index)
 {
-    // std::cout << "Building a semicolon primitive \n";
     m_index++;
     
     return std::make_shared<SemicolonComponent>
@@ -246,7 +242,6 @@ std::shared_ptr<ColonComponent> TokenHandlers::buildColon(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index)
 {
-    // std::cout << "Building an equal primitive \n";
     m_index++;
     
     return std::make_shared<ColonComponent>
@@ -259,7 +254,6 @@ std::shared_ptr<PercentageComponent> TokenHandlers::buildPercentage(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index)
 {
-    // std::cout << "Building a percentage primitive \n";
     m_index++;
     
     return std::make_shared<PercentageComponent>
@@ -272,7 +266,6 @@ std::shared_ptr<CommaComponent> TokenHandlers::buildComma(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index)
 {
-    // std::cout << "Building a comma primitive \n";
     m_index++;
     
     return std::make_shared<CommaComponent>
@@ -285,7 +278,6 @@ std::shared_ptr<HashTagComponent> TokenHandlers::buildHashTag(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index)
 {
-    // std::cout << "Building a hash tag primitive \n";
     m_index++;
     
     return std::make_shared<HashTagComponent>
@@ -299,7 +291,6 @@ std::shared_ptr<StringType> TokenHandlers::buildNestedString(
     size_t &m_index,
     std::vector<std::shared_ptr<Character>> &characters)
 {
-    // std::cout << "Building a string " << "\n"; 
     characters.push_back(m_tokens[m_index]);
     m_index++;
 
@@ -321,7 +312,6 @@ std::shared_ptr<ClosingOpenTag> TokenHandlers::buildClosingOpenTag(
     size_t &m_index,
     size_t &start)
 {
-    // std::cout << "Building a Closing OpenTag " << "\n"; 
     m_index++; //forward slash
     m_index++; 
     return std::make_shared<ClosingOpenTag>
@@ -337,7 +327,6 @@ std::shared_ptr<CommentOpenTag> TokenHandlers::buildCommentOpenTag(
     size_t &start,
     std::vector<std::shared_ptr<WhiteSpace>> &whiteSpaces)
 {
-    // std::cout << "Building a CommentOpenTag " << "\n"; 
 
     m_index++; //first dash
     m_index++; //second dash
@@ -358,7 +347,6 @@ std::shared_ptr<CommentCloseTag> TokenHandlers::buildCommentCloseTag(
     size_t &start,
     std::vector<std::shared_ptr<WhiteSpace>> &whiteSpaces)
 {
-    // std::cout << "Building a Comment close tag " << "\n"; 
 
     m_index++;
     m_index++;
@@ -379,7 +367,6 @@ std::shared_ptr<DocumentTypeOpenTag> TokenHandlers::buildDocumentTypeOpenTag(
     size_t &start,
     std::vector<std::shared_ptr<WhiteSpace>> &whiteSpaces)
 {
-    // std::cout << "Building a DocumentTypeOpenTag " << "\n"; 
 
     m_index++; //next token
     return std::make_shared<DocumentTypeOpenTag>
@@ -411,7 +398,6 @@ std::shared_ptr<OpenTag> TokenHandlers::buildOpenTag(
     size_t &start,
     std::vector<std::shared_ptr<WhiteSpace>> &whiteSpaces)
 {   
-    // std::cout << "Building a OpenTag " << "\n"; 
     m_index++; 
     return std::make_shared<OpenTag>
     (

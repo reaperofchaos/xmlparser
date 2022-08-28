@@ -1,0 +1,124 @@
+#include "PrimitiveHandlers.hpp"
+
+std::shared_ptr<Primitive> PrimitiveHandlers::buildPrimitive(
+    std::vector<std::shared_ptr<Component>> &components, 
+    size_t &m_index)
+{
+    size_t start = m_index; 
+    switch(components[start]->type()){
+        case ComponentType::Name:
+            return PrimitiveHandlers::buildBooleanPrimitive(components[start], m_index);
+        case ComponentType::NumberType:
+            return PrimitiveHandlers::buildNumberPrimitive(components, m_index);
+        case ComponentType::StringType:
+            return PrimitiveHandlers::buildStringPrimitive(components, m_index);
+        case ComponentType::OpenObject:
+            return PrimitiveHandlers::buildObject(components, m_index);
+        case ComponentType::OpenArray:
+            return PrimitiveHandlers::buildArray(components, m_index);
+        default:
+            m_index++;
+            return NULL; 
+    }
+    return NULL; 
+}
+
+std::shared_ptr<BooleanPrimitive> PrimitiveHandlers::buildBooleanPrimitive(
+    std::shared_ptr<Component> &text, 
+    size_t &m_index)
+{
+    m_index++;
+    return std::make_shared<BooleanPrimitive>(std::dynamic_pointer_cast<Name>(text));
+}
+
+std::shared_ptr<StringPrimitive> PrimitiveHandlers::buildStringPrimitive(
+    std::vector<std::shared_ptr<Component>> &components,
+    size_t &m_index)
+{
+    size_t start = m_index;
+    m_index++; 
+    PrimitiveHandlers::IgnoreWhiteSpace(components, m_index);     
+    return std::make_shared<StringPrimitive>(std::dynamic_pointer_cast<StringType>(components[start]));
+}
+
+std::shared_ptr<NumberPrimitive> PrimitiveHandlers::buildNumberPrimitive(
+    std::vector<std::shared_ptr<Component>> &components,
+    size_t &m_index)
+{
+    m_index++;
+    return std::make_shared<NumberPrimitive>(std::dynamic_pointer_cast<NumberType>(components[m_index-1]));
+}
+
+std::shared_ptr<ObjectPrimitive> PrimitiveHandlers::buildObject(
+    std::vector<std::shared_ptr<Component>> &components,
+    size_t &m_index)
+{
+    std::vector<std::shared_ptr<ObjectPair>> objectPairs; 
+    m_index++; //bracket
+
+    while(components[m_index]->type() != ComponentType::CloseObject)
+    {
+        PrimitiveHandlers::IgnoreWhiteSpace(components, m_index);
+
+        //Function to build an object pair
+        if(components[m_index]->type() == ComponentType::Name){
+            std::shared_ptr<Name> key = std::dynamic_pointer_cast<Name>(components[m_index]); 
+            m_index++;
+            PrimitiveHandlers::IgnoreWhiteSpace(components, m_index);
+            if(components[m_index]->type() == ComponentType::ColonComponent)
+            {
+                m_index++;
+            }
+
+            PrimitiveHandlers::IgnoreWhiteSpace(components, m_index);
+            std::shared_ptr<Primitive> primitive = PrimitiveHandlers::buildPrimitive(components, m_index);
+            PrimitiveHandlers::IgnoreWhiteSpace(components, m_index);
+            if(components[m_index]->type() == ComponentType::CommaComponent)
+            {
+                m_index++;
+                PrimitiveHandlers::IgnoreWhiteSpace(components, m_index);
+            }
+
+            objectPairs.push_back(std::make_shared<ObjectPair>(key, primitive));
+        }
+    }
+
+    m_index++;
+    return std::make_shared<ObjectPrimitive>(objectPairs);
+}
+
+std::shared_ptr<ArrayPrimitive> PrimitiveHandlers::buildArray(
+    std::vector<std::shared_ptr<Component>> &components,
+    size_t &m_index)
+{
+    std::vector<std::shared_ptr<Primitive>> primitives;
+    m_index++; //array bracket
+    
+    while(components[m_index]->type() != ComponentType::CloseArray)
+    {
+        PrimitiveHandlers::IgnoreWhiteSpace(components, m_index);
+        if(components[m_index]->type() != ComponentType::CommaComponent)
+        {
+            primitives.push_back(PrimitiveHandlers::buildPrimitive(components, m_index));
+            m_index++;
+        }
+        PrimitiveHandlers::IgnoreWhiteSpace(components, m_index);
+        if(components[m_index]->type() == ComponentType::CommaComponent)
+        {
+            m_index++;
+        }
+        PrimitiveHandlers::IgnoreWhiteSpace(components, m_index);
+    }
+    m_index++;
+    return std::make_shared<ArrayPrimitive>(primitives);
+}
+
+void PrimitiveHandlers::IgnoreWhiteSpace( 
+    std::vector<std::shared_ptr<Component>> &components,
+    size_t &m_index)
+{
+    while(components[m_index]->type() == ComponentType::WhiteSpaces)
+    {
+        m_index++;
+    } 
+}

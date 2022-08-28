@@ -112,8 +112,16 @@ class BooleanPrimitive: public Primitive
         BooleanPrimitive(std::shared_ptr<Name> name, 
             std::shared_ptr<Name> value ): Primitive()
         {
+            
             this->name = name->getValue();
-            this->value = value->getValue();
+            if(value->getValue() == "true" || 
+                value->getValue() =="True" ||
+                value->getValue() == "TRUE")
+            {
+                this->value = "true";
+            }else{
+                this->value = "false"; 
+            }
         }
         virtual PrimitiveType type(){ return PrimitiveType::BooleanPrimitive;}
         virtual std::string inspect() { return this->getType() + " - " + this->getValue(); }

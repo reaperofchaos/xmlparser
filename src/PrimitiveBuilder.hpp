@@ -7,7 +7,7 @@
 #include "Types/Component.hpp"
 #include "Types/Primitive.hpp"
 #include "CharacterReader.hpp"
-#include "Handlers/ComponentHandlers.hpp"
+#include "Handlers/PrimitiveHandlers.hpp"
 #include "Tokenizer.hpp"
 #include "CharacterReader.hpp"
 
