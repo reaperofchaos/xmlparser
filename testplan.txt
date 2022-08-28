@@ -8,3 +8,5 @@ test7.txt - lists
 test8.txt - anchor tags
 test9.txt - embedded styles
 test10.txt - tables
+test11.txt - svg
+test12.txt - jsx

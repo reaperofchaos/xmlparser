@@ -7,6 +7,7 @@
 #include "../Types/Primitive.hpp"
 #include "../Types/Prop.hpp"
 #include "../Handlers/PrimitiveHandlers.hpp"
+#include "../Utils/ComponentUtilities.hpp"
 
 /**
  * A class used to create Props from Component vectors
@@ -34,8 +35,4 @@ class PropHandlers {
         
         static std::shared_ptr<BooleanProp> buildBooleanProp(
             std::shared_ptr<Name> name);
-        
-        static void IgnoreWhiteSpace( 
-            std::vector<std::shared_ptr<Component>> &components,
-            size_t &m_index);
 };

@@ -17,7 +17,7 @@ std::shared_ptr<Primitive> PrimitiveHandlers::buildPrimitive(
         case ComponentType::OpenArray:
             return PrimitiveHandlers::buildArray(components, m_index);
         default:
-            m_index++;
+            ComponentUtilities::IncrementIndex(components, m_index);
             return NULL; 
     }
     return NULL; 
@@ -36,8 +36,8 @@ std::shared_ptr<StringPrimitive> PrimitiveHandlers::buildStringPrimitive(
     size_t &m_index)
 {
     size_t start = m_index;
-    m_index++; 
-    PrimitiveHandlers::IgnoreWhiteSpace(components, m_index);     
+    ComponentUtilities::IncrementIndex(components, m_index);
+    ComponentUtilities::IgnoreWhiteSpace(components, m_index);     
     return std::make_shared<StringPrimitive>(std::dynamic_pointer_cast<StringType>(components[start]));
 }
 
@@ -45,7 +45,7 @@ std::shared_ptr<NumberPrimitive> PrimitiveHandlers::buildNumberPrimitive(
     std::vector<std::shared_ptr<Component>> &components,
     size_t &m_index)
 {
-    m_index++;
+    ComponentUtilities::IncrementIndex(components, m_index);
     return std::make_shared<NumberPrimitive>(std::dynamic_pointer_cast<NumberType>(components[m_index-1]));
 }
 
@@ -54,36 +54,36 @@ std::shared_ptr<ObjectPrimitive> PrimitiveHandlers::buildObject(
     size_t &m_index)
 {
     std::vector<std::shared_ptr<ObjectPair>> objectPairs; 
-    m_index++; //bracket
+    ComponentUtilities::IncrementIndex(components, m_index);
 
     while(components[m_index]->type() != ComponentType::CloseObject)
     {
-        PrimitiveHandlers::IgnoreWhiteSpace(components, m_index);
+        ComponentUtilities::IgnoreWhiteSpace(components, m_index);
 
         //Function to build an object pair
         if(components[m_index]->type() == ComponentType::Name){
             std::shared_ptr<Name> key = std::dynamic_pointer_cast<Name>(components[m_index]); 
-            m_index++;
-            PrimitiveHandlers::IgnoreWhiteSpace(components, m_index);
+            ComponentUtilities::IncrementIndex(components, m_index);
+            ComponentUtilities::IgnoreWhiteSpace(components, m_index);
             if(components[m_index]->type() == ComponentType::ColonComponent)
             {
                 m_index++;
             }
 
-            PrimitiveHandlers::IgnoreWhiteSpace(components, m_index);
+            ComponentUtilities::IgnoreWhiteSpace(components, m_index);
             std::shared_ptr<Primitive> primitive = PrimitiveHandlers::buildPrimitive(components, m_index);
-            PrimitiveHandlers::IgnoreWhiteSpace(components, m_index);
+            ComponentUtilities::IgnoreWhiteSpace(components, m_index);
             if(components[m_index]->type() == ComponentType::CommaComponent)
             {
-                m_index++;
-                PrimitiveHandlers::IgnoreWhiteSpace(components, m_index);
+                ComponentUtilities::IncrementIndex(components, m_index);
+                ComponentUtilities::IgnoreWhiteSpace(components, m_index);
             }
 
             objectPairs.push_back(std::make_shared<ObjectPair>(key, primitive));
         }
     }
 
-    m_index++;
+    ComponentUtilities::IncrementIndex(components, m_index);
     return std::make_shared<ObjectPrimitive>(objectPairs);
 }
 
@@ -92,33 +92,26 @@ std::shared_ptr<ArrayPrimitive> PrimitiveHandlers::buildArray(
     size_t &m_index)
 {
     std::vector<std::shared_ptr<Primitive>> primitives;
-    m_index++; //array bracket
+    ComponentUtilities::IncrementIndex(components, m_index);
     
     while(components[m_index]->type() != ComponentType::CloseArray)
     {
-        PrimitiveHandlers::IgnoreWhiteSpace(components, m_index);
+        ComponentUtilities::IgnoreWhiteSpace(components, m_index);
         if(components[m_index]->type() != ComponentType::CommaComponent)
         {
             primitives.push_back(PrimitiveHandlers::buildPrimitive(components, m_index));
-            m_index++;
+            ComponentUtilities::IncrementIndex(components, m_index);
         }
-        PrimitiveHandlers::IgnoreWhiteSpace(components, m_index);
+        
+        ComponentUtilities::IgnoreWhiteSpace(components, m_index);
         if(components[m_index]->type() == ComponentType::CommaComponent)
         {
-            m_index++;
+            ComponentUtilities::IncrementIndex(components, m_index);
         }
-        PrimitiveHandlers::IgnoreWhiteSpace(components, m_index);
-    }
-    m_index++;
-    return std::make_shared<ArrayPrimitive>(primitives);
-}
 
-void PrimitiveHandlers::IgnoreWhiteSpace( 
-    std::vector<std::shared_ptr<Component>> &components,
-    size_t &m_index)
-{
-    while(components[m_index]->type() == ComponentType::WhiteSpaces)
-    {
-        m_index++;
-    } 
+        ComponentUtilities::IgnoreWhiteSpace(components, m_index);
+    }
+    
+    ComponentUtilities::IncrementIndex(components, m_index);
+    return std::make_shared<ArrayPrimitive>(primitives);
 }

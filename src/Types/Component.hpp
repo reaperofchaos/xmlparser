@@ -724,24 +724,6 @@ class CommentOpenTag: public Component{
             this->value = value;
         }
 
-        CommentOpenTag(std::shared_ptr<OpenBracket> openBracket, 
-            std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces, 
-            std::shared_ptr<Exclamation> exclamation,
-            std::shared_ptr<Dash> dash1,
-            std::shared_ptr<Dash> dash2)
-        {
-            std::string value = "";
-            value += openBracket->getValue();
-            for(std::shared_ptr<WhiteSpace> whiteSpace : whiteSpaces)
-            {
-                value += whiteSpace->getValue();
-            }
-            value += exclamation->getValue();
-            value += dash1->getValue();
-            value += dash2->getValue();
-            this->value = value; 
-        }
-
         virtual ComponentType type(){ return ComponentType::CommentOpenTag;}
         std::string getValue(){ return value;}
         

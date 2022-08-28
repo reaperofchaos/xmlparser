@@ -5,6 +5,8 @@
 #include <memory>
 #include "../Types/Component.hpp"
 #include "../Types/Primitive.hpp"
+#include "../Utils/ComponentUtilities.hpp"
+
 /**
  * A class used to create Primitives from Component vectors
  */
@@ -31,10 +33,6 @@ class PrimitiveHandlers {
             size_t &m_index);
         
         static std::shared_ptr<ArrayPrimitive> buildArray(
-            std::vector<std::shared_ptr<Component>> &components,
-            size_t &m_index);
-        
-        static void IgnoreWhiteSpace( 
             std::vector<std::shared_ptr<Component>> &components,
             size_t &m_index);
 };

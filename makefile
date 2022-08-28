@@ -36,6 +36,8 @@ $(OBJDIR)/PrimitiveBuilder.o \
 $(OBJDIR)/ElementBuilder.o \
 $(OBJDIR)/Element.o \
 $(OBJDIR)/Prop.o \
+$(OBJDIR)/ComponentUtilities.o \
+$(OBJDIR)/CharacterUtilities.o \
 
 # $(OBJDIR)/Writer.o \
 # $(OBJDIR)/Printer.o \
@@ -58,6 +60,12 @@ $(OBJDIR)/ElementBuilder.o:
 
 $(OBJDIR)/PrimitiveBuilder.o:
 	$(CC) -c $(CCFLAGS) $(SRCDIR)/PrimitiveBuilder.cpp -o $(OBJDIR)/PrimitiveBuilder.o
+
+$(OBJDIR)/CharacterUtilities.o:
+	$(CC) -c $(CCFLAGS) $(SRCDIR)/Utils/CharacterUtilities.cpp -o $(OBJDIR)/CharacterUtilities.o
+
+$(OBJDIR)/ComponentUtilities.o:
+	$(CC) -c $(CCFLAGS) $(SRCDIR)/Utils/ComponentUtilities.cpp -o $(OBJDIR)/ComponentUtilities.o
 
 $(OBJDIR)/PropHandlers.o:
 	$(CC) -c $(CCFLAGS) $(SRCDIR)/Handlers/PropHandlers.cpp -o $(OBJDIR)/PropHandlers.o

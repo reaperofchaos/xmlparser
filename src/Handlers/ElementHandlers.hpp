@@ -7,6 +7,8 @@
 #include "../Types/Primitive.hpp"
 #include "../Types/Element.hpp"
 #include "../Handlers/PropHandlers.hpp"
+#include "../Utils/ComponentUtilities.hpp"
+
 /**
  * A class used to create Elements from Component vectors
  */
@@ -36,12 +38,4 @@ class ElementHandlers {
             std::vector<std::shared_ptr<Component>> &components,
             size_t &m_index,  
             size_t &start);
-
-        static void IgnoreWhiteSpace( 
-            std::vector<std::shared_ptr<Component>> &components,
-            size_t &m_index);
-        
-        static void IncrementIndex( 
-            std::vector<std::shared_ptr<Component>> &components,
-            size_t &m_index);
 };

@@ -5,6 +5,7 @@
 #include <memory>
 #include "../Types/CharType.hpp"
 #include "../Types/Component.hpp"
+#include "../Utils/CharacterUtilities.hpp"
 
 /**
  * A class used to create Components from Token vectors
@@ -19,23 +20,20 @@ class TokenHandlers {
         static std::shared_ptr<CloseTag> buildCloseTag(
             std::vector<std::shared_ptr<Character>> &m_tokens, 
             size_t &m_index,
-            std::vector<std::shared_ptr<WhiteSpace>> &whiteSpaces);
+            size_t &start);
 
         static std::shared_ptr<CloseArray> buildCloseArray(
             std::vector<std::shared_ptr<Character>> &m_tokens, 
-            size_t &m_index,
-            std::vector<std::shared_ptr<WhiteSpace>> &whiteSpaces);
+            size_t &m_index);
         
         static std::shared_ptr<CloseObject> buildCloseObject(
             std::vector<std::shared_ptr<Character>> &m_tokens, 
-            size_t &m_index,
-            std::vector<std::shared_ptr<WhiteSpace>> &whiteSpaces);
+            size_t &m_index);
 
         static std::shared_ptr<CloseObject> buildCloseObject(
             std::vector<std::shared_ptr<Character>> &m_tokens, 
             size_t &m_index,
-            size_t &start,
-            std::vector<std::shared_ptr<WhiteSpace>> &whiteSpaces);
+            size_t &start);
 
         static std::shared_ptr<WhiteSpaces> buildWhiteSpaces(
             std::vector<std::shared_ptr<WhiteSpace>> &whiteSpaces);
@@ -60,15 +58,12 @@ class TokenHandlers {
 
         static std::shared_ptr<OpenArray> buildOpenArray(
             std::vector<std::shared_ptr<Character>> &m_tokens, 
-            size_t &m_index,
-            size_t &start,
-            std::vector<std::shared_ptr<WhiteSpace>> &whiteSpaces);
+            size_t &m_index);
 
         static std::shared_ptr<OpenObject> buildOpenObject(
             std::vector<std::shared_ptr<Character>> &m_tokens, 
             size_t &m_index,
-            size_t &start,
-            std::vector<std::shared_ptr<WhiteSpace>> &whiteSpaces);
+            size_t &start);
 
         static std::shared_ptr<ExclamationComponent> buildExclamation(
             std::vector<std::shared_ptr<Character>> &m_tokens, 
@@ -112,26 +107,22 @@ class TokenHandlers {
         static std::shared_ptr<CommentOpenTag> buildCommentOpenTag(
             std::vector<std::shared_ptr<Character>> &m_tokens, 
             size_t &m_index,
-            size_t &start,
-            std::vector<std::shared_ptr<WhiteSpace>> &whiteSpaces);
+            size_t &start);
         
         static std::shared_ptr<CommentCloseTag> buildCommentCloseTag(
             std::vector<std::shared_ptr<Character>> &m_tokens, 
             size_t &m_index,
-            size_t &start,
-            std::vector<std::shared_ptr<WhiteSpace>> &whiteSpaces);
+            size_t &start);
         
         static std::shared_ptr<DocumentTypeOpenTag> buildDocumentTypeOpenTag(
             std::vector<std::shared_ptr<Character>> &m_tokens, 
             size_t &m_index,
-            size_t &start,
-            std::vector<std::shared_ptr<WhiteSpace>> &whiteSpaces);
+            size_t &start);
         
         static std::shared_ptr<OpenTag> buildOpenTag(
             std::vector<std::shared_ptr<Character>> &m_tokens, 
             size_t &m_index,
-            size_t &start,
-            std::vector<std::shared_ptr<WhiteSpace>> &whiteSpaces);
+            size_t &start);
 
         static void findWhiteSpace(
             std::vector<std::shared_ptr<Character>> &m_tokens, 

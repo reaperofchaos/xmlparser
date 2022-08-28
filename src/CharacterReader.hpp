@@ -8,6 +8,7 @@
 #include "Types/Component.hpp"
 #include "Tokenizer.hpp"
 #include "Handlers/TokenHandlers.hpp"
+#include "Utils/CharacterUtilities.hpp"
 /**
  * @brief Class that takes tokens  and 
  * analyzes them further to create primitives

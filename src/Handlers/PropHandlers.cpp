@@ -8,12 +8,14 @@ std::shared_ptr<Prop> PropHandlers::buildProp(
     if(components[start]->type() == ComponentType::Name)
     {
         std::shared_ptr<Name> name = std::dynamic_pointer_cast<Name>(components[start]); 
-        m_index++;
-        PropHandlers::IgnoreWhiteSpace(components, m_index);
+        ComponentUtilities::IncrementIndex(components, m_index);
+        ComponentUtilities::IgnoreWhiteSpace(components, m_index);
+    
         if(components[m_index]->type() == ComponentType::EqualComponent)
         {
-            m_index++;
-            PropHandlers::IgnoreWhiteSpace(components, m_index);
+            ComponentUtilities::IncrementIndex(components, m_index);
+            ComponentUtilities::IgnoreWhiteSpace(components, m_index);
+
             switch(components[m_index]->type())
             {
                 case ComponentType::Name:
@@ -23,7 +25,7 @@ std::shared_ptr<Prop> PropHandlers::buildProp(
                 case ComponentType::OpenObject:
                     return PropHandlers::buildObjectProp(components, name, m_index);
                 default:
-                    m_index++;
+                    ComponentUtilities::IncrementIndex(components, m_index);
                     return NULL; 
             }
         }
@@ -64,14 +66,4 @@ std::shared_ptr<BooleanProp> PropHandlers::buildBooleanProp(
     std::shared_ptr<Name> name)
 {
     return std::make_shared<BooleanProp>(name);
-}
-
-void PropHandlers::IgnoreWhiteSpace( 
-    std::vector<std::shared_ptr<Component>> &components,
-    size_t &m_index)
-{
-    while(components[m_index]->type() == ComponentType::WhiteSpaces)
-    {
-        m_index++;
-    } 
 }
