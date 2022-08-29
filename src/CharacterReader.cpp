@@ -61,9 +61,9 @@ std::shared_ptr<Component>CharacterReader::next(){
                                 case SymbolType::CloseBracket:
                                     return TokenHandlers::buildCloseTag(m_tokens, m_index, start);
                                 case SymbolType::ArrayCloseBracket:
-                                    return TokenHandlers::buildCloseArray(m_tokens, m_index);
+                                    return TokenHandlers::buildCloseArray(m_tokens, m_index, start);
                                 case SymbolType::ObjectCloseBracket:
-                                    return TokenHandlers::buildCloseObject(m_tokens, m_index);
+                                    return TokenHandlers::buildCloseObject(m_tokens, m_index, start);
                                 default:
                                     return TokenHandlers::buildWhiteSpaces(whiteSpaces);
                             }
@@ -107,7 +107,7 @@ std::shared_ptr<Component>CharacterReader::next(){
                         return TokenHandlers::buildOpenTag(m_tokens, m_index, start);
 
                     case SymbolType::ArrayOpenBracket: //build the start of an array 
-                        return TokenHandlers::buildOpenArray(m_tokens, m_index);
+                        return TokenHandlers::buildOpenArray(m_tokens, m_index, start);
                     
                     case SymbolType::ObjectOpenBracket: //build the start of an object
                         return TokenHandlers::buildOpenObject(m_tokens, m_index, start);
@@ -122,31 +122,31 @@ std::shared_ptr<Component>CharacterReader::next(){
                         return TokenHandlers::buildCloseTag(m_tokens, m_index, start);
                         
                     case SymbolType::ArrayCloseBracket:
-                        return TokenHandlers::buildCloseArray(m_tokens, m_index);
+                        return TokenHandlers::buildCloseArray(m_tokens, m_index, start);
 
                     case SymbolType::ObjectCloseBracket:
-                        return TokenHandlers::buildCloseObject(m_tokens, m_index);
+                        return TokenHandlers::buildCloseObject(m_tokens, m_index, start);
 
                     case SymbolType::Exclamation:
                         return TokenHandlers::buildExclamation(m_tokens, m_index, start);
                     
                     case SymbolType::EqualSymbol:
-                        return TokenHandlers::buildEqual(m_tokens, m_index);
+                        return TokenHandlers::buildEqual(m_tokens, m_index, start);
                     
                     case SymbolType::Comma:
-                        return TokenHandlers::buildComma(m_tokens, m_index);
+                        return TokenHandlers::buildComma(m_tokens, m_index, start);
                     
                     case SymbolType::HashTag:
-                        return TokenHandlers::buildHashTag(m_tokens, m_index);
+                        return TokenHandlers::buildHashTag(m_tokens, m_index, start);
                     
                     case SymbolType::Semicolon:
-                        return TokenHandlers::buildSemicolon(m_tokens, m_index);
+                        return TokenHandlers::buildSemicolon(m_tokens, m_index, start);
 
                     case SymbolType::Colon:
-                        return TokenHandlers::buildColon(m_tokens, m_index);
+                        return TokenHandlers::buildColon(m_tokens, m_index, start);
 
                     case SymbolType::Percentage:
-                        return TokenHandlers::buildPercentage(m_tokens, m_index);
+                        return TokenHandlers::buildPercentage(m_tokens, m_index, start);
 
                     case SymbolType::Dash:
                         if(m_tokens[m_index+1]->symbolType() == SymbolType::Dash)

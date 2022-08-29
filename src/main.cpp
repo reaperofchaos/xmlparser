@@ -2,41 +2,43 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <memory>
 #include <unordered_map>
 #include "linenoise.hpp"
 #include "ElementBuilder.hpp"
-// #include "printer.hpp"
+#include "Node.hpp"
+#include "printer.hpp"
 // #include "Node.hpp"
-// #include "Writer.hpp"
+#include "Writer.hpp"
 
-void READ(std::string input)
+std::shared_ptr<Node> READ(std::string input)
 {
     std::cout << input << "\n"; 
-    ElementBuilder::read_str(input); 
+    return ElementBuilder::read_str(input); 
 }
 
 
-// Node* EVAL(Node* ast)
-// {
-//     return ast; 
-// }
+std::shared_ptr<Node> EVAL(std::shared_ptr<Node> ast)
+{
+    return ast; 
+}
 
-// void PRINT(Node* result){
-//     if(result != NULL){
-//         Node::display(result);
-//     }
-//     std::string fileName = "out.txt";
-//     std::cout << "Saving parsed tree to " << fileName << "\n"; 
-//     Writer* writer = new Writer(result);
-//     writer->createFile(fileName); 
-//     writer->setFile("out.json");
-//     writer->writeTreeAsJSON();
-// }
+void PRINT(std::shared_ptr<Node>result){
+    if(result != NULL){
+        Node::display(result);
+    }
+    std::string fileName = "out.txt";
+    std::cout << "Saving parsed tree to " << fileName << "\n"; 
+    Writer* writer = new Writer(result);
+    writer->createFile(fileName); 
+    writer->setFile("out.json");
+    writer->writeTreeAsJSON();
+}
 
 std::string rep(std::string input){
-    READ(input);
-    // Node* result = EVAL(ast);
-    // PRINT(result);
+    std::shared_ptr<Node> = READ(input);
+    std::shared_ptr<Node> result = EVAL(ast);
+    PRINT(result);
     return ""; 
 }
 

@@ -11,6 +11,7 @@
 #include "Handlers/ElementHandlers.hpp"
 #include "Tokenizer.hpp"
 #include "CharacterReader.hpp"
+#include "Node.hpp"
 
 class ElementBuilder 
 {
@@ -30,7 +31,7 @@ class ElementBuilder
         std::vector<std::shared_ptr<Primitive>> getPrimitives(){return m_primitives;}
         std::vector<std::shared_ptr<Element>> getElements(){return m_elements;}
 
-        static void read_str(std::string input);
+        static Node* read_str(std::string input);
         std::shared_ptr<Element> next();
         void displayComponents();
         void displayElements();

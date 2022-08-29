@@ -24,16 +24,14 @@ class TokenHandlers {
 
         static std::shared_ptr<CloseArray> buildCloseArray(
             std::vector<std::shared_ptr<Character>> &m_tokens, 
-            size_t &m_index);
+            size_t &m_index,
+            size_t &start);
         
-        static std::shared_ptr<CloseObject> buildCloseObject(
-            std::vector<std::shared_ptr<Character>> &m_tokens, 
-            size_t &m_index);
-
         static std::shared_ptr<CloseObject> buildCloseObject(
             std::vector<std::shared_ptr<Character>> &m_tokens, 
             size_t &m_index,
             size_t &start);
+
 
         static std::shared_ptr<WhiteSpaces> buildWhiteSpaces(
             std::vector<std::shared_ptr<WhiteSpace>> &whiteSpaces);
@@ -58,7 +56,8 @@ class TokenHandlers {
 
         static std::shared_ptr<OpenArray> buildOpenArray(
             std::vector<std::shared_ptr<Character>> &m_tokens, 
-            size_t &m_index);
+            size_t &m_index,
+            size_t &start);
 
         static std::shared_ptr<OpenObject> buildOpenObject(
             std::vector<std::shared_ptr<Character>> &m_tokens, 
@@ -72,27 +71,33 @@ class TokenHandlers {
 
         static std::shared_ptr<EqualComponent> buildEqual(
             std::vector<std::shared_ptr<Character>> &m_tokens, 
-            size_t &m_index);
+            size_t &m_index,
+            size_t &start);
         
         static std::shared_ptr<SemicolonComponent> buildSemicolon(
             std::vector<std::shared_ptr<Character>> &m_tokens, 
-            size_t &m_index);
+            size_t &m_index,
+            size_t &start);
         
         static std::shared_ptr<ColonComponent> buildColon(
             std::vector<std::shared_ptr<Character>> &m_tokens, 
-            size_t &m_index);
+            size_t &m_index,
+            size_t &start);
         
         static std::shared_ptr<PercentageComponent> buildPercentage(
             std::vector<std::shared_ptr<Character>> &m_tokens, 
-            size_t &m_index);
+            size_t &m_index,
+            size_t &start);
         
         static std::shared_ptr<CommaComponent> buildComma(
             std::vector<std::shared_ptr<Character>> &m_tokens, 
-            size_t &m_index);
+            size_t &m_index,
+            size_t &start);
         
         static std::shared_ptr<HashTagComponent> buildHashTag(
             std::vector<std::shared_ptr<Character>> &m_tokens, 
-            size_t &m_index);
+            size_t &m_index,
+            size_t &start);
 
         static std::shared_ptr<StringType> buildNestedString(
             std::vector<std::shared_ptr<Character>> &m_tokens, 

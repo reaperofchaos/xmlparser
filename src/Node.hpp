@@ -3,28 +3,28 @@
 #include <iostream>
 #include <queue>
 #include <optional>
-#include "Types.hpp"
-
+#include <memory>
+#include "Types/Element.hpp"
 class Node{
     public:
-        Value* value = NULL; 
-        Node* parent = NULL;
-        std::vector<Node*> children;
+        std::shared_ptr<Element> value = NULL; 
+        std::shared_ptr<Node> parent = NULL;
+        std::vector<std::shared_ptr<Node>> children;
         int level = 0; 
 
     Node(){};    
-    Node(Value* newValue)
+    Node(std::shared_ptr<Element> element)
     {
-        this->value = newValue;
+        this->value = element;
     }
     
-    Node(Value* newValue, Node* parentNode)
+    Node(std::shared_ptr<Element> newValue, std::shared_ptr<Node> parentNode)
     {
         this->value = newValue;
         this->parent = parentNode;
     }
 
-    Node(Value* newValue, int level, Node* parentNode)
+    Node(std::shared_ptr<Element> newValue, int level, std::shared_ptr<Node> parentNode)
     {
         this->value = newValue;
         this->level = level;
@@ -32,7 +32,7 @@ class Node{
 
     }
 
-    void setValue(Value* value){this->value = value; }
+    void setValue(std::shared_ptr<Element> value){this->value = value; }
 
     /**
      * @brief Get the level property of the bottom of the tree
@@ -40,7 +40,7 @@ class Node{
      * @param node, a tree
      * @return int the level of the node
      */
-    static int getLastLevel(Node* node)
+    static int getLastLevel(std::shared_ptr<Node> node)
     {
         int childNodes = node->children.size();
         if(childNodes > 0)
@@ -58,12 +58,12 @@ class Node{
      * @param currenetValue value to find
      * @return Node* 
      */
-    static Node* findNode(Node* tree, Value* currentValue)
+    static std::shared_ptr<Node> findNode(std::shared_ptr<Node> tree, std::shared_ptr<Element> currentValue)
     {
         int numberOfChildren = tree->children.size();
         // Tree is root (no parents) and currentValue is an end tag and has a value
         // string equal to the tree's value string then return the root node
-        if(tree->parent == NULL && tree->value->str() == currentValue->str())
+        if(tree->parent == NULL && tree->value->getValue() == currentValue->getValue())
         {
             if(Node::isPair(tree, currentValue))
             {
@@ -81,7 +81,7 @@ class Node{
             while(i >= 0)
             {
                 //If we get a matching name
-                if(tree->children[i]->value->str() == currentValue->str())
+                if(tree->children[i]->value->getValue() == currentValue->getValue())
                 {
                     //if we get a maching pair
                     if(Node::isPair(tree->children.at(i), currentValue))
@@ -92,7 +92,7 @@ class Node{
                     //if the pair doesn't match, we have a linting error,
                     // an end tag without a start tag
                     std::cout   << "Error: A " << tree->children.at(i)->value->getType() 
-                                << " for " << currentValue->str()
+                                << " for " << currentValue->getValue()
                                 << " was found after a " << currentValue->getType()  
                                 << "\n"; 
                     return NULL;
@@ -107,7 +107,7 @@ class Node{
                 return Node::findNode(tree->parent, currentValue);
             }else{
                 std::cout   << "Error: A " << currentValue->getType() 
-                        << " for " << currentValue->str()
+                        << " for " << currentValue->getValue()
                         << " was found without a starting tag "   
                         << "\n"; 
                     return NULL;
@@ -121,7 +121,7 @@ class Node{
      * @param node, a tree
      * @return int the level of the node
      */
-    static Node* getLastNode(Node* node)
+    static std::shared_ptr<Node> getLastNode(std::shared_ptr<Node> node)
     {
         int childNodes = node->children.size();
         if(childNodes > 0)
@@ -138,11 +138,11 @@ class Node{
      * @param valuesToAdd 
      * @return Node* 
      */
-    static Node* createTree(std::vector<Value*> valuesToAdd)
+    static std::shared_ptr<Node> createTree(std::vector<std::shared_ptr<Element>> valuesToAdd)
     {
-        Node* root =  new Node(); 
+        std::shared_ptr<Node> root =  std::make_shared<Node>(); 
         std::cout << "Creating tree from the nodes" << "\n\n"; 
-        for(Value* valueToAdd : valuesToAdd)
+        for(std::shared_ptr<Element> valueToAdd : valuesToAdd)
         {
             root->insertValue(root, valueToAdd);
         }
@@ -156,21 +156,22 @@ class Node{
      * @param node2 a different node
      * @return boolean
      */
-    static bool isPair(Node* node1, Node* node2)
+    static bool isPair(std::shared_ptr<Node> node1, std::shared_ptr<Node> node2)
     {
-        if(node1 && node2){
-        if(node1->value->str() == node2->value->str())
+        if(node1 && node2)
         {
-            if(node1->value->type() == Type::EndTag)
+            if(node1->value->getValue() == node2->value->getValue())
             {
-                return node2->value->type() == Type::StartTag;
-            }
+                if(node1->value->type() == TagType::CloseTagElement)
+                {
+                    return node2->value->type() == TagType::OpenTagElement;
+                }
 
-            if(node1->value->type() == Type::StartTag)
-            {
-                return node2->value->type() == Type::EndTag;
+                if(node1->value->type() == TagType::OpenTagElement
+                {
+                    return node2->value->type() == TagType::CloseTagElement;
+                }
             }
-        }
         }
 
         return false;
@@ -183,29 +184,29 @@ class Node{
      * @param node2 a different node
      * @return boolean
      */
-    static bool isPair(Node* node1, Value* valueToCompare){
-        if(node1->value->str() == valueToCompare->str())
+    static bool isPair(std::shared_ptr<Node> node1, std::shared_ptr<Element> valueToCompare){
+        if(node1->value->getName() == valueToCompare->getName())
         {
-            if(node1->value->type() == Type::EndTag)
+            if(node1->value->type() == TagType::CloseTagElement)
             {
-                return valueToCompare->type() == Type::StartTag;
+                return valueToCompare->type() == TagType::OpenTagElement;
             }
 
-            if(node1->value->type() == Type::StartTag)
+            if(node1->value->type() == TagType::OpenTagElement)
             {
-                return valueToCompare->type() == Type::EndTag;
+                return valueToCompare->type() == TagType::CloseTagElement;
             }
         }
 
         return false;
     }
 
-    void insertValue(Node* node, Value* valueToAdd)
+    void insertValue(std::shared_ptr<Node> node, std::shared_ptr<Element> valueToAdd)
     {
         //if Node pointer is null, create a root node
         if (node->value == NULL)
         {
-            std::cout << "The first node " << valueToAdd->str() << " has been added" << "\n"; 
+            std::cout << "The first node " << valueToAdd->getValue() << " has been added" << "\n"; 
             node->setValue(valueToAdd);
         }else{
             Node* lastNode = Node::getLastNode(node);
@@ -255,7 +256,7 @@ class Node{
      * @param node, a tree
      * @return int the level of the node
      */
-    static Node* findLastNode(Node* node)
+    static std::shared_ptr<Node> findLastNode(Node* node)
     {
         int childNodes = node->children.size();
         if(childNodes > 0)
@@ -271,16 +272,16 @@ class Node{
     * 
     * @param node, a tree node with Values
     */
-    static void display(Node* node)
+    static void display(std::shared_ptr<Node> node)
     {
             if(node->level == 0)
             {
-                std::cout   << "Root is " << node->value->str() << "\n"; 
+                std::cout   << "Root is " << node->value->getValue() << "\n"; 
             }else{
-                std::cout   << "Child Node: " << node->value->str() 
+                std::cout   << "Child Node: " << node->value->getValue() 
                             << " - " << node->value->getType()
                             <<  " level: " << node->level << " \n";
-                std::cout   << "Child of parent " << node->parent->value->str() 
+                std::cout   << "Child of parent " << node->parent->value->getValue() 
                             << " - " << node->value->getType()
                             << " level: " << node->parent->level << "\n";
             }

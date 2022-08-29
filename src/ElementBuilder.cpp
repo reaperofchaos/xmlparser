@@ -62,6 +62,9 @@ void ElementBuilder::read_str(std::string input)
     std::vector<std::shared_ptr<Element>>elements = elementBuilder.getElements(); 
     std::cout << "Total elements " << elements.size() << "\n"; 
     elementBuilder.displayElements();
+    Node* tree = targetNode->createTree(elements);
+    reader.setAst(tree); 
+    return tree; 
 }
 
 void ElementBuilder::displayElements(){

@@ -35,21 +35,24 @@ std::shared_ptr<CloseTag> TokenHandlers::buildCloseTag(
 
 std::shared_ptr<CloseArray> TokenHandlers::buildCloseArray(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
-    size_t &m_index)
+    size_t &m_index,
+    size_t &start)
 {
+    CharacterUtilities::IncrementIndex(m_tokens, m_index);
 
-    return std::make_shared<CloseArray>(std::dynamic_pointer_cast<ArrayCloseBracket>(m_tokens[m_index]));
+    return std::make_shared<CloseArray>(std::dynamic_pointer_cast<ArrayCloseBracket>(m_tokens[start]));
     
 }
 
 std::shared_ptr<CloseObject> TokenHandlers::buildCloseObject(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
-    size_t &m_index)
+    size_t &m_index,
+    size_t &start)
 {
 
     CharacterUtilities::IncrementIndex(m_tokens, m_index);
 
-    return std::make_shared<CloseObject>(std::dynamic_pointer_cast<ObjectCloseBracket>(m_tokens[m_index-1]));
+    return std::make_shared<CloseObject>(std::dynamic_pointer_cast<ObjectCloseBracket>(m_tokens[start]));
     
 }
 
@@ -99,19 +102,8 @@ std::shared_ptr<ClosingCloseTag> TokenHandlers::buildClosingCloseTag(
     size_t &m_index,
     size_t &start)
 {
-
-    if(m_tokens[m_index+1]->type() == CharacterType::WhiteSpace )
-    {
-        CharacterUtilities::IncrementIndex(m_tokens, m_index);
-        while(m_tokens[m_index]->type() == CharacterType::WhiteSpace)
-        {
-            CharacterUtilities::IncrementIndex(m_tokens, m_index);
-        }
-    }else{
-        CharacterUtilities::IncrementIndex(m_tokens, m_index);
-    }
-    
     CharacterUtilities::IncrementIndex(m_tokens, m_index);
+    CharacterUtilities::IgnoreWhiteSpace(m_tokens, m_index);
 
     return std::make_shared<ClosingCloseTag>
         (
@@ -163,11 +155,13 @@ std::shared_ptr<StringType> TokenHandlers::buildString(
 
 std::shared_ptr<OpenArray> TokenHandlers::buildOpenArray(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
-    size_t &m_index)
+    size_t &m_index,
+    size_t &start)
 {
-    
+    CharacterUtilities::IncrementIndex(m_tokens, m_index);
+
     return std::make_shared<OpenArray>(
-            std::dynamic_pointer_cast<ArrayOpenBracket>(m_tokens[m_index]));
+            std::dynamic_pointer_cast<ArrayOpenBracket>(m_tokens[start]));
 
 }
 
@@ -197,73 +191,79 @@ std::shared_ptr<ExclamationComponent> TokenHandlers::buildExclamation(
 
 std::shared_ptr<EqualComponent> TokenHandlers::buildEqual(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
-    size_t &m_index)
+    size_t &m_index,
+    size_t &start)
 {
     CharacterUtilities::IncrementIndex(m_tokens, m_index);
     
     return std::make_shared<EqualComponent>
     (
-        std::dynamic_pointer_cast<EqualSymbol>(m_tokens[m_index -1])
+        std::dynamic_pointer_cast<EqualSymbol>(m_tokens[start])
     );
 }
 
 std::shared_ptr<SemicolonComponent> TokenHandlers::buildSemicolon(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
-    size_t &m_index)
+    size_t &m_index,
+    size_t &start)
 {
     CharacterUtilities::IncrementIndex(m_tokens, m_index);
     
     return std::make_shared<SemicolonComponent>
     (
-        std::dynamic_pointer_cast<Semicolon>(m_tokens[m_index -1])
+        std::dynamic_pointer_cast<Semicolon>(m_tokens[start])
     );
 }
 
 std::shared_ptr<ColonComponent> TokenHandlers::buildColon(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
-    size_t &m_index)
+    size_t &m_index,
+    size_t &start)
 {
     CharacterUtilities::IncrementIndex(m_tokens, m_index);
     
     return std::make_shared<ColonComponent>
     (
-        std::dynamic_pointer_cast<Colon>(m_tokens[m_index -1])
+        std::dynamic_pointer_cast<Colon>(m_tokens[start])
     );
 }
 
 std::shared_ptr<PercentageComponent> TokenHandlers::buildPercentage(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
-    size_t &m_index)
+    size_t &m_index,
+    size_t &start)
 {
     CharacterUtilities::IncrementIndex(m_tokens, m_index);
     
     return std::make_shared<PercentageComponent>
     (
-        std::dynamic_pointer_cast<Percentage>(m_tokens[m_index -1])
+        std::dynamic_pointer_cast<Percentage>(m_tokens[start])
     );
 }
 
 std::shared_ptr<CommaComponent> TokenHandlers::buildComma(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
-    size_t &m_index)
+    size_t &m_index,
+    size_t &start)
 {
     CharacterUtilities::IncrementIndex(m_tokens, m_index);
     
     return std::make_shared<CommaComponent>
     (
-        std::dynamic_pointer_cast<Comma>(m_tokens[m_index -1])
+        std::dynamic_pointer_cast<Comma>(m_tokens[start])
     );
 }
 
 std::shared_ptr<HashTagComponent> TokenHandlers::buildHashTag(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
-    size_t &m_index)
+    size_t &m_index,
+    size_t &start)
 {
     CharacterUtilities::IncrementIndex(m_tokens, m_index);
     
     return std::make_shared<HashTagComponent>
     (
-        std::dynamic_pointer_cast<HashTag>(m_tokens[m_index -1])
+        std::dynamic_pointer_cast<HashTag>(m_tokens[start])
     );
 }
 
