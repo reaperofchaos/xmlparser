@@ -1,14 +1,16 @@
 #pragma once
 #include <fstream>
+#include <memory>
 #include "Node.hpp"
 
 
-class Writer{
-    Node* tree;
+class Writer
+{
+    std::shared_ptr<Node> tree;
     std::ofstream out; 
 
     public:
-        Writer(Node* tree)
+        Writer(std::shared_ptr<Node> tree)
         {
             this->tree = tree;
         }
@@ -26,64 +28,76 @@ class Writer{
             this->writeTreeToFile();
         }
 
-        void writeTreeToFile(){
+        void writeTreeToFile()
+        {
             this->out << "Parsed Tree \n";
             writeNodes(this->tree); 
             this->out.close(); 
-
         }
 
-        void writeNodes(Node* node){
+        void writeNodes(std::shared_ptr<Node> node)
+        {
 
-            this->out << "Node: " << node->value->str() << 
+            this->out << "Node: " << node->value->getValue() << 
             " Level: " << node->level << 
             " Type:" << node->value->getTypeAsString(node->value->type()) << "\n";
-            if(node->children.size() > 0){
-                for(Node* child : node->children)
+            if(node->children.size() > 0)
+            {
+                for(std::shared_ptr<Node> child : node->children)
                 {
                     writeNodes(child); 
                 }
             }
         }
 
-        void writeNodesAsObject(Node* node, bool isChild)
+        void writeNodesAsObject(std::shared_ptr<Node> node, bool isChild)
         {
             std::string spacing = ""; 
-            for(int i = 0; i < node->level; i++){
+            for(int i = 0; i < node->level; i++)
+            {
                 spacing += "\t";
             }
+
             std::string elementSpacing = spacing += "\t";
             
             this->out   << spacing << "{ \n";
             this->out   << "\t" << elementSpacing << "\"name\": \""  
-                        << node->value->str() << "\",\n"
+                        << node->value->getValue() << "\",\n"
                         << "\t" << elementSpacing << "\"level\": \""  
                         << node->level << "\",\n"
                         << "\t" << elementSpacing << "\"type\": \""   
                         << node->value->getTypeAsString(node->value->type()) << "\"";
-            if(node->children.size() > 0){
+            
+            if(node->children.size() > 0)
+            {
                 this->out << ",\n"; 
                 this->out << "\t" << elementSpacing << "\"children\": [\n"; 
                 size_t i = 0; 
-                for(Node* child : node->children)
+                for(std::shared_ptr<Node> child : node->children)
                 {
 
                     this->writeNodesAsObject(child, i < node->children.size() -1); 
                     i++; 
                 }
                 this->out << "\t" << spacing << "]\n";
+
             }else{
+                
                 this->out << "\n"; 
             }
-            if(isChild){
+
+            if(isChild)
+            {
                 this->out << elementSpacing << "},\n"; 
-            }else{
+            }
+            else{
                 this->out << elementSpacing << "}\n"; 
             }
         }
         
 
-        void writeTreeAsJSON(){
+        void writeTreeAsJSON()
+        {
             writeNodesAsObject(this->tree, false); 
             this->out.close(); 
         }

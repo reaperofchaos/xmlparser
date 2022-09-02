@@ -162,14 +162,16 @@ class Node{
         {
             if(node1->value->getValue() == node2->value->getValue())
             {
-                if(node1->value->type() == TagType::CloseTagElement)
+                if(node1->value->type() == ElementType::Tag &&
+                    node1->value->tagType() == TagType::CloseTagElement)
                 {
-                    return node2->value->type() == TagType::OpenTagElement;
+                    return node2->value->tagType() == TagType::OpenTagElement;
                 }
 
-                if(node1->value->type() == TagType::OpenTagElement
+                if(node1->value->type() == ElementType::Tag &&
+                    node1->value->tagType() == TagType::OpenTagElement)
                 {
-                    return node2->value->type() == TagType::CloseTagElement;
+                    return node2->value->tagType() == TagType::CloseTagElement;
                 }
             }
         }
@@ -185,16 +187,20 @@ class Node{
      * @return boolean
      */
     static bool isPair(std::shared_ptr<Node> node1, std::shared_ptr<Element> valueToCompare){
-        if(node1->value->getName() == valueToCompare->getName())
+        if(node1->value->getValue() == valueToCompare->getValue())
         {
-            if(node1->value->type() == TagType::CloseTagElement)
+            if(node1->value->type() == ElementType::Tag &&
+                    node1->value->tagType() == TagType::CloseTagElement)
             {
-                return valueToCompare->type() == TagType::OpenTagElement;
+                return valueToCompare->type() == ElementType::Tag && 
+                    valueToCompare->tagType() == TagType::OpenTagElement;
             }
 
-            if(node1->value->type() == TagType::OpenTagElement)
+            if(node1->value->type() == ElementType::Tag && 
+                node1->value->tagType() == TagType::OpenTagElement)
             {
-                return valueToCompare->type() == TagType::CloseTagElement;
+                return valueToCompare->type() == ElementType::Tag && 
+                    valueToCompare->tagType() == TagType::CloseTagElement;
             }
         }
 
@@ -209,25 +215,27 @@ class Node{
             std::cout << "The first node " << valueToAdd->getValue() << " has been added" << "\n"; 
             node->setValue(valueToAdd);
         }else{
-            Node* lastNode = Node::getLastNode(node);
+            std::shared_ptr<Node> lastNode = Node::getLastNode(node);
             int bottomLevel = getLastLevel(node);
             //add tag to children vector if no children exist
-            if(valueToAdd->type() != Type::EndTag)
+            if(valueToAdd->type() == ElementType::Tag &&
+                valueToAdd->tagType() != TagType::CloseTagElement)
             {
                 if(node->children.size() == 0)
                 {
-                    node->children.push_back(new Node(valueToAdd, bottomLevel + 1, node));
+                    node->children.push_back(std::make_shared<Node>(valueToAdd, bottomLevel + 1, node));
                 }else{
                     // we have more than one child node
                     // if the last node was a start tag, 
                     // this next start tag should be nested under it
-                    if(lastNode->value->type() == Type::StartTag)
+                    if(lastNode->value->type() == ElementType::Tag && 
+                        lastNode->value->tagType() == TagType::OpenTagElement)
                     {
                         insertValue(node->children[node->children.size() - 1], valueToAdd);
                     // This is a sibling node, so just add it to the child array
                     }else{
                         //Add to the children of the parent of the last node. (Node is a sibling of last node)
-                        lastNode->parent->children.push_back(new Node(valueToAdd, lastNode->parent->level +1, lastNode->parent));
+                        lastNode->parent->children.push_back(std::make_shared<Node>(valueToAdd, lastNode->parent->level +1, lastNode->parent));
                     }
                 }
             //We have an end tag, so we need to find the start tag before adding
@@ -235,13 +243,13 @@ class Node{
                 if(lastNode->parent != NULL){
                         //Navigate through the tree and check to find a start tag with a string value equal
                         // to the value of the string of the value being added. 
-                        Node* foundParentNode = Node::findNode(lastNode->parent, valueToAdd); 
+                        std::shared_ptr foundParentNode = Node::findNode(lastNode->parent, valueToAdd); 
                         
                         if(foundParentNode != NULL)
                         {
-                            foundParentNode->children.push_back(new Node(valueToAdd, foundParentNode->level +1, foundParentNode));
+                            foundParentNode->children.push_back(std::make_shared<Node>(valueToAdd, foundParentNode->level +1, foundParentNode));
                         }else{
-                            std::cout << "Linting Error: No start tag was found for end tag named  " << valueToAdd->str()  << "\n"; 
+                            std::cout << "Linting Error: No start tag was found for end tag named  " << valueToAdd->getValue()  << "\n"; 
                         }
                 }else{
                     std::cout << "Tree Error: The last node's parent is evidently not set \n"; 
@@ -256,7 +264,7 @@ class Node{
      * @param node, a tree
      * @return int the level of the node
      */
-    static std::shared_ptr<Node> findLastNode(Node* node)
+    static std::shared_ptr<Node> findLastNode(std::shared_ptr<Node> node)
     {
         int childNodes = node->children.size();
         if(childNodes > 0)
@@ -287,7 +295,7 @@ class Node{
             }
             if(node->children.size() > 0)
             {
-                for(Node* childNode : node->children)
+                for(std::shared_ptr<Node> childNode : node->children)
                 {
                     display(childNode);
                 };

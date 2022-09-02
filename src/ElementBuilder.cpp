@@ -46,7 +46,7 @@ void ElementBuilder::buildElements()
  * tokenizes and analyzes the tokens 
  * and returns an Abstract Syntax Tree
  **/
-void ElementBuilder::read_str(std::string input) 
+std::shared_ptr<Node> ElementBuilder::read_str(std::string input) 
 {
     Tokenizer tokenizer = Tokenizer(input);
     tokenizer.tokenize();
@@ -62,8 +62,8 @@ void ElementBuilder::read_str(std::string input)
     std::vector<std::shared_ptr<Element>>elements = elementBuilder.getElements(); 
     std::cout << "Total elements " << elements.size() << "\n"; 
     elementBuilder.displayElements();
-    Node* tree = targetNode->createTree(elements);
-    reader.setAst(tree); 
+    std::shared_ptr<Node> targetNode;
+    std::shared_ptr<Node> tree = targetNode->createTree(elements);
     return tree; 
 }
 

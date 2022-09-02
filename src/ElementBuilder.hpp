@@ -19,6 +19,7 @@ class ElementBuilder
         std::vector<std::shared_ptr<Component>> m_components;
         std::vector<std::shared_ptr<Primitive>> m_primitives;
         std::vector<std::shared_ptr<Element>> m_elements; 
+        std::shared_ptr<Node> tree;
         size_t m_index = 0; // position in string
 
     public:
@@ -30,8 +31,11 @@ class ElementBuilder
         std::vector<std::shared_ptr<Component>> getComponents(){return m_components;}
         std::vector<std::shared_ptr<Primitive>> getPrimitives(){return m_primitives;}
         std::vector<std::shared_ptr<Element>> getElements(){return m_elements;}
+        std::shared_ptr<Node> getTree(){return this->tree;};
 
-        static Node* read_str(std::string input);
+        void setTree(std::shared_ptr<Node> tree){ this->tree = tree;}; 
+
+        static std::shared_ptr<Node> read_str(std::string input);
         std::shared_ptr<Element> next();
         void displayComponents();
         void displayElements();

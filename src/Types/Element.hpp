@@ -21,7 +21,8 @@ enum class TagType
     OpenTagElement,
     SelfClosingTagElement,
     CloseTagElement,
-    CommentTagElement
+    CommentTagElement,
+    NotATag
 };
 
 class Element
@@ -50,6 +51,7 @@ class Element
         }
         
         virtual ElementType type(){ return ElementType::Element;}
+        virtual TagType tagType(){return TagType::NotATag;}
         virtual std::string inspect() { assert(0); }
         virtual std::vector<std::shared_ptr<Prop>> getProps(){return this->props;}
         virtual std::string getValue(){ return value;}
@@ -254,7 +256,7 @@ class CloseTagElement: public Tag
             this->tagString = openTag->getValue() + " " + name->getValue() + " " + closeTag->getValue(); 
             this->value = name->getValue();
         }
-        
+
         virtual TagType tagType(){ return TagType::CloseTagElement;}
         virtual ElementType type(){ return ElementType::Tag;}
         virtual std::string inspect() { std::string text = this->getTagType() + " - " + this->getValue() +"\n";

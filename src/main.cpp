@@ -8,7 +8,6 @@
 #include "ElementBuilder.hpp"
 #include "Node.hpp"
 #include "printer.hpp"
-// #include "Node.hpp"
 #include "Writer.hpp"
 
 std::shared_ptr<Node> READ(std::string input)
@@ -23,7 +22,8 @@ std::shared_ptr<Node> EVAL(std::shared_ptr<Node> ast)
     return ast; 
 }
 
-void PRINT(std::shared_ptr<Node>result){
+void PRINT(std::shared_ptr<Node>result)
+{
     if(result != NULL){
         Node::display(result);
     }
@@ -35,16 +35,19 @@ void PRINT(std::shared_ptr<Node>result){
     writer->writeTreeAsJSON();
 }
 
-std::string rep(std::string input){
-    std::shared_ptr<Node> = READ(input);
+std::string rep(std::string input)
+{
+    std::shared_ptr<Node> ast = READ(input);
     std::shared_ptr<Node> result = EVAL(ast);
     PRINT(result);
     return ""; 
 }
 
-int main(int argc, char** argv){
+int main(int argc, char** argv)
+{
 
-    if(argc > 1){
+    if(argc > 1)
+    {
         std::ifstream file;
         std::string line; 
         std::vector<std::string> lines; 
