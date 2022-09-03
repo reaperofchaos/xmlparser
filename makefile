@@ -38,11 +38,9 @@ $(OBJDIR)/Element.o \
 $(OBJDIR)/Prop.o \
 $(OBJDIR)/ComponentUtilities.o \
 $(OBJDIR)/CharacterUtilities.o \
-
-# $(OBJDIR)/Writer.o \
-# $(OBJDIR)/Printer.o \
-# $(OBJDIR)/Prop.o \
-# $(OBJDIR)/Node.o \
+$(OBJDIR)/Writer.o \
+$(OBJDIR)/Printer.o \
+$(OBJDIR)/Node.o \
 
 
 all: $(OBJS)
@@ -93,20 +91,14 @@ $(OBJDIR)/Symbol.o:
 $(OBJDIR)/CharType.o:
 	$(CC) -c $(CCFLAGS) $(SRCDIR)/Types/CharType.cpp -o $(OBJDIR)/CharType.o
 
-# $(OBJDIR)/Prop.o:
-# 	$(CC) -c $(CCFLAGS) $(SRCDIR)/Prop.cpp -o $(OBJDIR)/Prop.o
+$(OBJDIR)/Writer.o:
+	$(CC) -c $(CCFLAGS) $(SRCDIR)/Writer.cpp -o $(OBJDIR)/Writer.o
 
-# $(OBJDIR)/Writer.o:
-# 	$(CC) -c $(CCFLAGS) $(SRCDIR)/Writer.cpp -o $(OBJDIR)/Writer.o
+$(OBJDIR)/Node.o:
+	$(CC) -c $(CCFLAGS) $(SRCDIR)/Types/Node.cpp -o $(OBJDIR)/Node.o
 
-# $(OBJDIR)/Node.o:
-# 	$(CC) -c $(CCFLAGS) $(SRCDIR)/Node.cpp -o $(OBJDIR)/Node.o
-
-# $(OBJDIR)/Printer.o:
-# 	$(CC) -c $(CCFLAGS) $(SRCDIR)/printer.cpp -o $(OBJDIR)/Printer.o
-
-# $(OBJDIR)/Types.o:
-# 	$(CC) -c $(CCFLAGS) $(SRCDIR)/Types.cpp -o $(OBJDIR)/Types.o
+$(OBJDIR)/Printer.o:
+	$(CC) -c $(CCFLAGS) $(SRCDIR)/printer.cpp -o $(OBJDIR)/Printer.o
 
 $(OBJDIR)/CharacterReader.o:
 	$(CC) -c $(CCFLAGS) $(SRCDIR)/CharacterReader.cpp -o $(OBJDIR)/CharacterReader.o

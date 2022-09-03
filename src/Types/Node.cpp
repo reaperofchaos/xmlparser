@@ -124,6 +124,35 @@ std::shared_ptr<Node> Node::createTree(std::vector<std::shared_ptr<Element>> val
  * @param node2 a different node
  * @return boolean
  */
+bool Node::isPair(std::shared_ptr<Node> node1, std::shared_ptr<Element> valueToCompare){
+    if(node1->value->getValue() == valueToCompare->getValue())
+    {
+        if(node1->value->type() == ElementType::Tag &&
+                node1->value->tagType() == TagType::CloseTagElement)
+        {
+            return valueToCompare->type() == ElementType::Tag && 
+                valueToCompare->tagType() == TagType::OpenTagElement;
+        }
+
+        if(node1->value->type() == ElementType::Tag && 
+            node1->value->tagType() == TagType::OpenTagElement)
+        {
+            return valueToCompare->type() == ElementType::Tag && 
+                valueToCompare->tagType() == TagType::CloseTagElement;
+        }
+    }
+
+    return false;
+}
+
+
+/**
+ * @brief Checks if two nodes are a match
+ * 
+ * @param node1 a node
+ * @param node2 a different node
+ * @return boolean
+ */
 bool Node::isPair(std::shared_ptr<Node> node1, std::shared_ptr<Node> node2)
 {
     if(node1 && node2)
@@ -164,8 +193,9 @@ void Node::insertValue(std::shared_ptr<Node> node, std::shared_ptr<Element> valu
         std::shared_ptr<Node> lastNode = Node::getLastNode(node);
         int bottomLevel = getLastLevel(node);
         //add tag to children vector if no children exist
-        if(valueToAdd->type() != ElementType::Tag || valueToAdd->type() == ElementType::Tag &&
-            valueToAdd->tagType() != TagType::CloseTagElement)
+        if(valueToAdd->type() != ElementType::Tag ||
+            (valueToAdd->type() == ElementType::Tag &&
+            valueToAdd->tagType() != TagType::CloseTagElement))
         {
             if(node->children.size() == 0)
             {
@@ -237,11 +267,21 @@ void Node::display(std::shared_ptr<Node> node)
             std::cout   << "Root is " << node->value->getValue() << "\n"; 
         }else{
             std::cout   << "Child Node: " << node->value->getValue() 
-                        << " - " << node->value->getType()
-                        <<  " level: " << node->level << " \n";
+                        << " - ";
+            if(node->value->type() == ElementType::Tag){
+                std::cout << node->value->getTagType();
+            } else{
+                std::cout << node->value->getType();
+            }
+            std::cout   << " level: " << node->level << " \n";
             std::cout   << "Child of parent " << node->parent->value->getValue() 
-                        << " - " << node->value->getType()
-                        << " level: " << node->parent->level << "\n";
+                        << " - ";
+            if(node->parent->value->type() == ElementType::Tag){
+                std::cout << node->parent->value->getTagType();
+            } else{
+                std::cout << node->parent->value->getType();
+            }
+            std::cout << " level: " << node->parent->level << "\n";
         }
         if(node->children.size() > 0)
         {

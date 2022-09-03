@@ -11,7 +11,7 @@
 #include "Handlers/ElementHandlers.hpp"
 #include "Tokenizer.hpp"
 #include "CharacterReader.hpp"
-#include "Node.hpp"
+#include "Types/Node.hpp"
 
 class ElementBuilder 
 {

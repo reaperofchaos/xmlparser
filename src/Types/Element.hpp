@@ -50,12 +50,29 @@ class Element
             }
         }
         
+        virtual std::string getTagTypeAsString(TagType type){
+            switch (type)
+            {
+                case TagType::OpenTagElement:
+                    return "Open tag";
+                case TagType::SelfClosingTagElement:
+                    return "Self closing tag";
+                case TagType::CloseTagElement:
+                    return "Closing Tag"; 
+                case TagType::CommentTagElement:
+                    return "Comment Tag"; 
+                default: 
+                    return "Unknown Tag";
+            }
+        }
+        
         virtual ElementType type(){ return ElementType::Element;}
         virtual TagType tagType(){return TagType::NotATag;}
         virtual std::string inspect() { assert(0); }
         virtual std::vector<std::shared_ptr<Prop>> getProps(){return this->props;}
         virtual std::string getValue(){ return value;}
         virtual std::string getType(){return this->getTypeAsString(this->type());}
+        virtual std::string getTagType(){return this->getTagTypeAsString(this->tagType());}
 };
 
 class DocumentTag: public Element

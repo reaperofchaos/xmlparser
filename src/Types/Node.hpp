@@ -4,7 +4,7 @@
 #include <queue>
 #include <optional>
 #include <memory>
-#include "Types/Element.hpp"
+#include "Element.hpp"
 class Node{
     public:
         std::shared_ptr<Element> value = NULL; 
@@ -38,7 +38,8 @@ class Node{
     static int getLastLevel(std::shared_ptr<Node> node);
     static std::shared_ptr<Node> findLastNode(std::shared_ptr<Node> node);
     static std::shared_ptr<Node> getLastNode(std::shared_ptr<Node> node);
-    static std::shared_ptr<Node> createTree(std::vector<std::shared_ptr<Element>> valuesToAdd);    
+    static std::shared_ptr<Node> createTree(std::vector<std::shared_ptr<Element>> valuesToAdd); 
+    static bool isPair(std::shared_ptr<Node> node1, std::shared_ptr<Node> node2);   
     static bool isPair(std::shared_ptr<Node> node1, std::shared_ptr<Element> valueToCompare);
     static void display(std::shared_ptr<Node> node);
 

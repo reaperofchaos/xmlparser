@@ -6,7 +6,7 @@
 #include <unordered_map>
 #include "linenoise.hpp"
 #include "ElementBuilder.hpp"
-#include "Node.hpp"
+#include "Types/Node.hpp"
 #include "printer.hpp"
 #include "Writer.hpp"
 
