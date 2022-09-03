@@ -293,11 +293,18 @@ class CommentTagElement: public Tag
 
     public: 
         CommentTagElement(std::shared_ptr<CommentOpenTag> openTag, 
-            std::shared_ptr<StringType> comment, 
+            std::vector<std::shared_ptr<Component>> comments, 
             std::shared_ptr<CommentCloseTag> closeTag): Tag()
         {
-            this->tagString = openTag->getValue() + " " + comment->getValue() + " " + closeTag->getValue(); 
-            this->value = comment->getValue();
+            std::string value = "";
+            
+            for(std::shared_ptr<Component> comment: comments){
+                value += comment->getValue(); 
+            }
+            
+            this->value = value;
+            this->tagString = openTag->getValue() + " " + value + " " + closeTag->getValue(); 
+
         }
         virtual TagType tagType(){ return TagType::CommentTagElement;}
         virtual ElementType type(){ return ElementType::Tag;}

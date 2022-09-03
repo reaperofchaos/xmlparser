@@ -7,15 +7,12 @@
 #include "linenoise.hpp"
 #include "ElementBuilder.hpp"
 #include "Types/Node.hpp"
-#include "printer.hpp"
 #include "Writer.hpp"
 
 std::shared_ptr<Node> READ(std::string input)
 {
-    std::cout << input << "\n"; 
     return ElementBuilder::read_str(input); 
 }
-
 
 std::shared_ptr<Node> EVAL(std::shared_ptr<Node> ast)
 {
@@ -28,11 +25,14 @@ void PRINT(std::shared_ptr<Node>result)
         Node::display(result);
     }
     std::string fileName = "out.txt";
-    std::cout << "Saving parsed tree to " << fileName << "\n"; 
+    std::cout << "\n"; 
     Writer* writer = new Writer(result);
     writer->createFile(fileName); 
-    writer->setFile("out.json");
+    std::cout << "Parsed tree level information saved to " << fileName << "\n"; 
+    std::string jsonFileName = "out.json"; 
+    writer->setFile(jsonFileName);
     writer->writeTreeAsJSON();
+    std::cout << "Parsed tree saved as JSON to " << jsonFileName << "\n"; 
 }
 
 std::string rep(std::string input)

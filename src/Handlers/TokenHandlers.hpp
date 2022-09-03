@@ -50,7 +50,6 @@ class TokenHandlers {
         static std::shared_ptr<StringType> buildString(
             std::vector<std::shared_ptr<Character>> &m_tokens, 
             size_t &m_index,
-            size_t &start,
             std::vector<std::shared_ptr<Character>> &characters, 
             SymbolType symbolType);
 

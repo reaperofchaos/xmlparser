@@ -96,11 +96,14 @@ std::shared_ptr<CommentTagElement> ElementHandlers::buildCommentTagElement(
     std::shared_ptr<CommentOpenTag> openTag = std::dynamic_pointer_cast<CommentOpenTag>(components[start]); 
     ComponentUtilities::IncrementIndex(components, m_index);
     ComponentUtilities::IgnoreWhiteSpace(components, m_index);
+    std::vector<std::shared_ptr<Component>> comment; 
 
-    std::shared_ptr<StringType> comment = std::dynamic_pointer_cast<StringType>(components[m_index]);
-    ComponentUtilities::IncrementIndex(components, m_index);
-    ComponentUtilities::IgnoreWhiteSpace(components, m_index);
-
+    while(components[m_index]->type() != ComponentType::CommentCloseTag)
+    {
+        comment.push_back(components[m_index]);
+        ComponentUtilities::IncrementIndex(components, m_index);
+    }
+    
     std::shared_ptr<CommentCloseTag> closeTag = std::dynamic_pointer_cast<CommentCloseTag>(components[m_index]);
     ComponentUtilities::IncrementIndex(components, m_index);
     ComponentUtilities::IgnoreWhiteSpace(components, m_index);

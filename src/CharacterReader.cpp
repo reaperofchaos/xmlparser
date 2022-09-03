@@ -113,10 +113,10 @@ std::shared_ptr<Component>CharacterReader::next(){
                         return TokenHandlers::buildOpenObject(m_tokens, m_index, start);
 
                     case SymbolType::SingleQuote: //build the string
-                        return TokenHandlers::buildString(m_tokens, m_index, start, characters, SymbolType::SingleQuote);
+                        return TokenHandlers::buildString(m_tokens, m_index, characters, SymbolType::SingleQuote);
                         
                     case SymbolType::Quote: //build the string
-                        return TokenHandlers::buildString(m_tokens, m_index, start, characters, SymbolType::Quote);
+                        return TokenHandlers::buildString(m_tokens, m_index, characters, SymbolType::Quote);
 
                     case SymbolType::CloseBracket:
                         return TokenHandlers::buildCloseTag(m_tokens, m_index, start);

@@ -67,7 +67,8 @@ enum class ComponentType
     HashTagComponent
 };
 
-class Component{
+class Component
+{
     private:
         std::string value;
     public:
@@ -132,31 +133,12 @@ class Component{
         virtual std::string getType(){return this->getTypeAsString(this->type());}
 };
 
-class StringType: public Component{
+class StringType: public Component
+{
     private:
         std::string value;
 
     public:
-        StringType(std::shared_ptr<Quote> q, std::vector<std::shared_ptr<Character>> characters, std::shared_ptr<Quote> q2): Component(){
-            std::string value = "";
-            value += q->getValue();
-            for(std::shared_ptr<Character> character : characters){
-                value += character->getValue(); 
-            }
-            value += q2->getValue(); 
-            this->value = value;
-            // std::cout << this->inspect() << "\n";
-        }
-        StringType(std::shared_ptr<SingleQuote> q, std::vector<std::shared_ptr<Character>> characters, std::shared_ptr<SingleQuote> q2){
-            std::string value = "";
-            value += q->getValue();
-            for(std::shared_ptr<Character> character : characters){
-                value += character->getValue(); 
-            }
-            value += q2->getValue();
-            this->value = value;
-            // std::cout << this->inspect() << "\n";
-        }
         StringType(std::vector<std::shared_ptr<Character>> characters){
             std::string value = "";
             for(std::shared_ptr<Character> character : characters){
@@ -198,7 +180,8 @@ class StringType: public Component{
 
 
 
-class NumberType: public Component{
+class NumberType: public Component
+{
     private:
         std::string value;
 
@@ -226,7 +209,8 @@ class NumberType: public Component{
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class Name: public Component{
+class Name: public Component
+{
     private:
         std::string value;
 
@@ -254,7 +238,8 @@ class Name: public Component{
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class OpenObject: public Component{
+class OpenObject: public Component
+{
     private:
         std::string value;
 
@@ -279,7 +264,8 @@ class OpenObject: public Component{
         virtual std::string getType(){return this->getTypeAsString(this->type());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
-class CloseObject: public Component{
+class CloseObject: public Component
+{
     private:
         std::string value;
 
@@ -315,7 +301,8 @@ class CloseObject: public Component{
         virtual std::string getType(){return this->getTypeAsString(this->type());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
-class OpenArray: public Component{
+class OpenArray: public Component
+{
     private:
         std::string value;
 
@@ -354,7 +341,8 @@ class OpenArray: public Component{
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class CloseArray: public Component{
+class CloseArray: public Component
+{
     private:
         std::string value;
 
@@ -391,7 +379,8 @@ class CloseArray: public Component{
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class OpenTag: public Component{
+class OpenTag: public Component
+{
     private:
         std::string value;
 
@@ -434,7 +423,8 @@ class OpenTag: public Component{
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class ClosingCloseTag: public Component{
+class ClosingCloseTag: public Component
+{
     private:
         std::string value;
 
@@ -469,7 +459,8 @@ class ClosingCloseTag: public Component{
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class ClosingOpenTag: public Component{
+class ClosingOpenTag: public Component
+{
     private:
         std::string value;
 
@@ -493,7 +484,8 @@ class ClosingOpenTag: public Component{
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class CloseTag: public Component{
+class CloseTag: public Component
+{
     private:
         std::string value;
 
@@ -529,7 +521,8 @@ class CloseTag: public Component{
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class ColonComponent: public Component{
+class ColonComponent: public Component
+{
     private:
         std::string value;
 
@@ -544,7 +537,8 @@ class ColonComponent: public Component{
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class SemicolonComponent: public Component{
+class SemicolonComponent: public Component
+{
     private:
         std::string value;
 
@@ -559,7 +553,8 @@ class SemicolonComponent: public Component{
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class CommaComponent: public Component{
+class CommaComponent: public Component
+{
     private:
         std::string value;
 
@@ -574,7 +569,8 @@ class CommaComponent: public Component{
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class WhiteSpaces: public Component{
+class WhiteSpaces: public Component
+{
     private:
         std::string value;
 
@@ -594,7 +590,8 @@ class WhiteSpaces: public Component{
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class ExclamationComponent: public Component{
+class ExclamationComponent: public Component
+{
     private:
         std::string value;
 
@@ -609,7 +606,8 @@ class ExclamationComponent: public Component{
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class EqualComponent: public Component{
+class EqualComponent: public Component
+{
     private:
         std::string value;
 
@@ -624,7 +622,8 @@ class EqualComponent: public Component{
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class PercentageComponent: public Component{
+class PercentageComponent: public Component
+{
     private:
         std::string value;
 
@@ -639,7 +638,8 @@ class PercentageComponent: public Component{
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class HashTagComponent: public Component{
+class HashTagComponent: public Component
+{
     private:
         std::string value;
 
@@ -654,7 +654,8 @@ class HashTagComponent: public Component{
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class DashComponent: public Component{
+class DashComponent: public Component
+{
     private:
         std::string value;
 
@@ -669,7 +670,8 @@ class DashComponent: public Component{
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class DocumentTypeOpenTag: public Component{
+class DocumentTypeOpenTag: public Component
+{
     private:
         std::string value;
 
@@ -706,7 +708,8 @@ class DocumentTypeOpenTag: public Component{
 
 };
 
-class CommentOpenTag: public Component{
+class CommentOpenTag: public Component
+{
     private:
         std::string value;
 
@@ -732,7 +735,8 @@ class CommentOpenTag: public Component{
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
-class CommentCloseTag: public Component{
+class CommentCloseTag: public Component
+{
     private:
         std::string value;
 

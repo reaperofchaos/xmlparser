@@ -39,7 +39,6 @@ $(OBJDIR)/Prop.o \
 $(OBJDIR)/ComponentUtilities.o \
 $(OBJDIR)/CharacterUtilities.o \
 $(OBJDIR)/Writer.o \
-$(OBJDIR)/Printer.o \
 $(OBJDIR)/Node.o \
 
 
@@ -96,9 +95,6 @@ $(OBJDIR)/Writer.o:
 
 $(OBJDIR)/Node.o:
 	$(CC) -c $(CCFLAGS) $(SRCDIR)/Types/Node.cpp -o $(OBJDIR)/Node.o
-
-$(OBJDIR)/Printer.o:
-	$(CC) -c $(CCFLAGS) $(SRCDIR)/printer.cpp -o $(OBJDIR)/Printer.o
 
 $(OBJDIR)/CharacterReader.o:
 	$(CC) -c $(CCFLAGS) $(SRCDIR)/CharacterReader.cpp -o $(OBJDIR)/CharacterReader.o

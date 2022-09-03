@@ -82,8 +82,10 @@ std::shared_ptr<Name> TokenHandlers::buildName(
     CharacterUtilities::IncrementIndex(m_tokens, m_index);
 
     while(m_tokens[m_index]->type() != CharacterType::WhiteSpace &&
+    (m_tokens[m_index]->symbolType() != SymbolType::ForwardSlash) &&
     (m_tokens[m_index]->symbolType() != SymbolType::CloseBracket) &&
     (m_tokens[m_index]->symbolType() != SymbolType::EqualSymbol) &&
+    (m_tokens[m_index]->symbolType() != SymbolType::Dash) &&
     (m_tokens[m_index]->symbolType() != SymbolType::Colon) &&
     (m_tokens[m_index]->symbolType() != SymbolType::Comma) &&
     (m_tokens[m_index]->symbolType() != SymbolType::Semicolon))
@@ -104,6 +106,7 @@ std::shared_ptr<ClosingCloseTag> TokenHandlers::buildClosingCloseTag(
 {
     CharacterUtilities::IncrementIndex(m_tokens, m_index);
     CharacterUtilities::IgnoreWhiteSpace(m_tokens, m_index);
+    CharacterUtilities::IncrementIndex(m_tokens, m_index);
 
     return std::make_shared<ClosingCloseTag>
         (
@@ -115,7 +118,6 @@ std::shared_ptr<ClosingCloseTag> TokenHandlers::buildClosingCloseTag(
 std::shared_ptr<StringType> TokenHandlers::buildString(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index,
-    size_t &start,
     std::vector<std::shared_ptr<Character>> &characters, 
     SymbolType symbolType)
 {
@@ -131,11 +133,7 @@ std::shared_ptr<StringType> TokenHandlers::buildString(
 
         CharacterUtilities::IncrementIndex(m_tokens, m_index);
 
-        return std::make_shared<StringType>( 
-            std::dynamic_pointer_cast<SingleQuote>(m_tokens[start]),
-            characters,
-            std::dynamic_pointer_cast<SingleQuote>(m_tokens[m_index-1])
-        );
+        return std::make_shared<StringType>(characters);
     }else{
         while( m_tokens[m_index]->symbolType() != SymbolType::Quote)
         {
@@ -145,11 +143,7 @@ std::shared_ptr<StringType> TokenHandlers::buildString(
 
         CharacterUtilities::IncrementIndex(m_tokens, m_index);
 
-        return std::make_shared<StringType>( 
-            std::dynamic_pointer_cast<Quote>(m_tokens[start]),
-            characters,
-            std::dynamic_pointer_cast<Quote>(m_tokens[m_index-1])
-        );
+        return std::make_shared<StringType>(characters);
     }
 }
 

@@ -3,8 +3,6 @@
 //creates a vector tokens
 void Tokenizer::tokenize() 
 {
-    
-    
     while (auto token = this->next()) 
     {
         this->tokens.push_back(token);

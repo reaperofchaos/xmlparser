@@ -14,6 +14,7 @@ std::shared_ptr<Element>ElementBuilder::next(){
             case ComponentType::ClosingOpenTag:
                 return ElementHandlers::buildCloseTagElement(m_components, m_index, start);
             case ComponentType::CommentOpenTag:
+                std::cout << "Found a comment open tag \n"; 
                 return ElementHandlers::buildCommentTagElement(m_components, m_index, start); 
             case ComponentType::StringType:
                 return ElementHandlers::buildNestedString(m_components, m_index, start);    
@@ -34,7 +35,6 @@ std::shared_ptr<Element>ElementBuilder::next(){
  */
 void ElementBuilder::buildElements() 
 {
-    std::cout << "building elements \n"; 
     while (auto element = this->next()) 
     {
         this->m_elements.push_back(element);
@@ -56,12 +56,10 @@ std::shared_ptr<Node> ElementBuilder::read_str(std::string input)
     reader.build_components();
     std::vector<std::shared_ptr<Component>>components = reader.getComponents(); 
     std::cout << "Total components " << components.size() << "\n"; 
-    //reader.displayComponents();
     ElementBuilder elementBuilder(components);
     elementBuilder.buildElements();
     std::vector<std::shared_ptr<Element>>elements = elementBuilder.getElements(); 
     std::cout << "Total elements " << elements.size() << "\n"; 
-    elementBuilder.displayElements();
     std::shared_ptr<Node> targetNode;
     std::shared_ptr<Node> tree = targetNode->createTree(elements);
     return tree; 

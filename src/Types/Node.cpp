@@ -108,7 +108,7 @@ std::shared_ptr<Node> Node::getLastNode(std::shared_ptr<Node> node)
 std::shared_ptr<Node> Node::createTree(std::vector<std::shared_ptr<Element>> valuesToAdd)
 {
     std::shared_ptr<Node> root =  std::make_shared<Node>(); 
-    std::cout << "Creating tree from the nodes" << "\n\n"; 
+    std::cout << "Creating tree from the Elements" << "\n\n"; 
     for(std::shared_ptr<Element> valueToAdd : valuesToAdd)
     {
         root->insertValue(root, valueToAdd);
@@ -187,7 +187,6 @@ void Node::insertValue(std::shared_ptr<Node> node, std::shared_ptr<Element> valu
     //if Node pointer is null, create a root node
     if (node->value == NULL)
     {
-        std::cout << "The first node " << valueToAdd->getValue() << " has been added" << "\n"; 
         node->setValue(valueToAdd);
     }else{
         std::shared_ptr<Node> lastNode = Node::getLastNode(node);
