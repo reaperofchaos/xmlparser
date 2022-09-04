@@ -8,14 +8,7 @@ S, T, U, V, W, X, Y, Z, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s,
 z, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, [, ], (, ), @, #, $, %, ^, &, *, _, -, +, =, ~, `, ?, ,, ., :, ;, \, /, |, }
 
 ## TERMINAL SYMBOLS 
-T = {STMT, TAG, DOCUMENT_TAG, PAIREDTAG, UNPAIREDTAG, OPENTAG, CLOSINGTAG,
-OPENTAG, VALUE, STRING, OBJECT, CHARACTERSWITHOUTQUOTES, CHARACTERSWITHOUTSINGLEQUOTES, 
-CHARACTER, WHITESPACE, NUMBER, LETTER, LOWERCASE, UPPERCASE, SYMBOL, QUOTES, SINGLEQUOTES,
-ESCAPEDQUOTES, ESCAPEDSINGLEQUOTES, NAME, CHARACTERSWITHOUTWHITESPACE, ARRAYOPENBRACKET, 
- ARRAYCLOSEBRACKET, PRIMITIVE, ARRAYELEMENT, ARRAY, PAIRVALUE, OBJECTPAIR, OBJECTELEMENT, 
- OBJECTOPENBRACKET, OBJECTCLOSEBRACKET, OBJECT, COMMENTTAG, OPENBRACKET, CLOSEBRACKET, 
- BODY, SELFCLOSINGTAG, STARTTAG, CLOSETAG, XMLTAG, PROP, BOOLEANPROP, STRINGPROP, OBJECTPROP
- }
+T = {}
 
  ## START SYMBOL
  S = {STMT}
@@ -25,88 +18,103 @@ ESCAPEDQUOTES, ESCAPEDSINGLEQUOTES, NAME, CHARACTERSWITHOUTWHITESPACE, ARRAYOPEN
  P={
     // A document tag with one or more tags
     //Or just a tag
-	STMT = DOCUMENT_TAG + TAG | TAG,
-
-    //A tag can be either paired, or unpaired or one or more tags
-    TAG = PAIREDTAG | UNPAIREDTAG | TAG + TAG
-
-    // TAGS can be in pairs with or without a value
-    PAIREDTAG = OPENTAG + CLOSINGTAG | OPENTAG + VALUE + CLOSINGTAG,
-
-    // Some tags can be unpaired
-    UNPAIREDTAG = SELFCLOSINGTAG | XMLTAG | COMMENTTAG,
-
-    //VALUES BETWEEN TAGS can be strings, objects, or other tags
-    VALUE = STRING | OBJECT | TAG
-
-    //A string consists of quotes surrounding one or more characters
-    STRING = " + CHARACTERSWIHOUTQUOTES + " | ' + CHARACTERSWIHOUTSINGLEQUOTES + ' 
+	STMT = DocumentTag + Element | ELement,
     
-    CHARACTERSWITHOUTQUOTES = CHARACTER | SINGLEQUOTES | ESCAPEDQUOTES | ESCAPEDSINGLEQUOTES | CHARACTERSWITHOUTQUOTES + CHARACTERSWITHOUTQUOTES
-    
-    CHARACTERSWITHOUTSINGLEQUOTES = CHARACTER | QUOTES | ESCAPEDQUOTES | ESCAPEDSINGLEQUOTES | CHARACTERSWITHOUTSINGLEQUOTES + CHARACTERSWITHOUTSINGLEQUOTES
+    //Characters (Tokens)
+    Character = Character | WhiteSpace | Number | Letter | Symbol | UnicodeCharacter | Unknown | Character + Character
 
-    CHARACTERSWITHOUTWHITESPACE = NUMBER | LETTER | SYMBOL | CHARACTERSWITHOUTWHITESPACE + CHARACTERSWITHOUTWHITESPACE
+    //Symbols
+    Symbol = NotASymbol | Symbol | Quote | SingleQuote | EscapedQuote | EscapedSingleQuote| Colon | Comma | OpenBracket | CloseBracket | ObjectOpenBracket | ObjectCloseBracket |ArrayOpenBracket | ArrayCloseBracket | Exclamation | Dash | Underscore | QuestionMark |ForwardSlash | ClosingCloseTag | EqualSymbol | Semicolon | Percentage | HashTag
 
-    //Characters can be any non-terminal symbol
-    CHARACTER = WHITESPACE | NUMBER | LETTER | SYMBOL | CHARACTER + CHARACTER
-    
-    WHITESPACE = \s | \t | \n | \r | WHITESPACE + WHITESPACE
+    WhiteSpaces = \s | \t | \n | \r
+    Symbol = @ | $ | ^ | & | * | ( | ) | + | ` | ~ | . | | | \
+    Percentage = %
+    Comma = ,
+    Semicolon = ;
+    Underscore = _
+    EqualSymbol = =
+    HashTag = #
+    SingleQuote = '
+    Quote = "
+    EscapedSingleQuote = \'
+    EscapedQuote = \"
+    ObjectOpenBracket = {
+    ObjectCloseBracket = }
+    ArrayOpenBracket = [
+    ArrayCloseBracket = ]
+    Colon = : 
+    QuestionMark = ?
+    CloseBracket = >
+    OpenBracket = <
+    Dash = - 
+    ForwardSlash = /
 
-    NUMBER = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | NUMBER + NUMBER
+    //Letters
+    Letter = Uppercase | Lowercase
 
-    LETTER = LOWERCASE | UPPERCASE | LETTER + LETTER
-
-    LOWERCASE = a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p
+    Lowercase = a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p
     | q | r | s | t | u | v | w | x | y | z 
 
-    UPPERCASE = A | B | C | D | E | F | G | H | I | J | K | L | M | N | O | P
+    Uppercase = A | B | C | D | E | F | G | H | I | J | K | L | M | N | O | P
     | Q | R | S | T | U | V | W | X | Y | Z
 
-    SYMBOL = ! | @ | # | $ | % | ^ | & | * | ( | ) | / | \ | + | - | ` | ~ |
-    ? | > | < | , | . | : | ; | { | } | [ | ] | | | 
+    //Numbers
+    Number = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 
 
-    QUOTES = ",
-    SINGLEQUOTES = ',
-    ESCAPEDQUOTES = \" ,
-    ESCAPEDSINGLEQUOTES = \',
+    //Components
+    Component = Name | StringType | ArrayType | ObjectType | NumberType | Unknown | CloseObject | OpenObject | OpenTag | CloseTag | OpenArray | CloseArray | ColonComponent | CommaComponent | ExclamationComponent | QuestionComponent | DashComponent | SemicolonComponent | WhiteSpaces | ClosingCloseTag | ClosingOpenTag | EqualComponent | DocumentTypeOpenTag | CommentOpenTag | CommentCloseTag | PercentageComponent | HashTagComponent
 
-    // variable1, a, var, not 1variable
-    NAME = LETTER | LETTER + CHARACTERSWITHOUTWHITESPACE
-    ARRAYOPENBRACKET = [|[ +  WHITESPACE
-    ARRAYCLOSEBRACKET = ] | WHITESPACE + ]
-    PRIMITIVE = OBJECT | STRING | NUMBER | NAME | ARRAY
-    ARRAYELEMENT = PRIMITIVE | PRIMITIVE + WHITESPACE | PRIMITIVE + , + WHITESPACE +  PRIMITIVE
-    ARRAY = ARRAYOPENBRACKET + ARRAYELEMENT + ARRAYCLOSEBRACKET
+    NumberType = number | number + number
+    CloseTag = CloseBracket
+    CloseArray = ArrayCloseBracket
+    CloseObject = ObjectCloseBracket
+    WhiteSpaces = WhiteSpace | WhiteSpace + WhiteSpace
+    Name = Letter | Letter + Letter
+    ClosingCloseTag = ForwardSlash + CloseBracket
+    StringType = Character | Character + Character
+    OpenArray = ArrayOpenBracket
+    OpenObject = ObjectOpenBracket
+    ExclamationComponent = Exclamation
+    EqualComponent = EqualSymbol
+    SemicolonComponent = Semicolon
+    ColonComponent = Colon
+    PercentageComponent = Percentage
+    CommaComponent = Comma
+    HashTagComponent = HashTag
+    ClosingOpenTag = OpenBracket + ForwardSlash
+    CommentOpenTag = OpenBracket + Exclamation + Dash + Dash
+    CommentCloseTag = Dash + Dash + CloseBracket
+    DocumentTypeOpenTag = OpenBracket + Exclamation
+    OpenTag = OpenBracket
+
+    //Primitives
+    Primitive = Primitive | StringPrimitive | NumberPrimitive | BooleanPrimitive | ArrayPrimitive | ObjectPrimitive
+
+    BooleanPrimitive = Name
+    StringPrimitive = StringType | StringType + StringType
+    NumberPrimitive = NumberType | NumberType + NumberType
+    ObjectPairs = Name + ColonComponent + Primitive
+    ObjectPrimitive = ObjectPairs | ObjectPairs + ObjectPairs
+    ArrayPrimitive = Primitive | Primitive + CommaComponent +  Primitive
+
+    //Props 
+    Prop = Prop | ObjectProp | StringProp | BooleanProp
+    StringProp = Name + EqualComponent + StringPrimitive
+    ObjectProp = Name + EqualComponent + ObjectPrimitive
+    BooleanProp = Name | Name + EqualComponent + BooleanPrimitive
+
+    //Elements
+    Element = Element | DocumentTag | Tag | NestedObject | NestedString
+    DocumentTag = DocumentTypeOpenTag + Name + Prop + CloseTag
+    OpenTagElement = OpenTag + Name + Prop + CloseTag
+    SelfClosingTagElement = OpenTag + Name + Prop + ClosingCloseTag
+    CloseTagElement = ClosingOpenTag + Name + CloseTag
+    CommentTagElement = CommentOpenTag + Component + CommentCloseTag
+    NestedString = Component 
     
-    PAIRVALUE = OBJECT | STRING | NUMBER | NAME | ARRAY
-    OBJECTPAIR = NAME + WHITESPACE + : + WHITESPACE + PAIRVALUE | 
-    NAME  + : + WHITESPACE + PAIRVALUE | NAME + WHITESPACE + :  + PAIRVALUE|
-    NAME  + :  + PAIRVALUE
-    
-    OBJECTELEMENT = OBJECTPAIR | NAME | STRING | OBJECTELEMENT + , + WHITESPACE + OBJECTELEMENT | OBJECTELEMENT + WHITESPACE + , + WHITESPACE + OBJECTELEMENT
-    OBJECTOPENBRACKET = { | { + WHITESPACE
-    OBJECTCLOSEBRACKET = WHITESPACE + } | }
-    OBJECT = OBJECTOPENBRACKET +  OBJECTELEMENT + OBJECTCLOSEBRACKET
+    //Tag
+    Tag = Tag | OpenTagElement | SelfClosingTagElement | CloseTagElement | CommentTagElement | NotATag
 
-
-    COMMENTTAG =  < + ! + - + - + CHARACTER + - + - + >
-    OPENBRACKET = < | < + WHITESPACE
-    CLOSEBRACKET = > | WHITESPACE > 
-    BODY = NAME | NAME + WHITESPACE + PROP
-    SELFCLOSINGTAG = OPENBRACKET + BODY + / + CLOSEBRACKET | OPENBRACKET + BODY + WHITESPACE / + CLOSEBRACKET 
-    STARTTAG = OPENBRACKET + BODY + CLOSEBRACKET
-    CLOSETAG = OPENBRACKET + BODY + / + CLOSEBRACKET | OPENBRACKET + BODY + WHITESPACE / + CLOSEBRACKET 
-    DOCUMENT_TAG = OPENBRACKET + ! + BODY + CLOSEBRACKET
-    XMLTAG = OPENBRACKET + ? + BODY + CLOSEBRACKET
-
-    PROP = BOOLEANPROP | STRINGPROP | OBJECTPROP | PROP + PROP
-    BOOLEANPROP = NAME | NAME + WHITESPACE
-    STRINGPROP = NAME + = + STRING | NAME + WHITESPACE + = + STRING |
-     NAME  + = + WHITESPACE + STRING |
-      NAME  + WHITESPACE + = + WHITESPACE + STRING | STRINGPROP + WHITESPACE
-    OBJECTPROP = OBJECT | OBJECT + WHITESPACE
-}
 ```
 
 ## Logic
