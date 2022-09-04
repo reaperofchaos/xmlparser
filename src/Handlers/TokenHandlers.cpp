@@ -1,4 +1,4 @@
-#include "TokenHandlers.hpp"
+#include "TokenHandlers.h"
 
 std::shared_ptr<NumberType> TokenHandlers::buildNumberComponent(
     std::vector<std::shared_ptr<Character>> &m_tokens, 

@@ -7,29 +7,93 @@ Props: [
 	}
 ]
 Node: html Level: 1 Type: Open tag
-Node: test and another test and test-2 Level: 2 Type: Comment Tag
+Node: head Level: 2 Type: Open tag
+Node: style Level: 3 Type: Open tag
+Node: table {  font-family: arial, sans-serif;  border-collapse: collapse;  width: 100%;}td, th {  border: 1px solid #dddddd;  text-align: left;  padding: 8px;}tr:nth-child(even) {  background-color: #dddddd;} Level: 4 Type: Nested string
+Node: style Level: 3 Type: Closing Tag
+Node: head Level: 2 Type: Closing Tag
 Node: body Level: 2 Type: Open tag
 Node: h2 Level: 3 Type: Open tag
-Node: HTML Image Level: 4 Type: Nested string
+Node: HTML Table Level: 4 Type: Nested string
 Node: h2 Level: 3 Type: Closing Tag
-Node: img Level: 3 Type: Self closing tag
-Props: [
-	{		Name: src, 
-		Type: String prop, 
-		Value: pic_trulli.jpg, 
-	},
-	{		Name: alt, 
-		Type: String prop, 
-		Value: Trulli, 
-	},
-	{		Name: width, 
-		Type: String prop, 
-		Value: 500, 
-	},
-	{		Name: height, 
-		Type: String prop, 
-		Value: 333, 
-	}
-]
+Node: table Level: 3 Type: Open tag
+Node: tr Level: 4 Type: Open tag
+Node: th Level: 5 Type: Open tag
+Node: Company Level: 6 Type: Nested string
+Node: th Level: 5 Type: Closing Tag
+Node: th Level: 5 Type: Open tag
+Node: Contact Level: 6 Type: Nested string
+Node: th Level: 5 Type: Closing Tag
+Node: th Level: 5 Type: Open tag
+Node: Country Level: 6 Type: Nested string
+Node: th Level: 5 Type: Closing Tag
+Node: tr Level: 4 Type: Closing Tag
+Node: tr Level: 4 Type: Open tag
+Node: td Level: 5 Type: Open tag
+Node: Alfreds Futterkiste Level: 6 Type: Nested string
+Node: td Level: 5 Type: Closing Tag
+Node: td Level: 5 Type: Open tag
+Node: Maria Anders Level: 6 Type: Nested string
+Node: td Level: 5 Type: Closing Tag
+Node: td Level: 5 Type: Open tag
+Node: Germany Level: 6 Type: Nested string
+Node: td Level: 5 Type: Closing Tag
+Node: tr Level: 4 Type: Closing Tag
+Node: tr Level: 4 Type: Open tag
+Node: td Level: 5 Type: Open tag
+Node: Centro comercial Moctezuma Level: 6 Type: Nested string
+Node: td Level: 5 Type: Closing Tag
+Node: td Level: 5 Type: Open tag
+Node: Francisco Chang Level: 6 Type: Nested string
+Node: td Level: 5 Type: Closing Tag
+Node: td Level: 5 Type: Open tag
+Node: Mexico Level: 6 Type: Nested string
+Node: td Level: 5 Type: Closing Tag
+Node: tr Level: 4 Type: Closing Tag
+Node: tr Level: 4 Type: Open tag
+Node: td Level: 5 Type: Open tag
+Node: Ernst Handel Level: 6 Type: Nested string
+Node: td Level: 5 Type: Closing Tag
+Node: td Level: 5 Type: Open tag
+Node: Roland Mendel Level: 6 Type: Nested string
+Node: td Level: 5 Type: Closing Tag
+Node: td Level: 5 Type: Open tag
+Node: Austria Level: 6 Type: Nested string
+Node: td Level: 5 Type: Closing Tag
+Node: tr Level: 4 Type: Closing Tag
+Node: tr Level: 4 Type: Open tag
+Node: td Level: 5 Type: Open tag
+Node: Island Trading Level: 6 Type: Nested string
+Node: td Level: 5 Type: Closing Tag
+Node: td Level: 5 Type: Open tag
+Node: Helen Bennett Level: 6 Type: Nested string
+Node: td Level: 5 Type: Closing Tag
+Node: td Level: 5 Type: Open tag
+Node: UK Level: 6 Type: Nested string
+Node: td Level: 5 Type: Closing Tag
+Node: tr Level: 4 Type: Closing Tag
+Node: tr Level: 4 Type: Open tag
+Node: td Level: 5 Type: Open tag
+Node: Laughing Bacchus Winecellars Level: 6 Type: Nested string
+Node: td Level: 5 Type: Closing Tag
+Node: td Level: 5 Type: Open tag
+Node: Yoshi Tannamuri Level: 6 Type: Nested string
+Node: td Level: 5 Type: Closing Tag
+Node: td Level: 5 Type: Open tag
+Node: Canada Level: 6 Type: Nested string
+Node: td Level: 5 Type: Closing Tag
+Node: tr Level: 4 Type: Closing Tag
+Node: tr Level: 4 Type: Open tag
+Node: td Level: 5 Type: Open tag
+Node: Magazzini Alimentari Riuniti Level: 6 Type: Nested string
+Node: td Level: 5 Type: Closing Tag
+Node: td Level: 5 Type: Open tag
+Node: Giovanni Rovelli Level: 6 Type: Nested string
+Node: td Level: 5 Type: Closing Tag
+Node: td Level: 5 Type: Open tag
+Node: Italy Level: 6 Type: Nested string
+Node: td Level: 5 Type: Closing Tag
+Node: tr Level: 4 Type: Closing Tag
+Node: table Level: 3 Type: Closing Tag
 Node: body Level: 2 Type: Closing Tag
 Node: html Level: 1 Type: Closing Tag

@@ -1,4 +1,4 @@
-#include "PrimitiveBuilder.hpp"
+#include "PrimitiveBuilder.h"
 
 std::shared_ptr<Primitive>PrimitiveBuilder::next(){
     // size_t start = this->m_index;

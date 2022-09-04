@@ -1,4 +1,4 @@
-#include "PrimitiveHandlers.hpp"
+#include "PrimitiveHandlers.h"
 
 std::shared_ptr<Primitive> PrimitiveHandlers::buildPrimitive(
     std::vector<std::shared_ptr<Component>> &components, 

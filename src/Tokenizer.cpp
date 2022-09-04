@@ -1,4 +1,4 @@
-#include "Tokenizer.hpp"
+#include "Tokenizer.h"
 
 //creates a vector tokens
 void Tokenizer::tokenize() 

@@ -17,9 +17,33 @@
 			"type": "Open tag",
 			"children": [
 			{ 
-				"name": "test and another test and test-2",
+				"name": "head",
 				"level": "2",
-				"type": "Comment Tag"
+				"type": "Open tag",
+				"children": [
+				{ 
+					"name": "style",
+					"level": "3",
+					"type": "Open tag",
+					"children": [
+					{ 
+						"name": "table {  font-family: arial, sans-serif;  border-collapse: collapse;  width: 100%;}td, th {  border: 1px solid #dddddd;  text-align: left;  padding: 8px;}tr:nth-child(even) {  background-color: #dddddd;}",
+						"level": "4",
+						"type": "Nested string"
+					}
+					]
+				},
+				{ 
+					"name": "style",
+					"level": "3",
+					"type": "Closing Tag"
+				}
+				]
+			},
+			{ 
+				"name": "head",
+				"level": "2",
+				"type": "Closing Tag"
 			},
 			{ 
 				"name": "body",
@@ -32,7 +56,7 @@
 					"type": "Open tag",
 					"children": [
 					{ 
-						"name": "HTML Image",
+						"name": "HTML Table",
 						"level": "4",
 						"type": "Nested string"
 					}
@@ -44,35 +68,457 @@
 					"type": "Closing Tag"
 				},
 				{ 
-					"name": "img",
+					"name": "table",
 					"level": "3",
-					"type": "Self closing tag",
-					"props": [
-						{
-							"name": "src", 
-							"type": "String prop", 
-							"value": "pic_trulli.jpg", 
-							"value-type": "String"
+					"type": "Open tag",
+					"children": [
+					{ 
+						"name": "tr",
+						"level": "4",
+						"type": "Open tag",
+						"children": [
+						{ 
+							"name": "th",
+							"level": "5",
+							"type": "Open tag",
+							"children": [
+							{ 
+								"name": "Company",
+								"level": "6",
+								"type": "Nested string"
+							}
+							]
 						},
-						{
-							"name": "alt", 
-							"type": "String prop", 
-							"value": "Trulli", 
-							"value-type": "String"
+						{ 
+							"name": "th",
+							"level": "5",
+							"type": "Closing Tag"
 						},
-						{
-							"name": "width", 
-							"type": "String prop", 
-							"value": "500", 
-							"value-type": "String"
+						{ 
+							"name": "th",
+							"level": "5",
+							"type": "Open tag",
+							"children": [
+							{ 
+								"name": "Contact",
+								"level": "6",
+								"type": "Nested string"
+							}
+							]
 						},
-						{
-							"name": "height", 
-							"type": "String prop", 
-							"value": "333", 
-							"value-type": "String"
+						{ 
+							"name": "th",
+							"level": "5",
+							"type": "Closing Tag"
+						},
+						{ 
+							"name": "th",
+							"level": "5",
+							"type": "Open tag",
+							"children": [
+							{ 
+								"name": "Country",
+								"level": "6",
+								"type": "Nested string"
+							}
+							]
+						},
+						{ 
+							"name": "th",
+							"level": "5",
+							"type": "Closing Tag"
 						}
+						]
+					},
+					{ 
+						"name": "tr",
+						"level": "4",
+						"type": "Closing Tag"
+					},
+					{ 
+						"name": "tr",
+						"level": "4",
+						"type": "Open tag",
+						"children": [
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Open tag",
+							"children": [
+							{ 
+								"name": "Alfreds Futterkiste",
+								"level": "6",
+								"type": "Nested string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Closing Tag"
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Open tag",
+							"children": [
+							{ 
+								"name": "Maria Anders",
+								"level": "6",
+								"type": "Nested string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Closing Tag"
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Open tag",
+							"children": [
+							{ 
+								"name": "Germany",
+								"level": "6",
+								"type": "Nested string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Closing Tag"
+						}
+						]
+					},
+					{ 
+						"name": "tr",
+						"level": "4",
+						"type": "Closing Tag"
+					},
+					{ 
+						"name": "tr",
+						"level": "4",
+						"type": "Open tag",
+						"children": [
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Open tag",
+							"children": [
+							{ 
+								"name": "Centro comercial Moctezuma",
+								"level": "6",
+								"type": "Nested string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Closing Tag"
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Open tag",
+							"children": [
+							{ 
+								"name": "Francisco Chang",
+								"level": "6",
+								"type": "Nested string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Closing Tag"
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Open tag",
+							"children": [
+							{ 
+								"name": "Mexico",
+								"level": "6",
+								"type": "Nested string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Closing Tag"
+						}
+						]
+					},
+					{ 
+						"name": "tr",
+						"level": "4",
+						"type": "Closing Tag"
+					},
+					{ 
+						"name": "tr",
+						"level": "4",
+						"type": "Open tag",
+						"children": [
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Open tag",
+							"children": [
+							{ 
+								"name": "Ernst Handel",
+								"level": "6",
+								"type": "Nested string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Closing Tag"
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Open tag",
+							"children": [
+							{ 
+								"name": "Roland Mendel",
+								"level": "6",
+								"type": "Nested string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Closing Tag"
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Open tag",
+							"children": [
+							{ 
+								"name": "Austria",
+								"level": "6",
+								"type": "Nested string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Closing Tag"
+						}
+						]
+					},
+					{ 
+						"name": "tr",
+						"level": "4",
+						"type": "Closing Tag"
+					},
+					{ 
+						"name": "tr",
+						"level": "4",
+						"type": "Open tag",
+						"children": [
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Open tag",
+							"children": [
+							{ 
+								"name": "Island Trading",
+								"level": "6",
+								"type": "Nested string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Closing Tag"
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Open tag",
+							"children": [
+							{ 
+								"name": "Helen Bennett",
+								"level": "6",
+								"type": "Nested string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Closing Tag"
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Open tag",
+							"children": [
+							{ 
+								"name": "UK",
+								"level": "6",
+								"type": "Nested string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Closing Tag"
+						}
+						]
+					},
+					{ 
+						"name": "tr",
+						"level": "4",
+						"type": "Closing Tag"
+					},
+					{ 
+						"name": "tr",
+						"level": "4",
+						"type": "Open tag",
+						"children": [
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Open tag",
+							"children": [
+							{ 
+								"name": "Laughing Bacchus Winecellars",
+								"level": "6",
+								"type": "Nested string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Closing Tag"
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Open tag",
+							"children": [
+							{ 
+								"name": "Yoshi Tannamuri",
+								"level": "6",
+								"type": "Nested string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Closing Tag"
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Open tag",
+							"children": [
+							{ 
+								"name": "Canada",
+								"level": "6",
+								"type": "Nested string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Closing Tag"
+						}
+						]
+					},
+					{ 
+						"name": "tr",
+						"level": "4",
+						"type": "Closing Tag"
+					},
+					{ 
+						"name": "tr",
+						"level": "4",
+						"type": "Open tag",
+						"children": [
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Open tag",
+							"children": [
+							{ 
+								"name": "Magazzini Alimentari Riuniti",
+								"level": "6",
+								"type": "Nested string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Closing Tag"
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Open tag",
+							"children": [
+							{ 
+								"name": "Giovanni Rovelli",
+								"level": "6",
+								"type": "Nested string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Closing Tag"
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Open tag",
+							"children": [
+							{ 
+								"name": "Italy",
+								"level": "6",
+								"type": "Nested string"
+							}
+							]
+						},
+						{ 
+							"name": "td",
+							"level": "5",
+							"type": "Closing Tag"
+						}
+						]
+					},
+					{ 
+						"name": "tr",
+						"level": "4",
+						"type": "Closing Tag"
+					}
 					]
+				},
+				{ 
+					"name": "table",
+					"level": "3",
+					"type": "Closing Tag"
 				}
 				]
 			},

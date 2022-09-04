@@ -1,4 +1,4 @@
-#include "CharacterReader.hpp"
+#include "CharacterReader.h"
 
 /** 
  * function to read a string, 

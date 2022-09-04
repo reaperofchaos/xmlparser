@@ -1,4 +1,4 @@
-#include "Writer.hpp"
+#include "Writer.h"
 
 /**
  * @brief Function to write a tree to a provided filename

@@ -5,9 +5,9 @@
 #include <memory>
 #include <unordered_map>
 #include "linenoise.hpp"
-#include "ElementBuilder.hpp"
-#include "Types/Node.hpp"
-#include "Writer.hpp"
+#include "ElementBuilder.h"
+#include "Types/Node.h"
+#include "Writer.h"
 
 std::shared_ptr<Node> READ(std::string input)
 {

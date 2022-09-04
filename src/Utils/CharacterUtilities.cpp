@@ -1,4 +1,4 @@
-#include "CharacterUtilities.hpp"
+#include "CharacterUtilities.h"
 
 void CharacterUtilities::IgnoreWhiteSpace( 
     std::vector<std::shared_ptr<Character>> &characters,

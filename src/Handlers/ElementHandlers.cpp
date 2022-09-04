@@ -1,4 +1,4 @@
-#include "ElementHandlers.hpp"
+#include "ElementHandlers.h"
 
 //Creates a document tag element
 std::shared_ptr<DocumentTag> ElementHandlers::buildDocumentTagElement(
@@ -103,7 +103,7 @@ std::shared_ptr<CommentTagElement> ElementHandlers::buildCommentTagElement(
         comment.push_back(components[m_index]);
         ComponentUtilities::IncrementIndex(components, m_index);
     }
-    
+
     std::shared_ptr<CommentCloseTag> closeTag = std::dynamic_pointer_cast<CommentCloseTag>(components[m_index]);
     ComponentUtilities::IncrementIndex(components, m_index);
     ComponentUtilities::IgnoreWhiteSpace(components, m_index);

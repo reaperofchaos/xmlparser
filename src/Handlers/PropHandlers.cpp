@@ -1,6 +1,6 @@
-#include "PropHandlers.hpp"
+#include "PropHandlers.h"
 
-std::shared_ptr<Prop> PropHandlers::buildProp(
+std::shared_ptr<Prop> PropHandlers:: buildProp(
     std::vector<std::shared_ptr<Component>> &components,
     size_t &m_index)
 {

@@ -1,4 +1,4 @@
-#include "ComponentUtilities.hpp"
+#include "ComponentUtilities.h"
 
 void ComponentUtilities::IgnoreWhiteSpace( 
     std::vector<std::shared_ptr<Component>> &components,
