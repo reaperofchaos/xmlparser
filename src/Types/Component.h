@@ -35,6 +35,8 @@ class CommentCloseTag;
 class SemicolonComponent;
 class PercentageComponent;
 class HashTagComponent;
+class OpenParenthesisComponent;
+class CloseParenthesisComponent;
 
 enum class ComponentType
 {
@@ -64,7 +66,9 @@ enum class ComponentType
     CommentOpenTag,
     CommentCloseTag,
     PercentageComponent,
-    HashTagComponent
+    HashTagComponent,
+    OpenParenthesisComponent,
+    CloseParenthesisComponent,
 };
 
 class Component
@@ -122,6 +126,10 @@ class Component
                     return "Percentage Component";
                 case ComponentType::HashTagComponent:
                     return "Hash Tag Component";
+                case ComponentType::CloseParenthesisComponent:
+                    return "Close Parenthesis";
+                case ComponentType::OpenParenthesisComponent:
+                    return "Close Parenthesis";
                 default: 
                     return "Unknown";
             }
@@ -670,6 +678,37 @@ class DashComponent: public Component
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
+class CloseParenthesisComponent: public Component
+{
+    private:
+        std::string value;
+
+    public:
+        CloseParenthesisComponent(std::shared_ptr<CloseParenthesis> closeParenthesis ){
+            this->value = closeParenthesis->getValue();
+        }
+
+        virtual ComponentType type(){ return ComponentType::CloseParenthesisComponent;}
+        std::string getValue(){ return value;}
+        virtual std::string getType(){return this->getTypeAsString(this->type());}
+        virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
+};
+
+class OpenParenthesisComponent: public Component
+{
+    private:
+        std::string value;
+
+    public:
+        OpenParenthesisComponent(std::shared_ptr<OpenParenthesis> openParenthesis ){
+            this->value = openParenthesis->getValue();
+        }
+
+        virtual ComponentType type(){ return ComponentType::OpenParenthesisComponent;}
+        std::string getValue(){ return value;}
+        virtual std::string getType(){return this->getTypeAsString(this->type());}
+        virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
+};
 class DocumentTypeOpenTag: public Component
 {
     private:
