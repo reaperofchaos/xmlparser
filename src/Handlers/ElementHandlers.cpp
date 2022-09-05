@@ -144,24 +144,31 @@ std::shared_ptr<NestedObject> ElementHandlers::buildNestedObject(
     std::string value = ""; 
     value += components[start]->getValue();
     ComponentUtilities::IncrementIndex(components, m_index);
+    ComponentUtilities:: DisplayCurrent(components, m_index);
 
     while(components[m_index]->type() != ComponentType::CloseObject)
     {
         value += components[m_index]->getValue();
         ComponentUtilities::IncrementIndex(components, m_index);
+        ComponentUtilities:: DisplayCurrent(components, m_index);
+
     }
+    ComponentUtilities::DisplayCurrent(components, m_index);
 
     if(components[m_index]->type() == ComponentType::CloseParenthesisComponent)
     {
         value += components[m_index]->getValue();
         ComponentUtilities::IncrementIndex(components, m_index);
+        ComponentUtilities:: DisplayCurrent(components, m_index);
+
     }
-    ComponentUtilities:: DisplayCurrent(components, m_index);
 
     if(components[m_index]->type() == ComponentType::CloseObject)
     {
         value += components[m_index]->getValue();
         ComponentUtilities::IncrementIndex(components, m_index);
+        ComponentUtilities:: DisplayCurrent(components, m_index);
+
     }
 
     std::shared_ptr<StringType> stringValue = std::make_shared<StringType>(value);

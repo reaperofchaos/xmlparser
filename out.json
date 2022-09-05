@@ -37,7 +37,12 @@
 			"type": "Closing Tag"
 		},
 		{ 
-			"name": "{console.log('This is a test')}    {isVisible && (        <TextField>            This is visible        </TextField>    )}",
+			"name": "{console.log('This is a test')}",
+			"level": "1",
+			"type": "Nested object"
+		},
+		{ 
+			"name": "{isVisible && (        <TextField>            This is visible        </TextField>    )}",
 			"level": "1",
 			"type": "Nested object"
 		},
