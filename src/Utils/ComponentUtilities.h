@@ -17,4 +17,8 @@ class ComponentUtilities {
         static void IncrementIndex( 
             std::vector<std::shared_ptr<Component>> &components,
             size_t &m_index);
+        
+        static void DisplayCurrent( 
+            std::vector<std::shared_ptr<Component>> &characters,
+            size_t &m_index);
 };

@@ -19,3 +19,10 @@ void ComponentUtilities::IncrementIndex(
         m_index++;
     } 
 }
+
+void ComponentUtilities::DisplayCurrent( 
+    std::vector<std::shared_ptr<Component>> &components,
+    size_t &m_index)
+{
+    std::cout << components[m_index]->inspect() << "\n"; 
+}

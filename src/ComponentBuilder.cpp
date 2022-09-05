@@ -37,7 +37,6 @@ std::shared_ptr<Component>ComponentBuilder::next(){
 
     while (this->m_index < this->m_tokens.size())
     {
-        CharacterUtilities::DisplayCurrent(m_tokens, m_index);
         switch(m_tokens[m_index]->type())
         {
             case CharacterType::Number: //Build a number
@@ -133,6 +132,9 @@ std::shared_ptr<Component>ComponentBuilder::next(){
                     
                     case SymbolType::EqualSymbol:
                         return TokenHandlers::buildEqual(m_tokens, m_index, start);
+                    
+                    case SymbolType::AndSymbol:
+                        return TokenHandlers::buildAndComponent(m_tokens, m_index, start);
                     
                     case SymbolType::Comma:
                         return TokenHandlers::buildComma(m_tokens, m_index, start);

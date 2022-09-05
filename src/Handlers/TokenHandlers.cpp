@@ -184,6 +184,20 @@ std::shared_ptr<ExclamationComponent> TokenHandlers::buildExclamation(
     );
 }
 
+std::shared_ptr<AndComponent> TokenHandlers::buildAndComponent(
+    std::vector<std::shared_ptr<Character>> &m_tokens, 
+    size_t &m_index,
+    size_t &start)
+{
+
+    CharacterUtilities::IncrementIndex(m_tokens, m_index);
+    
+    return std::make_shared<AndComponent>
+    (
+        std::dynamic_pointer_cast<AndSymbol>(m_tokens[start])
+    );
+}
+
 std::shared_ptr<EqualComponent> TokenHandlers::buildEqual(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index,

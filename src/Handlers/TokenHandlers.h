@@ -142,4 +142,9 @@ class TokenHandlers {
             std::vector<std::shared_ptr<Character>> &m_tokens, 
             size_t &m_index,
             size_t &start);
+        
+        static std::shared_ptr<AndComponent> buildAndComponent(
+            std::vector<std::shared_ptr<Character>> &m_tokens, 
+            size_t &m_index,
+            size_t &start);
 };

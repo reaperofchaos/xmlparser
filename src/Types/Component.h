@@ -37,6 +37,7 @@ class PercentageComponent;
 class HashTagComponent;
 class OpenParenthesisComponent;
 class CloseParenthesisComponent;
+class AndComponent;
 
 enum class ComponentType
 {
@@ -69,6 +70,7 @@ enum class ComponentType
     HashTagComponent,
     OpenParenthesisComponent,
     CloseParenthesisComponent,
+    AndComponent,
 };
 
 class Component
@@ -678,6 +680,21 @@ class DashComponent: public Component
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
 };
 
+class AndComponent: public Component
+{
+    private:
+        std::string value;
+
+    public:
+        AndComponent(std::shared_ptr<AndSymbol> andSymbol ){
+            this->value = andSymbol->getValue();
+        }
+
+        virtual ComponentType type(){ return ComponentType::AndComponent;}
+        std::string getValue(){ return value;}
+        virtual std::string getType(){return this->getTypeAsString(this->type());}
+        virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
+};
 class CloseParenthesisComponent: public Component
 {
     private:

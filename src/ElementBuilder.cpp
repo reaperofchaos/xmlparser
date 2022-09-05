@@ -5,6 +5,7 @@ std::shared_ptr<Element>ElementBuilder::next(){
 
     while (this->m_index < this->m_components.size()-1)
     {
+        ComponentUtilities::DisplayCurrent(m_components, m_index);
         switch(m_components[m_index]->type())
         {
             case ComponentType::DocumentTypeOpenTag:
