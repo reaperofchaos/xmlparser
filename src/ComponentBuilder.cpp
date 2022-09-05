@@ -139,6 +139,12 @@ std::shared_ptr<Component>ComponentBuilder::next(){
                     case SymbolType::HashTag:
                         return TokenHandlers::buildHashTag(m_tokens, m_index, start);
                     
+                    case SymbolType::OpenParenthesis:
+                        return TokenHandlers::buildOpenParenthesis(m_tokens, m_index, start);
+                    
+                    case SymbolType::CloseParenthesis:
+                        return TokenHandlers::buildCloseParenthesis(m_tokens, m_index, start);
+                    
                     case SymbolType::Semicolon:
                         return TokenHandlers::buildSemicolon(m_tokens, m_index, start);
 

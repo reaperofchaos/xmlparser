@@ -132,4 +132,14 @@ class TokenHandlers {
             std::vector<std::shared_ptr<Character>> &m_tokens, 
             size_t &m_index,
             std::vector<std::shared_ptr<WhiteSpace>> &whiteSpaces);
+        
+        static std::shared_ptr<OpenParenthesisComponent> buildOpenParenthesis(
+            std::vector<std::shared_ptr<Character>> &m_tokens, 
+            size_t &m_index,
+            size_t &start);
+        
+        static std::shared_ptr<CloseParenthesisComponent> buildCloseParenthesis(
+            std::vector<std::shared_ptr<Character>> &m_tokens, 
+            size_t &m_index,
+            size_t &start);
 };

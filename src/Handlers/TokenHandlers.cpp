@@ -374,3 +374,29 @@ std::shared_ptr<OpenTag> TokenHandlers::buildOpenTag(
     );
 
 }
+
+std::shared_ptr<CloseParenthesisComponent> TokenHandlers::buildCloseParenthesis(
+    std::vector<std::shared_ptr<Character>> &m_tokens, 
+    size_t &m_index,
+    size_t &start)
+{
+    CharacterUtilities::IncrementIndex(m_tokens, m_index);
+    
+    return std::make_shared<CloseParenthesisComponent>
+    (
+        std::dynamic_pointer_cast<CloseParenthesis>(m_tokens[start])
+    );
+}
+
+std::shared_ptr<OpenParenthesisComponent> TokenHandlers::buildOpenParenthesis(
+    std::vector<std::shared_ptr<Character>> &m_tokens, 
+    size_t &m_index,
+    size_t &start)
+{
+    CharacterUtilities::IncrementIndex(m_tokens, m_index);
+    
+    return std::make_shared<OpenParenthesisComponent>
+    (
+        std::dynamic_pointer_cast<OpenParenthesis>(m_tokens[start])
+    );
+}
