@@ -8,6 +8,8 @@
 #include <memory>
 #include "Types/CharType.h"
 #include "Types/Symbol.h"
+#include "Utils/TokenizerUtilities.h"
+
 /**
  * @brief Class to break down string into smaller chunks
  * which are either tags, strings or untracked 

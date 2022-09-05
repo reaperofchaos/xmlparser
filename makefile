@@ -47,6 +47,7 @@ $(OBJDIR)/Element.o \
 $(OBJDIR)/Prop.o \
 $(OBJDIR)/ComponentUtilities.o \
 $(OBJDIR)/CharacterUtilities.o \
+$(OBJDIR)/TokenizerUtilities.o \
 $(OBJDIR)/Writer.o \
 $(OBJDIR)/Node.o
 
@@ -67,6 +68,7 @@ $(OBJDIR)/Element.o \
 $(OBJDIR)/Prop.o \
 $(OBJDIR)/ComponentUtilities.o \
 $(OBJDIR)/CharacterUtilities.o \
+$(OBJDIR)/TokenizerUtilities.o \
 $(OBJDIR)/Writer.o \
 $(OBJDIR)/Node.o
 
@@ -86,6 +88,7 @@ $(OBJDIR)/LElement.o \
 $(OBJDIR)/LProp.o \
 $(OBJDIR)/LComponentUtilities.o \
 $(OBJDIR)/LCharacterUtilities.o \
+$(OBJDIR)/LTokenizerUtilities.o \
 $(OBJDIR)/LWriter.o \
 $(OBJDIR)/LNode.o
 
@@ -116,6 +119,9 @@ $(OBJDIR)/CharacterUtilities.o:
 
 $(OBJDIR)/ComponentUtilities.o:
 	$(CC) -c $(CCFLAGS) $(SRCDIR)/Utils/ComponentUtilities.cpp -o $(OBJDIR)/ComponentUtilities.o
+
+$(OBJDIR)/TokenizerUtilities.o:
+	$(CC) -c $(CCFLAGS) $(SRCDIR)/Utils/TokenizerUtilities.cpp -o $(OBJDIR)/TokenizerUtilities.o
 
 $(OBJDIR)/PropHandlers.o:
 	$(CC) -c $(CCFLAGS) $(SRCDIR)/Handlers/PropHandlers.cpp -o $(OBJDIR)/PropHandlers.o
@@ -176,6 +182,9 @@ $(OBJDIR)/LCharacterUtilities.o:
 
 $(OBJDIR)/LComponentUtilities.o:
 	$(CC) -c $(LIBCCFLAGS) $(SRCDIR)/Utils/ComponentUtilities.cpp -o $(OBJDIR)/LComponentUtilities.o
+
+$(OBJDIR)/LTokenizerUtilities.o:
+	$(CC) -c $(CCFLAGS) $(SRCDIR)/Utils/LTokenizerUtilities.cpp -o $(OBJDIR)/LTokenizerUtilities.o
 
 $(OBJDIR)/LPropHandlers.o:
 	$(CC) -c $(LIBCCFLAGS) $(SRCDIR)/Handlers/PropHandlers.cpp -o $(OBJDIR)/LPropHandlers.o

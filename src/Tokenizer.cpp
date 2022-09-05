@@ -28,7 +28,7 @@ std::shared_ptr<Character>Tokenizer::next()
             case '\t':
             case '\n':
             case '\r':
-                m_index++; 
+                TokenizerUtilities::IncrementIndex(m_input, m_index);
                 return 
                 std::make_shared<WhiteSpace>(std::string(view.substr(start, 1)));
             case '@':
@@ -43,79 +43,79 @@ std::shared_ptr<Character>Tokenizer::next()
             case '~':
             case '.':
             case '|':
-                m_index++; 
+                TokenizerUtilities::IncrementIndex(m_input, m_index);
                 return std::make_shared<Symbol>(std::string(view.substr(start, 1)));
             case '%':
-                m_index++; 
+                TokenizerUtilities::IncrementIndex(m_input, m_index);
                 return std::make_shared<Percentage>(std::string(view.substr(start, 1)));
             case ',':
-                m_index++; 
+                TokenizerUtilities::IncrementIndex(m_input, m_index);
                 return std::make_shared<Comma>(std::string(view.substr(start, 1)));
             case ';': 
-                m_index++; 
+                TokenizerUtilities::IncrementIndex(m_input, m_index);
                 return std::make_shared<Semicolon>(std::string(view.substr(start, 1)));
             case '_': 
-                m_index++; 
+                TokenizerUtilities::IncrementIndex(m_input, m_index);
                 return std::make_shared<Underscore>(std::string(view.substr(start, 1)));
             case '=':
-                m_index++; 
+                TokenizerUtilities::IncrementIndex(m_input, m_index);
                 return std::make_shared<EqualSymbol>(std::string(view.substr(start, 1)));
             case '#':
-                m_index++; 
+                TokenizerUtilities::IncrementIndex(m_input, m_index);
                 return std::make_shared<HashTag>(std::string(view.substr(start, 1)));
             case '!':
-                m_index++; 
+                TokenizerUtilities::IncrementIndex(m_input, m_index);
                 return std::make_shared<Exclamation>(std::string(view.substr(start, 1)));
             case '\'':
-                m_index++; 
+                TokenizerUtilities::IncrementIndex(m_input, m_index);
                 return std::make_shared<SingleQuote>(std::string(view.substr(start, 1)));
             case '"':
-                m_index++; 
+                TokenizerUtilities::IncrementIndex(m_input, m_index);
                 return std::make_shared<Quote>(std::string(view.substr(start, 1)));
             case '\\':
                 switch(m_input.at(m_index+1))
                 {
                     case '\'':
-                        m_index++;
-                        m_index++; 
+                        TokenizerUtilities::IncrementIndex(m_input, m_index);
+                        TokenizerUtilities::IncrementIndex(m_input, m_index);
                         return std::make_shared<EscapedSingleQuote>(std::string(view.substr(start, 2)));
                     case '\"':
-                        m_index++;
-                        m_index++; 
+                        TokenizerUtilities::IncrementIndex(m_input, m_index);
+                        TokenizerUtilities::IncrementIndex(m_input, m_index);
                         return std::make_shared<EscapedQuote>(std::string(view.substr(start, 2)));
                     default:
-                        m_index++; 
+                        TokenizerUtilities::IncrementIndex(m_input, m_index);
                         return std::make_shared<Symbol>(std::string(view.substr(start, 1)));
                 }
             case '{':
-                m_index++; 
+                TokenizerUtilities::IncrementIndex(m_input, m_index);
                 return std::dynamic_pointer_cast<Character>(std::make_shared<ObjectOpenBracket>(std::string(view.substr(start, 1))));
             case '}':
-                m_index++; 
+                TokenizerUtilities::IncrementIndex(m_input, m_index);
                 return std::dynamic_pointer_cast<Character>(std::make_shared<ObjectCloseBracket>(std::string(view.substr(start, 1))));
             case '[':
-                m_index++; 
+                TokenizerUtilities::IncrementIndex(m_input, m_index);
                 return std::dynamic_pointer_cast<Character>(std::make_shared<ArrayOpenBracket>(std::string(view.substr(start, 1))));
             case ']':
-                m_index++; 
+                TokenizerUtilities::IncrementIndex(m_input, m_index);
                 return std::dynamic_pointer_cast<Character>(std::make_shared<ArrayCloseBracket>(std::string(view.substr(start, 1))));
             case ':':
-                m_index++; 
+                TokenizerUtilities::IncrementIndex(m_input, m_index);
                 return std::dynamic_pointer_cast<Character>(std::make_shared<Colon>(std::string(view.substr(start, 1))));
             case '?':
-                m_index++; 
+                TokenizerUtilities::IncrementIndex(m_input, m_index);
                 return std::dynamic_pointer_cast<Character>(std::make_shared<QuestionMark>(std::string(view.substr(start, 1))));
             case '>':
-                m_index++; 
+                TokenizerUtilities::IncrementIndex(m_input, m_index);
                 return std::dynamic_pointer_cast<Character>(std::make_shared<CloseBracket>(std::string(view.substr(start, 1))));
             case '<':
-                m_index++; 
+                TokenizerUtilities::IncrementIndex(m_input, m_index);
                 return std::dynamic_pointer_cast<Character>(std::make_shared<OpenBracket>(std::string(view.substr(start, 1))));
             case '-':
-                m_index++; 
+                TokenizerUtilities::IncrementIndex(m_input, m_index);
                 return std::dynamic_pointer_cast<Character>(std::make_shared<Dash>(std::string(view.substr(start, 1))));
             case '/':
-                m_index++; 
+                TokenizerUtilities::IncrementIndex(m_input, m_index);
                 return std::dynamic_pointer_cast<Character>(std::make_shared<ForwardSlash>(std::string(view.substr(start, 1))));
             case 'a':
             case 'b':
@@ -143,7 +143,7 @@ std::shared_ptr<Character>Tokenizer::next()
             case 'x':
             case 'y':
             case 'z':
-                m_index++; 
+                TokenizerUtilities::IncrementIndex(m_input, m_index);
                 return std::make_shared<Lowercase>(std::string(view.substr(start, 1)));
             case 'A':
             case 'B':
@@ -171,7 +171,7 @@ std::shared_ptr<Character>Tokenizer::next()
             case 'X':
             case 'Y':
             case 'Z':
-                m_index++; 
+                TokenizerUtilities::IncrementIndex(m_input, m_index);
                 return std::make_shared<Uppercase>(std::string(view.substr(start, 1)));
             case '0':
             case '1':
@@ -184,11 +184,11 @@ std::shared_ptr<Character>Tokenizer::next()
             case '8':
             case '9':
             {
-                m_index++; 
+                TokenizerUtilities::IncrementIndex(m_input, m_index);
                 return std::make_shared<Number>(std::string(view.substr(start, 1)));
             }
             default:
-                m_index++; 
+                TokenizerUtilities::IncrementIndex(m_input, m_index);
                 return std::make_shared<UnicodeCharacter>(std::string(view.substr(start, 1)));
         };
     }
