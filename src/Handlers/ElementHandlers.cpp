@@ -33,20 +33,25 @@ std::shared_ptr<Tag> ElementHandlers::buildTagElement(
     size_t &m_index,  
     size_t &start)
 {
+    ComponentUtilities::DisplayCurrent(components, m_index);
     std::shared_ptr<OpenTag> openTag = std::dynamic_pointer_cast<OpenTag>(components[start]); 
     ComponentUtilities::IncrementIndex(components, m_index);
     ComponentUtilities::IgnoreWhiteSpace(components, m_index);
+    ComponentUtilities::DisplayCurrent(components, m_index);
     std::shared_ptr<Name> tagName = std::dynamic_pointer_cast<Name>(components[m_index]);
     ComponentUtilities::IncrementIndex(components, m_index);
     ComponentUtilities::IgnoreWhiteSpace(components, m_index);
+    ComponentUtilities::DisplayCurrent(components, m_index);
 
     //build props
     std::vector<std::shared_ptr<Prop>> props; 
     while(components[m_index]->type() == ComponentType::Name){
         std::shared_ptr<Prop> prop = PropHandlers::buildProp(components, m_index);
+        std::cout << prop->inspect() << "\n";
         props.push_back(prop);
     }
     ComponentUtilities::IgnoreWhiteSpace(components, m_index);
+    ComponentUtilities::DisplayCurrent(components, m_index);
 
     if(components[m_index]->type() == ComponentType::CloseTag)
     {
@@ -129,4 +134,37 @@ std::shared_ptr<NestedString> ElementHandlers::buildNestedString(
     std::shared_ptr<StringType> stringValue = std::make_shared<StringType>(value);
     
     return std::make_shared<NestedString>(stringValue);
+}
+
+std::shared_ptr<NestedObject> ElementHandlers::buildNestedObject(
+    std::vector<std::shared_ptr<Component>> &components,
+    size_t &m_index,  
+    size_t &start)
+{
+    std::string value = ""; 
+    value += components[start]->getValue();
+    ComponentUtilities::IncrementIndex(components, m_index);
+
+    while(components[m_index]->type() != ComponentType::CloseObject)
+    {
+        value += components[m_index]->getValue();
+        ComponentUtilities::IncrementIndex(components, m_index);
+    }
+
+    if(components[m_index]->type() == ComponentType::CloseParenthesisComponent)
+    {
+        value += components[m_index]->getValue();
+        ComponentUtilities::IncrementIndex(components, m_index);
+    }
+    ComponentUtilities:: DisplayCurrent(components, m_index);
+
+    if(components[m_index]->type() == ComponentType::CloseObject)
+    {
+        value += components[m_index]->getValue();
+        ComponentUtilities::IncrementIndex(components, m_index);
+    }
+
+    std::shared_ptr<StringType> stringValue = std::make_shared<StringType>(value);
+    
+    return std::make_shared<NestedObject>(stringValue);
 }

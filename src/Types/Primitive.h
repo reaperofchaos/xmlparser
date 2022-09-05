@@ -194,5 +194,4 @@ class ObjectPair{
         virtual std::string getType(){ return "Object Pair";}
         virtual std::shared_ptr<Primitive> getValue(){return value; }
         virtual std::string inspect() { return this->getType() + " - " + this->getValue()->inspect(); }
-
 };

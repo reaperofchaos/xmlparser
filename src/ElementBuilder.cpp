@@ -15,10 +15,13 @@ std::shared_ptr<Element>ElementBuilder::next(){
             case ComponentType::ClosingOpenTag:
                 return ElementHandlers::buildCloseTagElement(m_components, m_index, start);
             case ComponentType::CommentOpenTag:
-                std::cout << "Found a comment open tag \n"; 
                 return ElementHandlers::buildCommentTagElement(m_components, m_index, start); 
+            case ComponentType::Name:
             case ComponentType::StringType:
                 return ElementHandlers::buildNestedString(m_components, m_index, start);    
+            case ComponentType::OpenObject:
+                return ElementHandlers::buildNestedObject(m_components, m_index, start);    
+
             default:
                     m_index++;
                     return {};

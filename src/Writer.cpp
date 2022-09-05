@@ -39,31 +39,6 @@ void Writer::writeNodes(std::shared_ptr<Node> node)
         this->out << " Type: " 
             << node->value->getTypeAsString(node->value->type()) << "\n";
     }
-    if(node->value->type() == ElementType::Tag ||
-        node->value->type() == ElementType::DocumentTag)
-    {
-        std::vector<std::shared_ptr<Prop>> props = node->value->getProps();
-        if(props.size() > 0)
-        {
-            this->out << "Props: [" << "\n";
-            int i = 0; 
-            for(std::shared_ptr<Prop> prop : props)
-            {
-                if(i != 0)
-                {
-                    this->out << ",\n";
-                }
-                this->out << "\t{";
-                this->out << "\t\tName: " << prop->getName() << ", \n";
-                this->out << "\t\tType: " << prop->getType() << ", \n";
-                this->out << "\t\tValue: " << prop->getValue()->getValue() << ", \n";
-                this->out << "\t}";
-                i++;
-            }
-            this->out << "\n";
-            this->out << "]\n";  
-        }
-    }
     if(node->children.size() > 0)
     {
         for(std::shared_ptr<Node> child : node->children)

@@ -334,5 +334,17 @@ class NestedString: public Element
 };
 
 class NestedObject: public Element{
+    private:
+        std::string value;
 
+    public: 
+        NestedObject(std::shared_ptr<StringType> stringValue)
+        {
+            this->value = stringValue->getValue(); 
+        }
+        virtual ElementType type(){ return ElementType::NestedObject;}
+        virtual std::string inspect() { std::string text = this->getType() + " - " + this->getValue() +"\n";
+        return text;  }
+        virtual std::string getValue(){ return value;}
+        virtual std::string getType(){return this->getTypeAsString(this->type());}
 };

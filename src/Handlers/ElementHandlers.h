@@ -38,4 +38,9 @@ class ElementHandlers {
             std::vector<std::shared_ptr<Component>> &components,
             size_t &m_index,  
             size_t &start);
+        
+        static std::shared_ptr<NestedObject> buildNestedObject(
+            std::vector<std::shared_ptr<Component>> &components,
+            size_t &m_index,  
+            size_t &start);
 };
