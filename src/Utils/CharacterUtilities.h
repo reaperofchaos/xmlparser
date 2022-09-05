@@ -17,4 +17,9 @@ class CharacterUtilities {
         static void IncrementIndex( 
             std::vector<std::shared_ptr<Character>> &characters,
             size_t &m_index);
+        
+        static void DisplayCurrent( 
+            std::vector<std::shared_ptr<Character>> &characters,
+            size_t &m_index);
+
 };

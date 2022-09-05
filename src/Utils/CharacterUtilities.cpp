@@ -19,3 +19,10 @@ void CharacterUtilities::IncrementIndex(
         m_index++;
     }
 }
+
+void CharacterUtilities::DisplayCurrent( 
+    std::vector<std::shared_ptr<Character>> &characters,
+    size_t &m_index)
+{
+    std::cout << characters[m_index]->inspect() << "\n"; 
+}

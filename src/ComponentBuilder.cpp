@@ -37,6 +37,7 @@ std::shared_ptr<Component>ComponentBuilder::next(){
 
     while (this->m_index < this->m_tokens.size())
     {
+        CharacterUtilities::DisplayCurrent(m_tokens, m_index);
         switch(m_tokens[m_index]->type())
         {
             case CharacterType::Number: //Build a number

@@ -28,6 +28,7 @@ class Percentage;
 class HashTag;
 class OpenParenthesis;
 class CloseParenthesis;
+class AndSymbol;
 class Symbol: public Character{
     private: 
         std::string value; 
@@ -90,6 +91,8 @@ class Symbol: public Character{
                     return "Open Parenthesis";
                 case SymbolType::CloseParenthesis:
                     return "Close Parenthesis";
+                case SymbolType::AndSymbol:
+                    return "And Symbol"; 
                 default: 
                     return "Unknown"; 
             }
@@ -428,6 +431,20 @@ class CloseParenthesis: public Symbol{
             this->value = value;
         }
         virtual SymbolType symbolType(){ return SymbolType::CloseParenthesis;}
+        virtual std::string getValue(){ return value;}
+        virtual std::string getType(){return this->getSymbolTypeAsString(this->symbolType());}
+        virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
+};
+
+class AndSymbol: public Symbol{
+    private:
+        std::string value;
+
+    public:
+        AndSymbol(std::string value): Symbol(value){
+            this->value = value;
+        }
+        virtual SymbolType symbolType(){ return SymbolType::AndSymbol;}
         virtual std::string getValue(){ return value;}
         virtual std::string getType(){return this->getSymbolTypeAsString(this->symbolType());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}

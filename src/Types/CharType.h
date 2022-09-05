@@ -54,7 +54,8 @@ enum class SymbolType
     Percentage,
     HashTag,
     OpenParenthesis,
-    CloseParenthesis
+    CloseParenthesis,
+    AndSymbol
 };
 class Character{
     private:

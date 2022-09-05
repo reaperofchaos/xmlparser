@@ -51,6 +51,7 @@ std::shared_ptr<CloseObject> TokenHandlers::buildCloseObject(
 {
 
     CharacterUtilities::IncrementIndex(m_tokens, m_index);
+    CharacterUtilities::IgnoreWhiteSpace(m_tokens, m_index);
 
     return std::make_shared<CloseObject>(std::dynamic_pointer_cast<ObjectCloseBracket>(m_tokens[start]));
     
