@@ -36,8 +36,6 @@ std::shared_ptr<Character>Tokenizer::next()
             case '^':
             case '&':
             case '*':
-            case '(':
-            case ')':
             case '+':
             case '`':
             case '~':
@@ -45,6 +43,12 @@ std::shared_ptr<Character>Tokenizer::next()
             case '|':
                 TokenizerUtilities::IncrementIndex(m_input, m_index);
                 return std::make_shared<Symbol>(std::string(view.substr(start, 1)));
+            case '(':
+                TokenizerUtilities::IncrementIndex(m_input, m_index);
+                return std::make_shared<OpenParenthesis>(std::string(view.substr(start, 1)));
+            case ')':
+                TokenizerUtilities::IncrementIndex(m_input, m_index);
+                return std::make_shared<CloseParenthesis>(std::string(view.substr(start, 1)));
             case '%':
                 TokenizerUtilities::IncrementIndex(m_input, m_index);
                 return std::make_shared<Percentage>(std::string(view.substr(start, 1)));

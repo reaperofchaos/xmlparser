@@ -26,6 +26,8 @@ class Underscore;
 class Semicolon;
 class Percentage;
 class HashTag;
+class OpenParenthesis;
+class CloseParenthesis;
 class Symbol: public Character{
     private: 
         std::string value; 
@@ -84,6 +86,10 @@ class Symbol: public Character{
                     return "Percentage";
                 case SymbolType::HashTag:
                     return "Hash Tag";
+                case SymbolType::OpenParenthesis:
+                    return "Open Parenthesis";
+                case SymbolType::CloseParenthesis:
+                    return "Close Parenthesis";
                 default: 
                     return "Unknown"; 
             }
@@ -394,6 +400,34 @@ class Underscore: public Symbol{
             this->value = value;
         }
         virtual SymbolType symbolType(){ return SymbolType::Underscore;}
+        virtual std::string getValue(){ return value;}
+        virtual std::string getType(){return this->getSymbolTypeAsString(this->symbolType());}
+        virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
+};
+
+class OpenParenthesis: public Symbol{
+    private:
+        std::string value;
+
+    public:
+        OpenParenthesis(std::string value): Symbol(value){
+            this->value = value;
+        }
+        virtual SymbolType symbolType(){ return SymbolType::OpenParenthesis;}
+        virtual std::string getValue(){ return value;}
+        virtual std::string getType(){return this->getSymbolTypeAsString(this->symbolType());}
+        virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}
+};
+
+class CloseParenthesis: public Symbol{
+    private:
+        std::string value;
+
+    public:
+        CloseParenthesis(std::string value): Symbol(value){
+            this->value = value;
+        }
+        virtual SymbolType symbolType(){ return SymbolType::CloseParenthesis;}
         virtual std::string getValue(){ return value;}
         virtual std::string getType(){return this->getSymbolTypeAsString(this->symbolType());}
         virtual std::string inspect(){ return "Type " + getType() + " - " + getValue();}

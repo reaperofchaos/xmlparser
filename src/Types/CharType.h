@@ -52,7 +52,9 @@ enum class SymbolType
     EqualSymbol,
     Semicolon,
     Percentage,
-    HashTag
+    HashTag,
+    OpenParenthesis,
+    CloseParenthesis
 };
 class Character{
     private:
