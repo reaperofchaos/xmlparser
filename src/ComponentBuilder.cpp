@@ -1,17 +1,17 @@
-#include "CharacterReader.h"
+#include "ComponentBuilder.h"
 
 /** 
  * function to read a string, 
  * tokenizes and analyzes the tokens 
  * and returns an Abstract Syntax Tree
  **/
-void CharacterReader::read_str(std::string input) 
+void ComponentBuilder::read_str(std::string input) 
 {
     Tokenizer tokenizer = Tokenizer(input);
     tokenizer.tokenize();
     std::vector<std::shared_ptr<Character>>tokens = tokenizer.getTokens(); 
     std::cout << "Total tokens " << tokens.size() << "\n"; 
-    CharacterReader reader = CharacterReader(tokens);  
+    ComponentBuilder reader = ComponentBuilder(tokens);  
     // reader.  ();   
     reader.build_components();
     std::vector<std::shared_ptr<Component>>components = reader.getComponents(); 
@@ -19,7 +19,7 @@ void CharacterReader::read_str(std::string input)
     reader.displayComponents();
 }
 
-std::shared_ptr<Component>CharacterReader::next(){
+std::shared_ptr<Component>ComponentBuilder::next(){
     size_t start = this->m_index;
     std::vector<std::shared_ptr<Character>> characters;
     std::vector< std::shared_ptr<Number>> numbers;
@@ -179,7 +179,7 @@ std::shared_ptr<Component>CharacterReader::next(){
  * @brief Displays the type and value of the tokens
  * 
  */
-void CharacterReader::displayCharacterTokens(){
+void ComponentBuilder::displayCharacterTokens(){
     for(auto token : this->m_tokens)
     {
         std::cout << token->getType() << " - " << token->getValue() << "\n";
@@ -190,7 +190,7 @@ void CharacterReader::displayCharacterTokens(){
  * @brief Builds primitives from the characters
  * 
  */
-void CharacterReader::build_components() 
+void ComponentBuilder::build_components() 
 {
     while (auto component = this->next()) 
     {
@@ -202,7 +202,7 @@ void CharacterReader::build_components()
  * @brief Displays the type and value of the primitives
  * 
  */
-void CharacterReader::displayComponents()
+void ComponentBuilder::displayComponents()
 {
     for(auto component : this->m_components)
     {

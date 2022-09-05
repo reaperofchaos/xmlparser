@@ -7,10 +7,9 @@
 #include "Types/Component.h"
 #include "Types/Primitive.h"
 #include "Types/Element.h"
-#include "CharacterReader.h"
+#include "ComponentBuilder.h"
 #include "Handlers/ElementHandlers.h"
 #include "Tokenizer.h"
-#include "CharacterReader.h"
 #include "Types/Node.h"
 
 class ElementBuilder 

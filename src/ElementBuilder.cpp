@@ -52,9 +52,9 @@ std::shared_ptr<Node> ElementBuilder::read_str(std::string input)
     tokenizer.tokenize();
     std::vector<std::shared_ptr<Character>>tokens = tokenizer.getTokens(); 
     std::cout << "Total tokens " << tokens.size() << "\n"; 
-    CharacterReader reader = CharacterReader(tokens);  
-    reader.build_components();
-    std::vector<std::shared_ptr<Component>>components = reader.getComponents(); 
+    ComponentBuilder componentBuilder = ComponentBuilder(tokens);  
+    componentBuilder.build_components();
+    std::vector<std::shared_ptr<Component>>components = componentBuilder.getComponents(); 
     std::cout << "Total components " << components.size() << "\n"; 
     ElementBuilder elementBuilder(components);
     elementBuilder.buildElements();

@@ -32,7 +32,7 @@ LDFLAGS=-lstdc++
 LIBLDFLAGS=-lstdc++ -shared -W1,-soname,${LIBTARGET}
 
 STATICLIBOBJ=$(OBJDIR)/CharType.o \
-$(OBJDIR)/CharacterReader.o \
+$(OBJDIR)/ComponentBuilder.o \
 $(OBJDIR)/Tokenizer.o \
 $(OBJDIR)/TokenHandlers.o \
 $(OBJDIR)/Symbol.o \
@@ -53,7 +53,7 @@ $(OBJDIR)/Node.o
 
 OBJS=$(OBJDIR)/main.o\
 $(OBJDIR)/CharType.o \
-$(OBJDIR)/CharacterReader.o \
+$(OBJDIR)/ComponentBuilder.o \
 $(OBJDIR)/Tokenizer.o \
 $(OBJDIR)/TokenHandlers.o \
 $(OBJDIR)/Symbol.o \
@@ -73,7 +73,7 @@ $(OBJDIR)/Writer.o \
 $(OBJDIR)/Node.o
 
 LIBOBJS=$(OBJDIR)/LCharType.o \
-$(OBJDIR)/LCharacterReader.o \
+$(OBJDIR)/LComponentBuilder.o \
 $(OBJDIR)/LTokenizer.o \
 $(OBJDIR)/LTokenHandlers.o \
 $(OBJDIR)/LSymbol.o \
@@ -155,8 +155,8 @@ $(OBJDIR)/Writer.o:
 $(OBJDIR)/Node.o:
 	$(CC) -c $(CCFLAGS) $(SRCDIR)/Types/Node.cpp -o $(OBJDIR)/Node.o
 
-$(OBJDIR)/CharacterReader.o:
-	$(CC) -c $(CCFLAGS) $(SRCDIR)/CharacterReader.cpp -o $(OBJDIR)/CharacterReader.o
+$(OBJDIR)/ComponentBuilder.o:
+	$(CC) -c $(CCFLAGS) $(SRCDIR)/ComponentBuilder.cpp -o $(OBJDIR)/ComponentBuilder.o
 
 $(OBJDIR)/Tokenizer.o:
 	$(CC) -c $(CCFLAGS) $(SRCDIR)/Tokenizer.cpp -o $(OBJDIR)/Tokenizer.o
@@ -218,8 +218,8 @@ $(OBJDIR)/LWriter.o:
 $(OBJDIR)/LNode.o:
 	$(CC) -c $(LIBCCFLAGS) $(SRCDIR)/Types/Node.cpp -o $(OBJDIR)/LNode.o
 
-$(OBJDIR)/LCharacterReader.o:
-	$(CC) -c $(LIBCCFLAGS) $(SRCDIR)/CharacterReader.cpp -o $(OBJDIR)/LCharacterReader.o
+$(OBJDIR)/LComponentBuilder.o:
+	$(CC) -c $(LIBCCFLAGS) $(SRCDIR)/ComponentBuilder.cpp -o $(OBJDIR)/LComponentBuilder.o
 
 $(OBJDIR)/LTokenizer.o:
 	$(CC) -c $(LIBCCFLAGS) $(SRCDIR)/Tokenizer.cpp -o $(OBJDIR)/LTokenizer.o

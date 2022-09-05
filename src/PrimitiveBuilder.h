@@ -6,10 +6,8 @@
 #include <memory>
 #include "Types/Component.h"
 #include "Types/Primitive.h"
-#include "CharacterReader.h"
 #include "Handlers/PrimitiveHandlers.h"
 #include "Tokenizer.h"
-#include "CharacterReader.h"
 
 
 class PrimitiveBuilder 

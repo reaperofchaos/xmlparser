@@ -14,14 +14,14 @@
  * analyzes them further to create primitives
  * 
  */
-class CharacterReader {
+class ComponentBuilder {
     private:
         std::vector<std::shared_ptr<Character>> m_tokens;
         std::vector<std::shared_ptr<Component>> m_components;
         size_t m_index = 0; // position in string
 
     public:
-        CharacterReader(std::vector<std::shared_ptr<Character>> tokens){
+        ComponentBuilder(std::vector<std::shared_ptr<Character>> tokens){
             this->m_tokens = tokens; 
         }
 
