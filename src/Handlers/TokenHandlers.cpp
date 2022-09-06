@@ -1,5 +1,12 @@
 #include "TokenHandlers.h"
-
+/**
+ * @brief Builds a Number component from the provided characters
+ * 
+ * @param m_tokens 
+ * @param m_index 
+ * @param numbers 
+ * @return std::shared_ptr<NumberType> 
+ */
 std::shared_ptr<NumberType> TokenHandlers::buildNumberComponent(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index,
@@ -33,6 +40,14 @@ std::shared_ptr<CloseTag> TokenHandlers::buildCloseTag(
         std::dynamic_pointer_cast<CloseBracket>(m_tokens[start])); 
 }
 
+/**
+ * @brief Builds a close array component from the provided characters
+ * 
+ * @param m_tokens 
+ * @param m_index 
+ * @param start 
+ * @return std::shared_ptr<CloseArray> 
+ */
 std::shared_ptr<CloseArray> TokenHandlers::buildCloseArray(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index,
@@ -44,6 +59,14 @@ std::shared_ptr<CloseArray> TokenHandlers::buildCloseArray(
     
 }
 
+/**
+ * @brief Builds a close object component from the provided characters
+ * 
+ * @param m_tokens 
+ * @param m_index 
+ * @param start 
+ * @return std::shared_ptr<CloseObject> 
+ */
 std::shared_ptr<CloseObject> TokenHandlers::buildCloseObject(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index,
@@ -57,6 +80,12 @@ std::shared_ptr<CloseObject> TokenHandlers::buildCloseObject(
     
 }
 
+/**
+ * @brief Builds whitespaces component from the provided characters
+ * 
+ * @param whiteSpaces 
+ * @return std::shared_ptr<WhiteSpaces> 
+ */
 std::shared_ptr<WhiteSpaces> TokenHandlers::buildWhiteSpaces(
     std::vector<std::shared_ptr<WhiteSpace>> &whiteSpaces)
 {
@@ -101,6 +130,14 @@ std::shared_ptr<Name> TokenHandlers::buildName(
         characters);
 }
 
+/**
+ * @brief Builds a closing close tag component from the provided characters
+ * 
+ * @param m_tokens 
+ * @param m_index 
+ * @param start 
+ * @return std::shared_ptr<ClosingCloseTag> 
+ */
 std::shared_ptr<ClosingCloseTag> TokenHandlers::buildClosingCloseTag(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index,
@@ -117,6 +154,15 @@ std::shared_ptr<ClosingCloseTag> TokenHandlers::buildClosingCloseTag(
         );
 }
 
+/**
+ * @brief Builds a string component from the provided characters
+ * 
+ * @param m_tokens 
+ * @param m_index 
+ * @param characters 
+ * @param symbolType 
+ * @return std::shared_ptr<StringType> 
+ */
 std::shared_ptr<StringType> TokenHandlers::buildString(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index,
@@ -149,6 +195,14 @@ std::shared_ptr<StringType> TokenHandlers::buildString(
     }
 }
 
+/**
+ * @brief Builds an open array component from the provided characters
+ * 
+ * @param m_tokens 
+ * @param m_index 
+ * @param start 
+ * @return std::shared_ptr<OpenArray> 
+ */
 std::shared_ptr<OpenArray> TokenHandlers::buildOpenArray(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index,
@@ -161,6 +215,14 @@ std::shared_ptr<OpenArray> TokenHandlers::buildOpenArray(
 
 }
 
+/**
+ * @brief Creates an open object component from the provided characters
+ * 
+ * @param m_tokens 
+ * @param m_index 
+ * @param start 
+ * @return std::shared_ptr<OpenObject> 
+ */
 std::shared_ptr<OpenObject> TokenHandlers::buildOpenObject(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index,
@@ -171,6 +233,14 @@ std::shared_ptr<OpenObject> TokenHandlers::buildOpenObject(
             std::dynamic_pointer_cast<ObjectOpenBracket>(m_tokens[start]));
 }
 
+/**
+ * @brief Builds an exclamation component from the provided character
+ * 
+ * @param m_tokens 
+ * @param m_index 
+ * @param start 
+ * @return std::shared_ptr<ExclamationComponent> 
+ */
 std::shared_ptr<ExclamationComponent> TokenHandlers::buildExclamation(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index,
@@ -185,6 +255,14 @@ std::shared_ptr<ExclamationComponent> TokenHandlers::buildExclamation(
     );
 }
 
+/**
+ * @brief Builds an and component from the provided characters
+ * 
+ * @param m_tokens 
+ * @param m_index 
+ * @param start 
+ * @return std::shared_ptr<AndComponent> 
+ */
 std::shared_ptr<AndComponent> TokenHandlers::buildAndComponent(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index,
@@ -199,6 +277,14 @@ std::shared_ptr<AndComponent> TokenHandlers::buildAndComponent(
     );
 }
 
+/**
+ * @brief Builds an equal component from the provided characters
+ * 
+ * @param m_tokens 
+ * @param m_index 
+ * @param start 
+ * @return std::shared_ptr<EqualComponent> 
+ */
 std::shared_ptr<EqualComponent> TokenHandlers::buildEqual(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index,
@@ -212,6 +298,14 @@ std::shared_ptr<EqualComponent> TokenHandlers::buildEqual(
     );
 }
 
+/**
+ * @brief Builds a semicolon from the provided semicolon characters
+ * 
+ * @param m_tokens 
+ * @param m_index 
+ * @param start 
+ * @return std::shared_ptr<SemicolonComponent> 
+ */
 std::shared_ptr<SemicolonComponent> TokenHandlers::buildSemicolon(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index,
@@ -225,6 +319,14 @@ std::shared_ptr<SemicolonComponent> TokenHandlers::buildSemicolon(
     );
 }
 
+/**
+ * @brief Builds a colon component from the provided characters
+ * 
+ * @param m_tokens 
+ * @param m_index 
+ * @param start 
+ * @return std::shared_ptr<ColonComponent> 
+ */
 std::shared_ptr<ColonComponent> TokenHandlers::buildColon(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index,
@@ -238,6 +340,14 @@ std::shared_ptr<ColonComponent> TokenHandlers::buildColon(
     );
 }
 
+/**
+ * @brief Builds a percentage component from the provided characters
+ * 
+ * @param m_tokens 
+ * @param m_index 
+ * @param start 
+ * @return std::shared_ptr<PercentageComponent> 
+ */
 std::shared_ptr<PercentageComponent> TokenHandlers::buildPercentage(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index,
@@ -251,6 +361,14 @@ std::shared_ptr<PercentageComponent> TokenHandlers::buildPercentage(
     );
 }
 
+/**
+ * @brief Builds a comma component from the provided characters
+ * 
+ * @param m_tokens 
+ * @param m_index 
+ * @param start 
+ * @return std::shared_ptr<CommaComponent> 
+ */
 std::shared_ptr<CommaComponent> TokenHandlers::buildComma(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index,
@@ -264,6 +382,14 @@ std::shared_ptr<CommaComponent> TokenHandlers::buildComma(
     );
 }
 
+/**
+ * @brief Builds a hashtag component from the provided characters
+ * 
+ * @param m_tokens 
+ * @param m_index 
+ * @param start 
+ * @return std::shared_ptr<HashTagComponent> 
+ */
 std::shared_ptr<HashTagComponent> TokenHandlers::buildHashTag(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index,
@@ -277,6 +403,14 @@ std::shared_ptr<HashTagComponent> TokenHandlers::buildHashTag(
     );
 }
 
+/**
+ * @brief Builds a nested string from the provided characters
+ * 
+ * @param m_tokens 
+ * @param m_index 
+ * @param characters 
+ * @return std::shared_ptr<StringType> 
+ */
 std::shared_ptr<StringType> TokenHandlers::buildNestedString(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index,
@@ -297,7 +431,14 @@ std::shared_ptr<StringType> TokenHandlers::buildNestedString(
     return std::make_shared<StringType>(characters);
 }
 
-
+/**
+ * @brief Builds a closing open tag from the provided character
+ * 
+ * @param m_tokens 
+ * @param m_index 
+ * @param start 
+ * @return std::shared_ptr<ClosingOpenTag> 
+ */
 std::shared_ptr<ClosingOpenTag> TokenHandlers::buildClosingOpenTag(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index,
@@ -313,6 +454,14 @@ std::shared_ptr<ClosingOpenTag> TokenHandlers::buildClosingOpenTag(
     );
 }
 
+/**
+ * @brief Builds a comment open tag from the provided characters
+ * 
+ * @param m_tokens 
+ * @param m_index 
+ * @param start 
+ * @return std::shared_ptr<CommentOpenTag> 
+ */
 std::shared_ptr<CommentOpenTag> TokenHandlers::buildCommentOpenTag(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index,
@@ -331,6 +480,14 @@ std::shared_ptr<CommentOpenTag> TokenHandlers::buildCommentOpenTag(
     );
 }
 
+/**
+ * @brief Builds a comment close component from the provided characters
+ * 
+ * @param m_tokens 
+ * @param m_index 
+ * @param start 
+ * @return std::shared_ptr<CommentCloseTag> 
+ */
 std::shared_ptr<CommentCloseTag> TokenHandlers::buildCommentCloseTag(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index,
@@ -348,6 +505,14 @@ std::shared_ptr<CommentCloseTag> TokenHandlers::buildCommentCloseTag(
     );
 }
 
+/**
+ * @brief Builds a document open tag from the provided characters
+ * 
+ * @param m_tokens 
+ * @param m_index 
+ * @param start 
+ * @return std::shared_ptr<DocumentTypeOpenTag> 
+ */
 std::shared_ptr<DocumentTypeOpenTag> TokenHandlers::buildDocumentTypeOpenTag(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index,
@@ -362,6 +527,13 @@ std::shared_ptr<DocumentTypeOpenTag> TokenHandlers::buildDocumentTypeOpenTag(
     );
 }
 
+/**
+ * @brief Function to find white space and add it to the whitespaces vector
+ * 
+ * @param m_tokens 
+ * @param m_index 
+ * @param whiteSpaces 
+ */
 void TokenHandlers::findWhiteSpace(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index,
@@ -377,6 +549,14 @@ void TokenHandlers::findWhiteSpace(
     }
 }
 
+/**
+ * @brief Builds an open tag from the provided characters
+ * 
+ * @param m_tokens 
+ * @param m_index 
+ * @param start 
+ * @return std::shared_ptr<OpenTag> 
+ */
 std::shared_ptr<OpenTag> TokenHandlers::buildOpenTag(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index,
@@ -391,6 +571,14 @@ std::shared_ptr<OpenTag> TokenHandlers::buildOpenTag(
 
 }
 
+/**
+ * @brief Builds a close parenthesis component from the provided characters
+ * 
+ * @param m_tokens 
+ * @param m_index 
+ * @param start 
+ * @return std::shared_ptr<CloseParenthesisComponent> 
+ */
 std::shared_ptr<CloseParenthesisComponent> TokenHandlers::buildCloseParenthesis(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index,
@@ -404,6 +592,14 @@ std::shared_ptr<CloseParenthesisComponent> TokenHandlers::buildCloseParenthesis(
     );
 }
 
+/**
+ * @brief Builds an open parenthesis component from the provided characters
+ * 
+ * @param m_tokens 
+ * @param m_index 
+ * @param start 
+ * @return std::shared_ptr<OpenParenthesisComponent> 
+ */
 std::shared_ptr<OpenParenthesisComponent> TokenHandlers::buildOpenParenthesis(
     std::vector<std::shared_ptr<Character>> &m_tokens, 
     size_t &m_index,

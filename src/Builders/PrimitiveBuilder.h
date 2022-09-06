@@ -4,12 +4,15 @@
 #include <vector>
 #include <optional>
 #include <memory>
-#include "Types/Component.h"
-#include "Types/Primitive.h"
-#include "Handlers/PrimitiveHandlers.h"
+#include "../Types/Component.h"
+#include "../Types/Primitive.h"
+#include "../Handlers/PrimitiveHandlers.h"
 #include "Tokenizer.h"
 
-
+/**
+ * @brief Class to build primitives from components
+ * 
+ */
 class PrimitiveBuilder 
 {
     private:

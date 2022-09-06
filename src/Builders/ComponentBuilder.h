@@ -4,11 +4,12 @@
 #include <vector>
 #include <optional>
 #include <memory>
-#include "Types/CharType.h"
-#include "Types/Component.h"
+#include "../Types/CharType.h"
+#include "../Types/Component.h"
+#include "../Handlers/TokenHandlers.h"
+#include "../Utils/CharacterUtilities.h"
 #include "Tokenizer.h"
-#include "Handlers/TokenHandlers.h"
-#include "Utils/CharacterUtilities.h"
+
 /**
  * @brief Class that takes tokens  and 
  * analyzes them further to create primitives

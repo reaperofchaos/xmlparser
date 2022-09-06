@@ -4,14 +4,18 @@
 #include <vector>
 #include <optional>
 #include <memory>
-#include "Types/Component.h"
-#include "Types/Primitive.h"
-#include "Types/Element.h"
+#include "../Types/Component.h"
+#include "../Types/Primitive.h"
+#include "../Types/Element.h"
+#include "../Types/Node.h"
+#include "../Handlers/ElementHandlers.h"
 #include "ComponentBuilder.h"
-#include "Handlers/ElementHandlers.h"
 #include "Tokenizer.h"
-#include "Types/Node.h"
 
+/**
+ * @brief A class to build elements from components
+ * 
+ */
 class ElementBuilder 
 {
     private:

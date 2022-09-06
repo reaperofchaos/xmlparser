@@ -182,7 +182,6 @@ class OpenBracket: public Symbol{
     public:
         OpenBracket(std::string value): Symbol(value){
             this->value = value;
-            // std::cout << this->inspect() << "\n";            
         }
 
         virtual SymbolType symbolType(){ return SymbolType::OpenBracket;}

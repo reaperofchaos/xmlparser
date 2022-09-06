@@ -4,7 +4,7 @@
 #include <iostream>
 
 /**
- * A class used to create Elements from Component vectors
+ * A class used to traverse a string
  */
 class TokenizerUtilities {
     public:

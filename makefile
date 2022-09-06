@@ -109,10 +109,10 @@ $(OBJDIR)/Element.o:
 	$(CC) -c $(CCFLAGS) $(SRCDIR)/Types/Element.cpp -o $(OBJDIR)/Element.o
 
 $(OBJDIR)/ElementBuilder.o:
-	$(CC) -c $(CCFLAGS) $(SRCDIR)/ElementBuilder.cpp -o $(OBJDIR)/ElementBuilder.o
+	$(CC) -c $(CCFLAGS) $(SRCDIR)/Builders/ElementBuilder.cpp -o $(OBJDIR)/ElementBuilder.o
 
 $(OBJDIR)/PrimitiveBuilder.o:
-	$(CC) -c $(CCFLAGS) $(SRCDIR)/PrimitiveBuilder.cpp -o $(OBJDIR)/PrimitiveBuilder.o
+	$(CC) -c $(CCFLAGS) $(SRCDIR)/Builders/PrimitiveBuilder.cpp -o $(OBJDIR)/PrimitiveBuilder.o
 
 $(OBJDIR)/CharacterUtilities.o:
 	$(CC) -c $(CCFLAGS) $(SRCDIR)/Utils/CharacterUtilities.cpp -o $(OBJDIR)/CharacterUtilities.o
@@ -156,10 +156,10 @@ $(OBJDIR)/Node.o:
 	$(CC) -c $(CCFLAGS) $(SRCDIR)/Types/Node.cpp -o $(OBJDIR)/Node.o
 
 $(OBJDIR)/ComponentBuilder.o:
-	$(CC) -c $(CCFLAGS) $(SRCDIR)/ComponentBuilder.cpp -o $(OBJDIR)/ComponentBuilder.o
+	$(CC) -c $(CCFLAGS) $(SRCDIR)/Builders/ComponentBuilder.cpp -o $(OBJDIR)/ComponentBuilder.o
 
 $(OBJDIR)/Tokenizer.o:
-	$(CC) -c $(CCFLAGS) $(SRCDIR)/Tokenizer.cpp -o $(OBJDIR)/Tokenizer.o
+	$(CC) -c $(CCFLAGS) $(SRCDIR)/Builders/Tokenizer.cpp -o $(OBJDIR)/Tokenizer.o
 
 $(OBJDIR)/main.o:
 	$(CC) -c $(CCFLAGS) $(SRCDIR)/main.cpp -o $(OBJDIR)/main.o
@@ -172,10 +172,10 @@ $(OBJDIR)/LElement.o:
 	$(CC) -c $(LIBCCFLAGS) $(SRCDIR)/Types/Element.cpp -o $(OBJDIR)/LElement.o
 
 $(OBJDIR)/LElementBuilder.o:
-	$(CC) -c $(LIBCCFLAGS) $(SRCDIR)/ElementBuilder.cpp -o $(OBJDIR)/LElementBuilder.o
+	$(CC) -c $(LIBCCFLAGS) $(SRCDIR)/Builders/ElementBuilder.cpp -o $(OBJDIR)/LElementBuilder.o
 
 $(OBJDIR)/LPrimitiveBuilder.o:
-	$(CC) -c $(LIBCCFLAGS) $(SRCDIR)/PrimitiveBuilder.cpp -o $(OBJDIR)/LPrimitiveBuilder.o
+	$(CC) -c $(LIBCCFLAGS) $(SRCDIR)/Builders/PrimitiveBuilder.cpp -o $(OBJDIR)/LPrimitiveBuilder.o
 
 $(OBJDIR)/LCharacterUtilities.o:
 	$(CC) -c $(LIBCCFLAGS) $(SRCDIR)/Utils/CharacterUtilities.cpp -o $(OBJDIR)/LCharacterUtilities.o
@@ -222,7 +222,7 @@ $(OBJDIR)/LComponentBuilder.o:
 	$(CC) -c $(LIBCCFLAGS) $(SRCDIR)/ComponentBuilder.cpp -o $(OBJDIR)/LComponentBuilder.o
 
 $(OBJDIR)/LTokenizer.o:
-	$(CC) -c $(LIBCCFLAGS) $(SRCDIR)/Tokenizer.cpp -o $(OBJDIR)/LTokenizer.o
+	$(CC) -c $(LIBCCFLAGS) $(SRCDIR)/Builders/Tokenizer.cpp -o $(OBJDIR)/LTokenizer.o
  
 clean:
 	rm -rf $(OBJDIR)/*.o $(TARGET) $(LIBTARGET) $(ARCHIVELIBTARGET)

@@ -6,7 +6,7 @@
 #include "../Types/CharType.h"
 
 /**
- * A class used to create Elements from Component vectors
+ * A class used to traverse and display Character vectors
  */
 class CharacterUtilities {
     public: 

@@ -1,11 +1,14 @@
 #include "ElementBuilder.h"
 
+/**
+ * @brief Function to iterate through the components
+ * and creates elements
+ */
 std::shared_ptr<Element>ElementBuilder::next(){
     size_t start = this->m_index;
 
     while (this->m_index < this->m_components.size()-1)
     {
-        ComponentUtilities::DisplayCurrent(m_components, m_index);
         switch(m_components[m_index]->type())
         {
             case ComponentType::DocumentTypeOpenTag:
@@ -52,23 +55,32 @@ void ElementBuilder::buildElements()
  **/
 std::shared_ptr<Node> ElementBuilder::read_str(std::string input) 
 {
+    std::cout << "Parsing the file: " << "\n";
+    std::cout << "\n";  
     Tokenizer tokenizer = Tokenizer(input);
     tokenizer.tokenize();
     std::vector<std::shared_ptr<Character>>tokens = tokenizer.getTokens(); 
-    std::cout << "Total tokens " << tokens.size() << "\n"; 
+    std::cout << "Number of tokens(characters) found: " << tokens.size() << "\n"; 
     ComponentBuilder componentBuilder = ComponentBuilder(tokens);  
     componentBuilder.build_components();
     std::vector<std::shared_ptr<Component>>components = componentBuilder.getComponents(); 
-    std::cout << "Total components " << components.size() << "\n"; 
+    std::cout << "Number of components found: " << components.size() << "\n"; 
     ElementBuilder elementBuilder(components);
     elementBuilder.buildElements();
     std::vector<std::shared_ptr<Element>>elements = elementBuilder.getElements(); 
-    std::cout << "Total elements " << elements.size() << "\n"; 
+    std::cout << "Number of elements found: " << elements.size() << "\n";
+    std::cout << "\n"; 
     std::shared_ptr<Node> targetNode;
     std::shared_ptr<Node> tree = targetNode->createTree(elements);
     return tree; 
 }
 
+/**
+ * @brief A function to iterate through a 
+ * vector of elements and displays the  element type
+ * and value
+ * 
+ */
 void ElementBuilder::displayElements(){
     for(auto element : this->m_elements)
     {

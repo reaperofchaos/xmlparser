@@ -6,7 +6,7 @@
 #include "../Types/Component.h"
 
 /**
- * A class used to create Elements from Component vectors
+ * A class used to traverse component vectors
  */
 class ComponentUtilities {
     public:

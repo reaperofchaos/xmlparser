@@ -1,8 +1,10 @@
 #include "PrimitiveBuilder.h"
 
-std::shared_ptr<Primitive>PrimitiveBuilder::next(){
-    // size_t start = this->m_index;
-
+/**
+ * @brief Iterates through a vector of components and creates a primitive
+ */
+std::shared_ptr<Primitive>PrimitiveBuilder::next()
+{
     while (this->m_index < this->m_components.size())
     {
         switch(m_components[m_index]->type())

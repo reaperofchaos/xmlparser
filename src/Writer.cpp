@@ -125,6 +125,12 @@ void Writer::writeProps(
                 << "]";
 }
 
+/**
+ * @brief a function to write the Abstract Syntax Tree (Node) as an object
+ * 
+ * @param node 
+ * @param isChild 
+ */
 void Writer::writeNodesAsObject(std::shared_ptr<Node> node, bool isChild)
 {
     std::string spacing = ""; 
@@ -180,6 +186,11 @@ void Writer::writeNodesAsObject(std::shared_ptr<Node> node, bool isChild)
     }
 }
 
+/**
+ * @brief a function to write the Abstract Syntax Tree (Node)
+ * as a JSON file
+ * 
+ */
 void Writer::writeTreeAsJSON()
 {
     writeNodesAsObject(this->tree, false); 

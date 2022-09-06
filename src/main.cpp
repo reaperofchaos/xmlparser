@@ -5,7 +5,7 @@
 #include <memory>
 #include <unordered_map>
 #include "linenoise.hpp"
-#include "ElementBuilder.h"
+#include "Builders/ElementBuilder.h"
 #include "Types/Node.h"
 #include "Writer.h"
 

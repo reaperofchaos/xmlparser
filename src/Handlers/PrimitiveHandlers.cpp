@@ -1,5 +1,12 @@
 #include "PrimitiveHandlers.h"
 
+/**
+ * @brief Builds a primitive from the provided components
+ * 
+ * @param components 
+ * @param m_index 
+ * @return std::shared_ptr<Primitive> 
+ */
 std::shared_ptr<Primitive> PrimitiveHandlers::buildPrimitive(
     std::vector<std::shared_ptr<Component>> &components, 
     size_t &m_index)
@@ -23,6 +30,13 @@ std::shared_ptr<Primitive> PrimitiveHandlers::buildPrimitive(
     return NULL; 
 }
 
+/**
+ * @brief Creates a boolean primitive from the provided components
+ * 
+ * @param text 
+ * @param m_index 
+ * @return std::shared_ptr<BooleanPrimitive> 
+ */
 std::shared_ptr<BooleanPrimitive> PrimitiveHandlers::buildBooleanPrimitive(
     std::shared_ptr<Component> &text, 
     size_t &m_index)
@@ -31,6 +45,13 @@ std::shared_ptr<BooleanPrimitive> PrimitiveHandlers::buildBooleanPrimitive(
     return std::make_shared<BooleanPrimitive>(std::dynamic_pointer_cast<Name>(text));
 }
 
+/**
+ * @brief Builds a string primitive from the provided components
+ * 
+ * @param components 
+ * @param m_index 
+ * @return std::shared_ptr<StringPrimitive> 
+ */
 std::shared_ptr<StringPrimitive> PrimitiveHandlers::buildStringPrimitive(
     std::vector<std::shared_ptr<Component>> &components,
     size_t &m_index)
@@ -41,6 +62,13 @@ std::shared_ptr<StringPrimitive> PrimitiveHandlers::buildStringPrimitive(
     return std::make_shared<StringPrimitive>(std::dynamic_pointer_cast<StringType>(components[start]));
 }
 
+/**
+ * @brief Builds a number primitive from the provided components
+ * 
+ * @param components 
+ * @param m_index 
+ * @return std::shared_ptr<NumberPrimitive> 
+ */
 std::shared_ptr<NumberPrimitive> PrimitiveHandlers::buildNumberPrimitive(
     std::vector<std::shared_ptr<Component>> &components,
     size_t &m_index)
@@ -49,6 +77,13 @@ std::shared_ptr<NumberPrimitive> PrimitiveHandlers::buildNumberPrimitive(
     return std::make_shared<NumberPrimitive>(std::dynamic_pointer_cast<NumberType>(components[m_index-1]));
 }
 
+/**
+ * @brief Builds an object from the provided components
+ * 
+ * @param components 
+ * @param m_index 
+ * @return std::shared_ptr<ObjectPrimitive> 
+ */
 std::shared_ptr<ObjectPrimitive> PrimitiveHandlers::buildObject(
     std::vector<std::shared_ptr<Component>> &components,
     size_t &m_index)
@@ -87,6 +122,13 @@ std::shared_ptr<ObjectPrimitive> PrimitiveHandlers::buildObject(
     return std::make_shared<ObjectPrimitive>(objectPairs);
 }
 
+/**
+ * @brief Builds an array from the provided components
+ * 
+ * @param components 
+ * @param m_index 
+ * @return std::shared_ptr<ArrayPrimitive> 
+ */
 std::shared_ptr<ArrayPrimitive> PrimitiveHandlers::buildArray(
     std::vector<std::shared_ptr<Component>> &components,
     size_t &m_index)

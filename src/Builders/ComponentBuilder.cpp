@@ -12,13 +12,17 @@ void ComponentBuilder::read_str(std::string input)
     std::vector<std::shared_ptr<Character>>tokens = tokenizer.getTokens(); 
     std::cout << "Total tokens " << tokens.size() << "\n"; 
     ComponentBuilder reader = ComponentBuilder(tokens);  
-    // reader.  ();   
     reader.build_components();
     std::vector<std::shared_ptr<Component>>components = reader.getComponents(); 
     std::cout << "Total components " << components.size() << "\n"; 
     reader.displayComponents();
 }
 
+/**
+ * @brief A function to iterate through a vector of characters and creates a
+ * component
+ * 
+ */
 std::shared_ptr<Component>ComponentBuilder::next(){
     size_t start = this->m_index;
     std::vector<std::shared_ptr<Character>> characters;
@@ -196,7 +200,7 @@ void ComponentBuilder::displayCharacterTokens(){
 }
 
 /**
- * @brief Builds primitives from the characters
+ * @brief Builds components from the characters
  * 
  */
 void ComponentBuilder::build_components() 
@@ -208,7 +212,7 @@ void ComponentBuilder::build_components()
 }
 
 /**
- * @brief Displays the type and value of the primitives
+ * @brief Displays the type and value of the components
  * 
  */
 void ComponentBuilder::displayComponents()
