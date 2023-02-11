@@ -4,8 +4,9 @@
 #include <iostream>
 #include <memory>
 #include <cassert>
-#include "CharType.h"
-#include "Symbol.h"
+#include "Tokenizer/Types/CharType.h"
+#include "Tokenizer/Types/Symbol.h"
+#include "Tokenizer/Types/WhiteSpace.h"
 
 class Component;
 class Name;
@@ -254,11 +255,11 @@ class OpenObject: public Component
         std::string value;
 
     public:
-        OpenObject(std::shared_ptr<ObjectOpenBracket> openBracket){
+        OpenObject(std::shared_ptr<LeftCurlyBracket> openBracket){
             this->value = openBracket->getValue();
         }
 
-        OpenObject(std::shared_ptr<ObjectOpenBracket> openBracket, std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces){
+        OpenObject(std::shared_ptr<RightCurlyBracket> openBracket, std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces){
             std::string value = "";
             value += openBracket->getValue();
         
@@ -280,11 +281,11 @@ class CloseObject: public Component
         std::string value;
 
     public:
-        CloseObject(std::shared_ptr<ObjectCloseBracket> closeBracket){
+        CloseObject(std::shared_ptr<RightCurlyBracket> closeBracket){
             this->value = closeBracket->getValue();
         }
 
-        CloseObject(std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces, std::shared_ptr<ObjectCloseBracket> closeBracket){
+        CloseObject(std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces, std::shared_ptr<RightCurlyBracket> closeBracket){
             std::string value = "";
             for(std::shared_ptr<WhiteSpace> whiteSpace : whiteSpaces)
             {
@@ -295,8 +296,8 @@ class CloseObject: public Component
         }
 
         virtual ComponentType type(){ return ComponentType::CloseObject;}
-        virtual void setValue(std::shared_ptr<ObjectCloseBracket> closeBracket){this->value = closeBracket->getValue();}
-        virtual void setValue(std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces, std::shared_ptr<ObjectCloseBracket> closeBracket)
+        virtual void setValue(std::shared_ptr<RightCurlyBracket> closeBracket){this->value = closeBracket->getValue();}
+        virtual void setValue(std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces, std::shared_ptr<RightCurlyBracket> closeBracket)
         {
             std::string value = "";
             for(std::shared_ptr<WhiteSpace> whiteSpace : whiteSpaces)
@@ -317,11 +318,11 @@ class OpenArray: public Component
         std::string value;
 
     public:
-        OpenArray(std::shared_ptr<ArrayOpenBracket> openBracket){
+        OpenArray(std::shared_ptr<LeftSquareBracket> openBracket){
             this->value = openBracket->getValue();
         }
 
-        OpenArray(std::shared_ptr<ArrayOpenBracket> openBracket, std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces){
+        OpenArray(std::shared_ptr<LeftSquareBracket> openBracket, std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces){
             std::string value = "";
             value += openBracket->getValue();
 
@@ -333,10 +334,10 @@ class OpenArray: public Component
         }
 
         virtual ComponentType type(){ return ComponentType::OpenArray;}
-        virtual void setValue(std::shared_ptr<ArrayOpenBracket> openBracket){
+        virtual void setValue(std::shared_ptr<LeftSquareBracket> openBracket){
             this->value = openBracket->getValue();
         }
-        virtual void setValue(std::shared_ptr<ArrayOpenBracket> openBracket, std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces){
+        virtual void setValue(std::shared_ptr<LeftSquareBracket> openBracket, std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces){
             std::string value = "";
             value += openBracket->getValue();
 
@@ -357,11 +358,11 @@ class CloseArray: public Component
         std::string value;
 
     public:
-        CloseArray(std::shared_ptr<ArrayCloseBracket> closeBracket){
+        CloseArray(std::shared_ptr<RightSquareBracket> closeBracket){
             this->value = closeBracket->getValue();
         }
 
-        CloseArray(std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces, std::shared_ptr<ArrayCloseBracket> closeBracket){
+        CloseArray(std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces, std::shared_ptr<RightSquareBracket> closeBracket){
             std::string value = "";
             for(std::shared_ptr<WhiteSpace> whiteSpace : whiteSpaces)
             {
@@ -373,8 +374,8 @@ class CloseArray: public Component
 
         virtual ComponentType type(){ return ComponentType::CloseArray;}
         std::string getValue(){ return value;}
-        virtual void setValue(std::shared_ptr<ArrayCloseBracket> closeBracket){this->value = closeBracket->getValue();}
-        virtual void setValue(std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces, std::shared_ptr<ArrayCloseBracket> closeBracket)
+        virtual void setValue(std::shared_ptr<RightSquareBracket> closeBracket){this->value = closeBracket->getValue();}
+        virtual void setValue(std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces, std::shared_ptr<RightSquareBracket> closeBracket)
         {
             std::string value = "";
             for(std::shared_ptr<WhiteSpace> whiteSpace : whiteSpaces)
@@ -395,11 +396,11 @@ class OpenTag: public Component
         std::string value;
 
     public:
-        OpenTag(std::shared_ptr<OpenBracket> openBracket){
+        OpenTag(std::shared_ptr<LessThanSymbol> openBracket){
             this->value = openBracket->getValue();
         }
 
-        OpenTag(std::shared_ptr<OpenBracket> openBracket, std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces){
+        OpenTag(std::shared_ptr<LessThanSymbol> openBracket, std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces){
             std::string value = "";
             value += openBracket->getValue();
             for(std::shared_ptr<WhiteSpace> whiteSpace : whiteSpaces)
@@ -413,11 +414,11 @@ class OpenTag: public Component
         virtual ComponentType type(){ return ComponentType::OpenTag;}
         std::string getValue(){ return value;}
         
-        virtual void setValue(std::shared_ptr<OpenBracket> openBracket){
+        virtual void setValue(std::shared_ptr<LessThanSymbol> openBracket){
             this->value = openBracket->getValue();
         }
 
-        virtual void setValue(std::shared_ptr<OpenBracket> openBracket, std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces){
+        virtual void setValue(std::shared_ptr<LessThanSymbol> openBracket, std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces){
             std::string value = "";
             value += openBracket->getValue();
             for(std::shared_ptr<WhiteSpace> whiteSpace : whiteSpaces)
@@ -440,8 +441,7 @@ class ClosingCloseTag: public Component
 
     public:
         ClosingCloseTag(std::shared_ptr<ForwardSlash> forwardSlash, 
-            std::shared_ptr<CloseBracket> 
-            closeBracket)
+            std::shared_ptr<GreaterThanSymbol> closeBracket)
         {
                 std::string value = "";
                 value += forwardSlash->getValue();
@@ -451,7 +451,7 @@ class ClosingCloseTag: public Component
 
         ClosingCloseTag(std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces, 
             std::shared_ptr<ForwardSlash> forwardSlash, 
-            std::shared_ptr<CloseBracket> closeBracket)
+            std::shared_ptr<GreaterThanSymbol> closeBracket)
         {
             std::string value = "";
             for(std::shared_ptr<WhiteSpace> whiteSpace : whiteSpaces)
@@ -475,7 +475,7 @@ class ClosingOpenTag: public Component
         std::string value;
 
     public:
-        ClosingOpenTag(std::shared_ptr<OpenBracket> openBracket, std::shared_ptr<ForwardSlash> forwardSlash){
+        ClosingOpenTag(std::shared_ptr<LessThanSymbol> openBracket, std::shared_ptr<ForwardSlash> forwardSlash){
                 std::string value = "";
                 value += openBracket->getValue();
                 value += forwardSlash->getValue();
@@ -484,7 +484,7 @@ class ClosingOpenTag: public Component
 
         virtual ComponentType type(){ return ComponentType::ClosingOpenTag;}
         std::string getValue(){ return value;}
-        virtual void setValue(std::shared_ptr<OpenBracket> openBracket, std::shared_ptr<ForwardSlash> forwardSlash){
+        virtual void setValue(std::shared_ptr<LessThanSymbol> openBracket, std::shared_ptr<ForwardSlash> forwardSlash){
             std::string value = "";
             value += openBracket->getValue();
             value += forwardSlash->getValue();
@@ -500,11 +500,11 @@ class CloseTag: public Component
         std::string value;
 
     public:
-        CloseTag(std::shared_ptr<CloseBracket> closeBracket){
+        CloseTag(std::shared_ptr<GreaterThanSymbol> closeBracket){
                 this->value = closeBracket->getValue();
         }
 
-        CloseTag(std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces, std::shared_ptr<CloseBracket> closeBracket){
+        CloseTag(std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces, std::shared_ptr<GreaterThanSymbol> closeBracket){
             std::string value = "";
             for(std::shared_ptr<WhiteSpace> whiteSpace : whiteSpaces)
             {
@@ -516,8 +516,8 @@ class CloseTag: public Component
 
         virtual ComponentType type(){ return ComponentType::CloseTag;}
         std::string getValue(){ return value;}
-        virtual void setValue(std::shared_ptr<CloseBracket> closeBracket){this->value = closeBracket->getValue();}
-        virtual void setValue(std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces, std::shared_ptr<CloseBracket> closeBracket)
+        virtual void setValue(std::shared_ptr<GreaterThanSymbol> closeBracket){this->value = closeBracket->getValue();}
+        virtual void setValue(std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces, std::shared_ptr<GreaterThanSymbol> closeBracket)
         {
             std::string value = "";
             for(std::shared_ptr<WhiteSpace> whiteSpace : whiteSpaces)
@@ -701,7 +701,7 @@ class CloseParenthesisComponent: public Component
         std::string value;
 
     public:
-        CloseParenthesisComponent(std::shared_ptr<CloseParenthesis> closeParenthesis ){
+        CloseParenthesisComponent(std::shared_ptr<RightParenthesis> closeParenthesis ){
             this->value = closeParenthesis->getValue();
         }
 
@@ -717,7 +717,7 @@ class OpenParenthesisComponent: public Component
         std::string value;
 
     public:
-        OpenParenthesisComponent(std::shared_ptr<OpenParenthesis> openParenthesis ){
+        OpenParenthesisComponent(std::shared_ptr<LeftParenthesis> openParenthesis ){
             this->value = openParenthesis->getValue();
         }
 
@@ -732,7 +732,7 @@ class DocumentTypeOpenTag: public Component
         std::string value;
 
     public:
-        DocumentTypeOpenTag(std::shared_ptr<OpenBracket> openBracket, 
+        DocumentTypeOpenTag(std::shared_ptr<LessThanSymbol> openBracket, 
             std::shared_ptr<Exclamation> exclamation)
         {
             std::string value = "";
@@ -741,7 +741,7 @@ class DocumentTypeOpenTag: public Component
             this->value = value;
         }
 
-        DocumentTypeOpenTag(std::shared_ptr<OpenBracket> openBracket, 
+        DocumentTypeOpenTag(std::shared_ptr<LessThanSymbol> openBracket, 
             std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces, 
             std::shared_ptr<Exclamation> exclamation)
         {
@@ -770,7 +770,7 @@ class CommentOpenTag: public Component
         std::string value;
 
     public:
-        CommentOpenTag(std::shared_ptr<OpenBracket> openBracket, 
+        CommentOpenTag(std::shared_ptr<LessThanSymbol> openBracket, 
             std::shared_ptr<Exclamation> exclamation,
             std::shared_ptr<Dash> dash1,
             std::shared_ptr<Dash> dash2)
@@ -799,7 +799,7 @@ class CommentCloseTag: public Component
     public:
         CommentCloseTag(std::shared_ptr<Dash> dash1, 
             std::shared_ptr<Dash> dash2, 
-            std::shared_ptr<CloseBracket> closeBracket)
+            std::shared_ptr<GreaterThanSymbol> closeBracket)
         {
                 std::string value = "";
                 value += dash1->getValue();
@@ -812,7 +812,7 @@ class CommentCloseTag: public Component
                 std::shared_ptr<Dash> dash1, 
                 std::shared_ptr<Dash> dash2, 
                 std::vector<std::shared_ptr<WhiteSpace>> whiteSpaces, 
-                std::shared_ptr<CloseBracket> closeBracket)
+                std::shared_ptr<GreaterThanSymbol> closeBracket)
             {
             std::string value = "";
 

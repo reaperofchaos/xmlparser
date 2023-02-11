@@ -4,11 +4,11 @@
 #include <vector>
 #include <optional>
 #include <memory>
-#include "../Types/CharType.h"
+#include "Tokenizer/Types/CharType.h"
 #include "../Types/Component.h"
 #include "../Handlers/TokenHandlers.h"
 #include "../Utils/CharacterUtilities.h"
-#include "Tokenizer.h"
+#include "Tokenizer/Tokenizer.h"
 
 /**
  * @brief Class that takes tokens  and 

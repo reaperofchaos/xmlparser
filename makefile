@@ -19,10 +19,13 @@ LIBFLAGS=-fPIC
 OBJDIR=obj
 #Libraries
 GTEST = /usr/local/lib/libgtest.a
-
+LIBRARYPATH=-L/Users/jacobconner/Desktop/typescriptParser/libs
+TOKENIZER=-ltokenizer
+#Folder with header files
+INCLUDES=-I include
 #target directory
 
-CCFLAGS=$(DEBUG) ${CPPVERSION} $(OPT) $(WARN) -pipe
+CCFLAGS=$(DEBUG) ${CPPVERSION} $(OPT) $(WARN) -pipe ${INCLUDES}
 
 LIBCCFLAGS=$(DEBUG) ${LIBFLAGS} ${CPPVERSION} $(OPT) $(WARN)
 # linker
@@ -33,7 +36,6 @@ LIBLDFLAGS=-lstdc++ -shared -W1,-soname,${LIBTARGET}
 
 STATICLIBOBJ=$(OBJDIR)/CharType.o \
 $(OBJDIR)/ComponentBuilder.o \
-$(OBJDIR)/Tokenizer.o \
 $(OBJDIR)/TokenHandlers.o \
 $(OBJDIR)/Symbol.o \
 $(OBJDIR)/Component.o \
@@ -52,11 +54,8 @@ $(OBJDIR)/Writer.o \
 $(OBJDIR)/Node.o
 
 OBJS=$(OBJDIR)/main.o\
-$(OBJDIR)/CharType.o \
 $(OBJDIR)/ComponentBuilder.o \
-$(OBJDIR)/Tokenizer.o \
 $(OBJDIR)/TokenHandlers.o \
-$(OBJDIR)/Symbol.o \
 $(OBJDIR)/Component.o \
 $(OBJDIR)/Primitive.o \
 $(OBJDIR)/PropHandlers.o \
@@ -68,15 +67,12 @@ $(OBJDIR)/Element.o \
 $(OBJDIR)/Prop.o \
 $(OBJDIR)/ComponentUtilities.o \
 $(OBJDIR)/CharacterUtilities.o \
-$(OBJDIR)/TokenizerUtilities.o \
 $(OBJDIR)/Writer.o \
 $(OBJDIR)/Node.o
 
 LIBOBJS=$(OBJDIR)/LCharType.o \
 $(OBJDIR)/LComponentBuilder.o \
-$(OBJDIR)/LTokenizer.o \
 $(OBJDIR)/LTokenHandlers.o \
-$(OBJDIR)/LSymbol.o \
 $(OBJDIR)/LComponent.o \
 $(OBJDIR)/LPrimitive.o \
 $(OBJDIR)/LPropHandlers.o \
@@ -88,13 +84,12 @@ $(OBJDIR)/LElement.o \
 $(OBJDIR)/LProp.o \
 $(OBJDIR)/LComponentUtilities.o \
 $(OBJDIR)/LCharacterUtilities.o \
-$(OBJDIR)/LTokenizerUtilities.o \
 $(OBJDIR)/LWriter.o \
 $(OBJDIR)/LNode.o
 
 
 all: $(OBJS)
-	$(LD) -o $(TARGET) $(OBJS)  $(LDFLAGS)
+	$(LD) ${LIBRARYPATH} -o $(TARGET) $(OBJS)  $(LDFLAGS) ${TOKENIZER}
 
 lib: $(LIBOBJS)
 	$(LD) $(LIBLDFLAGS) -o $(LIBTARGET) $(LIBOBJS) -lc
@@ -138,16 +133,8 @@ $(OBJDIR)/Primitive.o:
 $(OBJDIR)/Component.o:
 	$(CC) -c $(CCFLAGS) $(SRCDIR)/Types/Component.cpp -o $(OBJDIR)/Component.o
 
-
 $(OBJDIR)/TokenHandlers.o:
 	$(CC) -c $(CCFLAGS) $(SRCDIR)/Handlers/TokenHandlers.cpp -o $(OBJDIR)/TokenHandlers.o
-
-$(OBJDIR)/Symbol.o:
-	$(CC) -c $(CCFLAGS) $(SRCDIR)/Types/Symbol.cpp -o $(OBJDIR)/Symbol.o
-
-
-$(OBJDIR)/CharType.o:
-	$(CC) -c $(CCFLAGS) $(SRCDIR)/Types/CharType.cpp -o $(OBJDIR)/CharType.o
 
 $(OBJDIR)/Writer.o:
 	$(CC) -c $(CCFLAGS) $(SRCDIR)/Writer.cpp -o $(OBJDIR)/Writer.o
@@ -157,9 +144,6 @@ $(OBJDIR)/Node.o:
 
 $(OBJDIR)/ComponentBuilder.o:
 	$(CC) -c $(CCFLAGS) $(SRCDIR)/Builders/ComponentBuilder.cpp -o $(OBJDIR)/ComponentBuilder.o
-
-$(OBJDIR)/Tokenizer.o:
-	$(CC) -c $(CCFLAGS) $(SRCDIR)/Builders/Tokenizer.cpp -o $(OBJDIR)/Tokenizer.o
 
 $(OBJDIR)/main.o:
 	$(CC) -c $(CCFLAGS) $(SRCDIR)/main.cpp -o $(OBJDIR)/main.o
@@ -183,9 +167,6 @@ $(OBJDIR)/LCharacterUtilities.o:
 $(OBJDIR)/LComponentUtilities.o:
 	$(CC) -c $(LIBCCFLAGS) $(SRCDIR)/Utils/ComponentUtilities.cpp -o $(OBJDIR)/LComponentUtilities.o
 
-$(OBJDIR)/LTokenizerUtilities.o:
-	$(CC) -c $(CCFLAGS) $(SRCDIR)/Utils/LTokenizerUtilities.cpp -o $(OBJDIR)/LTokenizerUtilities.o
-
 $(OBJDIR)/LPropHandlers.o:
 	$(CC) -c $(LIBCCFLAGS) $(SRCDIR)/Handlers/PropHandlers.cpp -o $(OBJDIR)/LPropHandlers.o
 
@@ -201,16 +182,8 @@ $(OBJDIR)/LPrimitive.o:
 $(OBJDIR)/LComponent.o:
 	$(CC) -c $(LIBCCFLAGS) $(SRCDIR)/Types/Component.cpp -o $(OBJDIR)/LComponent.o
 
-
 $(OBJDIR)/LTokenHandlers.o:
 	$(CC) -c $(LIBCCFLAGS) $(SRCDIR)/Handlers/TokenHandlers.cpp -o $(OBJDIR)/LTokenHandlers.o
-
-$(OBJDIR)/LSymbol.o:
-	$(CC) -c $(LIBCCFLAGS) $(SRCDIR)/Types/Symbol.cpp -o $(OBJDIR)/LSymbol.o
-
-
-$(OBJDIR)/LCharType.o:
-	$(CC) -c $(LIBCCFLAGS) $(SRCDIR)/Types/CharType.cpp -o $(OBJDIR)/LCharType.o
 
 $(OBJDIR)/LWriter.o:
 	$(CC) -c $(LIBCCFLAGS) $(SRCDIR)/Writer.cpp -o $(OBJDIR)/LWriter.o
@@ -221,8 +194,5 @@ $(OBJDIR)/LNode.o:
 $(OBJDIR)/LComponentBuilder.o:
 	$(CC) -c $(LIBCCFLAGS) $(SRCDIR)/ComponentBuilder.cpp -o $(OBJDIR)/LComponentBuilder.o
 
-$(OBJDIR)/LTokenizer.o:
-	$(CC) -c $(LIBCCFLAGS) $(SRCDIR)/Builders/Tokenizer.cpp -o $(OBJDIR)/LTokenizer.o
- 
 clean:
 	rm -rf $(OBJDIR)/*.o $(TARGET) $(LIBTARGET) $(ARCHIVELIBTARGET)
