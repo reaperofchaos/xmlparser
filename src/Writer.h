@@ -1,9 +1,9 @@
 #pragma once
 #include <fstream>
 #include <memory>
-#include "Types/Node.h"
-#include "Types/Element.h"
-#include "Types/Prop.h"
+#include "xmlparser/Types/Node.h"
+#include "xmlparser/Types/Element.h"
+#include "xmlparser/Types/Prop.h"
 
 /**
  * @brief Class to write a tree to 
