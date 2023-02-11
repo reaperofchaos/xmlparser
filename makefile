@@ -27,7 +27,7 @@ INCLUDES=-I include
 
 CCFLAGS=$(DEBUG) ${CPPVERSION} $(OPT) $(WARN) -pipe ${INCLUDES}
 
-LIBCCFLAGS=$(DEBUG) ${LIBFLAGS} ${CPPVERSION} $(OPT) $(WARN)
+LIBCCFLAGS=$(DEBUG) ${LIBFLAGS} ${CPPVERSION} $(OPT) $(WARN) ${INCLUDES}
 # linker
 LD=g++
 LDFLAGS=-lstdc++
@@ -70,8 +70,7 @@ $(OBJDIR)/CharacterUtilities.o \
 $(OBJDIR)/Writer.o \
 $(OBJDIR)/Node.o
 
-LIBOBJS=$(OBJDIR)/LCharType.o \
-$(OBJDIR)/LComponentBuilder.o \
+LIBOBJS=$(OBJDIR)/LComponentBuilder.o \
 $(OBJDIR)/LTokenHandlers.o \
 $(OBJDIR)/LComponent.o \
 $(OBJDIR)/LPrimitive.o \
@@ -92,7 +91,7 @@ all: $(OBJS)
 	$(LD) ${LIBRARYPATH} -o $(TARGET) $(OBJS)  $(LDFLAGS) ${TOKENIZER}
 
 lib: $(LIBOBJS)
-	$(LD) $(LIBLDFLAGS) -o $(LIBTARGET) $(LIBOBJS) -lc
+	$(LD) ${LIBRARYPATH}  $(LIBLDFLAGS) -o $(LIBTARGET) $(LIBOBJS) -lc ${TOKENIZER}
 
 staticLib: $(STATICLIBOBJ)
 	ar rcs $(ARCHIVELIBTARGET) $(STATICLIBOBJ)
@@ -192,7 +191,7 @@ $(OBJDIR)/LNode.o:
 	$(CC) -c $(LIBCCFLAGS) $(SRCDIR)/Types/Node.cpp -o $(OBJDIR)/LNode.o
 
 $(OBJDIR)/LComponentBuilder.o:
-	$(CC) -c $(LIBCCFLAGS) $(SRCDIR)/ComponentBuilder.cpp -o $(OBJDIR)/LComponentBuilder.o
+	$(CC) -c $(LIBCCFLAGS) $(SRCDIR)/Builders/ComponentBuilder.cpp -o $(OBJDIR)/LComponentBuilder.o
 
 clean:
 	rm -rf $(OBJDIR)/*.o $(TARGET) $(LIBTARGET) $(ARCHIVELIBTARGET)

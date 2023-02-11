@@ -1,53 +1,32 @@
 	{ 
-		"name": "Box",
+		"name": "test",
 		"level": "0",
 		"type": "Open tag",
-		"props": [
-			{
-				"name": "sx", 
-				"type": "Object prop", 
-				"value": "", 
-				"value-type": "Object"
-			}
-		],
 		"children": [
 		{ 
-			"name": "Button",
+			"name": "test1",
 			"level": "1",
 			"type": "Open tag",
-			"props": [
-				{
-					"name": "onClick", 
-					"type": "Object prop", 
-					"value": "()=>{}", 
-					"value-type": "String"
-				}
-			],
 			"children": [
 			{ 
-				"name": "Click Me!    ",
+				"name": "test2",
 				"level": "2",
-				"type": "Nested string"
+				"type": "Open tag"
+			},
+			{ 
+				"name": "test2",
+				"level": "2",
+				"type": "Closing Tag"
 			}
 			]
 		},
 		{ 
-			"name": "Button",
+			"name": "test1",
 			"level": "1",
 			"type": "Closing Tag"
 		},
 		{ 
-			"name": "{console.log('This is a test')}",
-			"level": "1",
-			"type": "Nested object"
-		},
-		{ 
-			"name": "{isVisible && (        <TextField>            This is visible        </TextField>    )}",
-			"level": "1",
-			"type": "Nested object"
-		},
-		{ 
-			"name": "Box",
+			"name": "test",
 			"level": "1",
 			"type": "Closing Tag"
 		}
