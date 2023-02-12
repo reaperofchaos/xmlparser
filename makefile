@@ -36,7 +36,7 @@ OBJS=$(OBJDIR)/main.o\
 $(OBJDIR)/Writer.o \
 
 all: $(OBJS)
-	$(LD) ${LIBRARYPATH} -o $(TARGET) $(OBJS)  $(LDFLAGS) ${TOKENIZER} ${XMLPARSER}
+	$(LD) ${LIBRARYPATH} -o $(TARGET) $(OBJS)  $(LDFLAGS) ${XMLPARSER} ${TOKENIZER} 
 
 $(OBJDIR)/Writer.o:
 	$(CC) -c $(CCFLAGS) $(SRCDIR)/Writer.cpp -o $(OBJDIR)/Writer.o

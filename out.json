@@ -1,55 +1,65 @@
 	{ 
-		"name": "Box",
+		"name": "DOCTYPE",
 		"level": "0",
-		"type": "Open tag",
+		"type": "Document tag",
 		"props": [
 			{
-				"name": "sx", 
-				"type": "Object prop", 
-				"value": "", 
-				"value-type": "Object"
+				"name": "html", 
+				"type": "Boolean prop", 
+				"value": "true", 
+				"value-type": "Boolean"
 			}
 		],
 		"children": [
 		{ 
-			"name": "Button",
+			"name": "html",
 			"level": "1",
 			"type": "Open tag",
-			"props": [
-				{
-					"name": "onClick", 
-					"type": "Object prop", 
-					"value": "()=>{}", 
-					"value-type": "String"
-				}
-			],
 			"children": [
 			{ 
-				"name": "Click Me!    ",
+				"name": "body",
 				"level": "2",
-				"type": "Nested string"
+				"type": "Open tag",
+				"children": [
+				{ 
+					"name": "h1",
+					"level": "3",
+					"type": "Open tag",
+					"children": [
+					{ 
+						"name": "My first SVG",
+						"level": "4",
+						"type": "Nested string"
+					}
+					]
+				},
+				{ 
+					"name": "h1",
+					"level": "3",
+					"type": "Closing Tag"
+				},
+				{ 
+					"name": "svg",
+					"level": "3",
+					"type": "Open tag",
+					"props": [
+						{
+							"name": "width", 
+							"type": "String prop", 
+							"value": "100", 
+							"value-type": "String"
+						},
+						{
+							"name": "height", 
+							"type": "String prop", 
+							"value": "100", 
+							"value-type": "String"
+						}
+					]
+				}
+				]
 			}
 			]
-		},
-		{ 
-			"name": "Button",
-			"level": "1",
-			"type": "Closing Tag"
-		},
-		{ 
-			"name": "{console.log('This is a test')}",
-			"level": "1",
-			"type": "Nested object"
-		},
-		{ 
-			"name": "{isVisible && (        <TextField>            This is visible        </TextField>    )}",
-			"level": "1",
-			"type": "Nested object"
-		},
-		{ 
-			"name": "Box",
-			"level": "1",
-			"type": "Closing Tag"
 		}
 		]
 	}

@@ -1,8 +1,8 @@
 Parsed Tree 
-Node: Box Level: 0 Type: Open tag
-Node: Button Level: 1 Type: Open tag
-Node: Click Me!     Level: 2 Type: Nested string
-Node: Button Level: 1 Type: Closing Tag
-Node: {console.log('This is a test')} Level: 1 Type: Nested object
-Node: {isVisible && (        <TextField>            This is visible        </TextField>    )} Level: 1 Type: Nested object
-Node: Box Level: 1 Type: Closing Tag
+Node: DOCTYPE Level: 0 Type: Document tag
+Node: html Level: 1 Type: Open tag
+Node: body Level: 2 Type: Open tag
+Node: h1 Level: 3 Type: Open tag
+Node: My first SVG Level: 4 Type: Nested string
+Node: h1 Level: 3 Type: Closing Tag
+Node: svg Level: 3 Type: Open tag
