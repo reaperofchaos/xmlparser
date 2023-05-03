@@ -42,6 +42,8 @@ std::shared_ptr<Component> ComponentBuilder::next()
 
     while (this->m_index < this->m_tokens.size())
     {
+        std::cout << m_tokens[m_index]->inspect() << "\n";
+
         switch (m_tokens[m_index]->type())
         {
         case CharacterType::Number: // Build a number
@@ -103,11 +105,12 @@ std::shared_ptr<Component> ComponentBuilder::next()
 
                 if (m_tokens[m_index]->symbolType() == SymbolType::Exclamation)
                 {
-                    CharacterUtilities::IncrementIndex(m_tokens, m_index);
                     if (m_tokens[m_index + 1]->symbolType() == SymbolType::Dash)
                     {
                         return TokenHandlers::buildCommentOpenTag(m_tokens, m_index, start);
                     }
+                    std::cout << "Building an open document type tag"
+                              << "\n";
 
                     return TokenHandlers::buildDocumentTypeOpenTag(m_tokens, m_index, start);
                 }

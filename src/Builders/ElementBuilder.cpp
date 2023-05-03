@@ -71,11 +71,6 @@ std::shared_ptr<Node> ElementBuilder::read_str(std::string input)
     elementBuilder.buildElements();
     std::vector<std::shared_ptr<Element>> elements = elementBuilder.getElements();
     std::cout << "Number of elements found: " << elements.size() << "\n";
-    std::cout << "\n";
-    for (std::shared_ptr<Element> element : elements)
-    {
-        std::cout << element->inspect() << "\n";
-    }
     std::shared_ptr<Node> targetNode;
     std::shared_ptr<Node> tree = targetNode->createTree(elements);
     return tree;

@@ -114,12 +114,15 @@ std::shared_ptr<Name> TokenHandlers::buildName(
     } while (m_tokens[m_index]->type() != CharacterType::WhiteSpace &&
              (m_tokens[m_index]->symbolType() != SymbolType::ForwardSlash) &&
              (m_tokens[m_index]->symbolType() != SymbolType::GreaterThanSymbol) &&
+             (m_tokens[m_index]->symbolType() != SymbolType::LessThanSymbol) &&
              (m_tokens[m_index]->symbolType() != SymbolType::RightParenthesis) &&
              (m_tokens[m_index]->symbolType() != SymbolType::EqualSymbol) &&
              (m_tokens[m_index]->symbolType() != SymbolType::Colon) &&
+             ((m_tokens[m_index]->symbolType() != SymbolType::Dash) &&
+              (m_tokens[m_index + 1]->symbolType() != SymbolType::Dash)) &&
              (m_tokens[m_index]->symbolType() != SymbolType::Comma) &&
              (m_tokens[m_index]->symbolType() != SymbolType::Semicolon));
-
+    std::cout << "next char after name" << m_tokens[m_index]->inspect() << "\n";
     if (m_tokens[start]->getType() == "Period Symbol")
     {
         return std::make_shared<Name>(
@@ -452,14 +455,17 @@ std::shared_ptr<CommentOpenTag> TokenHandlers::buildCommentOpenTag(
     size_t &start)
 {
     CharacterUtilities::IncrementIndex(m_tokens, m_index);
+    CharacterUtilities::IgnoreWhiteSpace(m_tokens, m_index);
     CharacterUtilities::IncrementIndex(m_tokens, m_index);
+    CharacterUtilities::IgnoreWhiteSpace(m_tokens, m_index);
     CharacterUtilities::IncrementIndex(m_tokens, m_index);
+    CharacterUtilities::IgnoreWhiteSpace(m_tokens, m_index);
 
     return std::make_shared<CommentOpenTag>(
         std::dynamic_pointer_cast<LessThanSymbol>(m_tokens[start]),
-        std::dynamic_pointer_cast<Exclamation>(m_tokens[m_index - 3]),
-        std::dynamic_pointer_cast<Dash>(m_tokens[m_index - 2]),
-        std::dynamic_pointer_cast<Dash>(m_tokens[m_index - 1]));
+        std::dynamic_pointer_cast<Exclamation>(m_tokens[start + 1]),
+        std::dynamic_pointer_cast<Dash>(m_tokens[start + 2]),
+        std::dynamic_pointer_cast<Dash>(m_tokens[start + 3]));
 }
 
 /**
@@ -500,6 +506,8 @@ std::shared_ptr<DocumentTypeOpenTag> TokenHandlers::buildDocumentTypeOpenTag(
 {
 
     CharacterUtilities::IncrementIndex(m_tokens, m_index);
+    CharacterUtilities::IgnoreWhiteSpace(m_tokens, m_index);
+
     return std::make_shared<DocumentTypeOpenTag>(
         std::dynamic_pointer_cast<LessThanSymbol>(m_tokens[start]),
         std::dynamic_pointer_cast<Exclamation>(m_tokens[m_index - 1]));

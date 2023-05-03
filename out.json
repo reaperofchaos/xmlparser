@@ -29,7 +29,13 @@
 					"value-type": "String"
 				},
 				{
-					"name": "data-name", 
+					"name": "dat", 
+					"type": "Boolean prop", 
+					"value": "true", 
+					"value-type": "Boolean"
+				},
+				{
+					"name": "a-name", 
 					"type": "String prop", 
 					"value": "Layer 1", 
 					"value-type": "String"
