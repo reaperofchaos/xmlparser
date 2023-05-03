@@ -81,7 +81,8 @@
         "stop_token": "cpp",
         "cinttypes": "cpp",
         "__memory": "cpp",
-        "filesystem": "cpp"
+        "filesystem": "cpp",
+        "__verbose_abort": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled",
     "cSpell.words": [

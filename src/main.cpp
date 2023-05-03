@@ -11,28 +11,29 @@
 
 std::shared_ptr<Node> READ(std::string input)
 {
-    return ElementBuilder::read_str(input); 
+    return ElementBuilder::read_str(input);
 }
 
 std::shared_ptr<Node> EVAL(std::shared_ptr<Node> ast)
 {
-    return ast; 
+    return ast;
 }
 
-void PRINT(std::shared_ptr<Node>result)
+void PRINT(std::shared_ptr<Node> result)
 {
-    if(result != NULL){
+    if (result != NULL)
+    {
         Node::display(result);
     }
     std::string fileName = "out.txt";
-    std::cout << "\n"; 
-    Writer* writer = new Writer(result);
-    writer->createFile(fileName); 
-    std::cout << "Parsed tree level information saved to " << fileName << "\n"; 
-    std::string jsonFileName = "out.json"; 
+    std::cout << "\n";
+    Writer *writer = new Writer(result);
+    writer->createFile(fileName);
+    std::cout << "Parsed tree level information saved to " << fileName << "\n";
+    std::string jsonFileName = "out.json";
     writer->setFile(jsonFileName);
     writer->writeTreeAsJSON();
-    std::cout << "Parsed tree saved as JSON to " << jsonFileName << "\n"; 
+    std::cout << "Parsed tree saved as JSON to " << jsonFileName << "\n";
 }
 
 std::string rep(std::string input)
@@ -40,50 +41,54 @@ std::string rep(std::string input)
     std::shared_ptr<Node> ast = READ(input);
     std::shared_ptr<Node> result = EVAL(ast);
     PRINT(result);
-    return ""; 
+    return "";
 }
 
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
 
-    if(argc > 1)
+    if (argc > 1)
     {
         std::ifstream file;
-        std::string line; 
-        std::vector<std::string> lines; 
-        std::string text; 
+        std::string line;
+        std::vector<std::string> lines;
+        std::string text;
         file.open(argv[1]);
-        while (std::getline(file, line)){
-            lines.push_back(line); 
+        while (std::getline(file, line))
+        {
+            lines.push_back(line);
         }
-        for(std::string l : lines){
-            text += l; 
+        for (std::string l : lines)
+        {
+            text += l;
         }
         file.close();
         rep(text);
-    }else{
-        const auto history_path = "history.txt"; 
-        linenoise::LoadHistory(history_path); 
+    }
+    else
+    {
+        const auto history_path = "history.txt";
+        linenoise::LoadHistory(history_path);
 
         std::string input;
-        for (;;){
+        for (;;)
+        {
 
-            auto quit = linenoise::Readline("hello> ", input); 
+            auto quit = linenoise::Readline("hello> ", input);
 
-            if(quit)
+            if (quit)
                 break;
-            if(input == "exit()" || input == "quit()")
+            if (input == "exit()" || input == "quit()")
             {
-                std::cout << "Exiting the XML parser \n"; 
-                return 0; 
+                std::cout << "Exiting the XML parser \n";
+                return 0;
             }
-            std::cout << rep(input) << std::endl; 
+            std::cout << rep(input) << std::endl;
 
-            //add text to history
-            linenoise::AddHistory(input.c_str()); 
-
+            // add text to history
+            linenoise::AddHistory(input.c_str());
         }
         linenoise::SaveHistory(history_path);
     }
-    return 0; 
+    return 0;
 }

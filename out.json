@@ -1,34 +1,226 @@
 	{ 
-		"name": "test",
+		"name": "xml",
 		"level": "0",
-		"type": "Open tag",
+		"type": "Prolog Tag",
+		"props": [
+			{
+				"name": "version", 
+				"type": "String prop", 
+				"value": "1.0", 
+				"value-type": "String"
+			},
+			{
+				"name": "encoding", 
+				"type": "String prop", 
+				"value": "UTF-8", 
+				"value-type": "String"
+			}
+		],
 		"children": [
 		{ 
-			"name": "test1",
+			"name": "svg",
 			"level": "1",
 			"type": "Open tag",
+			"props": [
+				{
+					"name": "id", 
+					"type": "String prop", 
+					"value": "Layer_1", 
+					"value-type": "String"
+				},
+				{
+					"name": "data-name", 
+					"type": "String prop", 
+					"value": "Layer 1", 
+					"value-type": "String"
+				},
+				{
+					"name": "xmlns", 
+					"type": "String prop", 
+					"value": "http://www.w3.org/2000/svg", 
+					"value-type": "String"
+				},
+				{
+					"name": "viewBox", 
+					"type": "String prop", 
+					"value": "0 0 48 48", 
+					"value-type": "String"
+				}
+			],
 			"children": [
 			{ 
-				"name": "test2",
+				"name": "defs",
 				"level": "2",
-				"type": "Open tag"
+				"type": "Open tag",
+				"children": [
+				{ 
+					"name": "style",
+					"level": "3",
+					"type": "Open tag",
+					"children": [
+					{ 
+						"name": ".cls-1 {        fill: #fff;stroke-width: 2px;}.cls-1, .cls-2 {        stroke: #231f20;stroke-miterlimit: 10;}.cls-2 {        stroke-width: .5px;}.cls-2, .cls-3 {        fill: #231f20;}.cls-4 {        letter-spacing: -.11em;}.cls-3 {        font-family: ArialMT, Arial;font-size: 6.22px;}",
+						"level": "4",
+						"type": "Nested string"
+					}
+					]
+				},
+				{ 
+					"name": "style",
+					"level": "3",
+					"type": "Closing Tag"
+				}
+				]
 			},
 			{ 
-				"name": "test2",
+				"name": "defs",
+				"level": "2",
+				"type": "Closing Tag"
+			},
+			{ 
+				"name": "rect",
+				"level": "2",
+				"type": "Self closing tag",
+				"props": [
+					{
+						"name": "class", 
+						"type": "String prop", 
+						"value": "cls-1", 
+						"value-type": "String"
+					},
+					{
+						"name": "x="5.69"", 
+						"type": "Boolean prop", 
+						"value": "true", 
+						"value-type": "Boolean"
+					},
+					{
+						"name": "y="16.28"", 
+						"type": "Boolean prop", 
+						"value": "true", 
+						"value-type": "Boolean"
+					},
+					{
+						"name": "width", 
+						"type": "String prop", 
+						"value": "36.8", 
+						"value-type": "String"
+					},
+					{
+						"name": "height", 
+						"type": "String prop", 
+						"value": "14.69", 
+						"value-type": "String"
+					},
+					{
+						"name": "rx", 
+						"type": "String prop", 
+						"value": "1.54", 
+						"value-type": "String"
+					},
+					{
+						"name": "ry", 
+						"type": "String prop", 
+						"value": "1.54", 
+						"value-type": "String"
+					}
+				]
+			},
+			{ 
+				"name": "text",
+				"level": "2",
+				"type": "Open tag",
+				"props": [
+					{
+						"name": "class", 
+						"type": "String prop", 
+						"value": "cls-3", 
+						"value-type": "String"
+					},
+					{
+						"name": "transform", 
+						"type": "String prop", 
+						"value": "translate(9.24 25.64) scale(.73 1)", 
+						"value-type": "String"
+					}
+				],
+				"children": [
+				{ 
+					"name": "tspan",
+					"level": "3",
+					"type": "Open tag",
+					"props": [
+						{
+							"name": "class", 
+							"type": "String prop", 
+							"value": "cls-4", 
+							"value-type": "String"
+						},
+						{
+							"name": "x="0"", 
+							"type": "Boolean prop", 
+							"value": "true", 
+							"value-type": "Boolean"
+						},
+						{
+							"name": "y="0"", 
+							"type": "Boolean prop", 
+							"value": "true", 
+							"value-type": "Boolean"
+						}
+					],
+					"children": [
+					{ 
+						"name": "T",
+						"level": "4",
+						"type": "Nested string"
+					}
+					]
+				},
+				{ 
+					"name": "tspan",
+					"level": "3",
+					"type": "Closing Tag"
+				},
+				{ 
+					"name": "tspan",
+					"level": "3",
+					"type": "Open tag",
+					"props": [
+						{
+							"name": "x="3.11"", 
+							"type": "Boolean prop", 
+							"value": "true", 
+							"value-type": "Boolean"
+						},
+						{
+							"name": "y="0"", 
+							"type": "Boolean prop", 
+							"value": "true", 
+							"value-type": "Boolean"
+						}
+					],
+					"children": [
+					{ 
+						"name": "ext",
+						"level": "4",
+						"type": "Nested string"
+					}
+					]
+				},
+				{ 
+					"name": "tspan",
+					"level": "3",
+					"type": "Closing Tag"
+				}
+				]
+			},
+			{ 
+				"name": "text",
 				"level": "2",
 				"type": "Closing Tag"
 			}
 			]
-		},
-		{ 
-			"name": "test1",
-			"level": "1",
-			"type": "Closing Tag"
-		},
-		{ 
-			"name": "test",
-			"level": "1",
-			"type": "Closing Tag"
 		}
 		]
 	}
