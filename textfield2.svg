@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+        stroke-width: 2px;
+      }
+
+      .cls-1, .cls-2 {
+        stroke: #231f20;
+        stroke-miterlimit: 10;
+      }
+
+      .cls-2 {
+        stroke-width: .5px;
+      }
+
+      .cls-2, .cls-3 {
+        fill: #231f20;
+      }
+
+      .cls-4 {
+        letter-spacing: -.11em;
+      }
+
+      .cls-3 {
+        font-family: ArialMT, Arial;
+        font-size: 6.22px;
+      }
+    </style>
+  </defs>
+  <rect class="cls-1" x="5.69" y="16.28" width="36.8" height="14.69" rx="1.54" ry="1.54"/>
+  <text class="cls-3" transform="translate(9.24 25.64) scale(.73 1)"><tspan class="cls-4" x="0" y="0">T</tspan><tspan x="3.11" y="0">ext</tspan></text>
+  <path class="cls-2" d="m18.62,20.9c.04,4.55,0,5.45,0,5.45"/>
+</svg>
