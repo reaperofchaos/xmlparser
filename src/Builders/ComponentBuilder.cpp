@@ -209,7 +209,7 @@ std::shared_ptr<Component> ComponentBuilder::next()
  */
 void ComponentBuilder::displayCharacterTokens()
 {
-    for (auto token : this->m_tokens)
+    for (std::shared_ptr<Character> token : this->m_tokens)
     {
         std::cout << token->getType() << " - " << token->getValue() << "\n";
     }
@@ -221,7 +221,7 @@ void ComponentBuilder::displayCharacterTokens()
  */
 void ComponentBuilder::build_components()
 {
-    while (auto component = this->next())
+    while (std::shared_ptr<Component> component = this->next())
     {
         this->m_components.push_back(component);
     }
@@ -233,7 +233,7 @@ void ComponentBuilder::build_components()
  */
 void ComponentBuilder::displayComponents()
 {
-    for (auto component : this->m_components)
+    for (std::shared_ptr<Component> component : this->m_components)
     {
         std::cout << component->getType() << " - " << component->getValue() << "\n";
     }

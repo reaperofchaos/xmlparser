@@ -43,7 +43,7 @@ std::shared_ptr<Element> ElementBuilder::next()
  */
 void ElementBuilder::buildElements()
 {
-    while (auto element = this->next())
+    while (std::shared_ptr<Element> element = this->next())
     {
         this->m_elements.push_back(element);
     }
@@ -84,7 +84,7 @@ std::shared_ptr<Node> ElementBuilder::read_str(std::string input)
  */
 void ElementBuilder::displayElements()
 {
-    for (auto element : this->m_elements)
+    for (std::shared_ptr<Element> element : this->m_elements)
     {
         std::cout << element->inspect();
     }

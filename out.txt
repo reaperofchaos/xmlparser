@@ -1,17 +1,8 @@
 Parsed Tree 
-Node: xml Level: 0 Type: Prolog Tag
-Node: svg Level: 1 Type: Open tag
-Node: defs Level: 2 Type: Open tag
-Node: style Level: 3 Type: Open tag
-Node: .cls-1 {        fill: #fff;stroke-width: 2px;}.cls-1, .cls-2 {        stroke: #231f20;stroke-miterlimit: 10;}.cls-2 {        stroke-width: .5px;}.cls-2, .cls-3 {        fill: #231f20;}.cls-4 {        letter-spacing: -.11em;}.cls-3 {        font-family: ArialMT, Arial;font-size: 6.22px;} Level: 4 Type: Nested string
-Node: style Level: 3 Type: Closing Tag
-Node: defs Level: 2 Type: Closing Tag
-Node: rect Level: 2 Type: Self closing tag
-Node: text Level: 2 Type: Open tag
-Node: tspan Level: 3 Type: Open tag
-Node: T Level: 4 Type: Nested string
-Node: tspan Level: 3 Type: Closing Tag
-Node: tspan Level: 3 Type: Open tag
-Node: ext Level: 4 Type: Nested string
-Node: tspan Level: 3 Type: Closing Tag
-Node: text Level: 2 Type: Closing Tag
+Node: Box Level: 0 Type: Open tag
+Node: Button Level: 1 Type: Open tag
+Node: Click Me!     Level: 2 Type: Nested string
+Node: Button Level: 1 Type: Closing Tag
+Node: {console.log('This is a test')} Level: 1 Type: Nested object
+Node: {isVisible && (        <TextField>            This is visible        </TextField>    )} Level: 1 Type: Nested object
+Node: Box Level: 1 Type: Closing Tag
